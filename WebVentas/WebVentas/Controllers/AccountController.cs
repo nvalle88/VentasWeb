@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebVentas.Models;
+using WebVentas.Services;
 
 namespace WebVentas.Controllers
 {
@@ -151,6 +152,7 @@ namespace WebVentas.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
