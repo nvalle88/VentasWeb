@@ -781,6 +781,7 @@
     <Content Include="Content\sound\voice_on.ogg" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\datatables\init.js" />
     <Content Include="Scripts\demo.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1357,7 +1358,13 @@
     <Content Include="Views\Tables\JQGrid.cshtml" />
     <Content Include="Views\Tables\Normal.cshtml" />
     <Content Include="Views\Supervisor\Index.cshtml" />
-    <Content Include="Views\Vendedores\Index.cshtml" />
+    <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
