@@ -2,9 +2,6 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 
 <!-- MAIN CONTENT -->
@@ -28,9 +25,7 @@
         }
 
     </div>
-
     <p>
-
         <a asp-action="Create">
 
             <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
@@ -66,7 +61,7 @@
 
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
 
-                        <h2>Ciudades</h2>
+                        <h2>Supervisores</h2>
 
                     </header>
 
@@ -189,9 +184,7 @@
 
 <!-- END MAIN CONTENT -->
 
-
-
-@section Scripts {
+@section pagespecific {
 
     <script src='~/js/datatables/init.js'></script>
 
