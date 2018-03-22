@@ -198,7 +198,7 @@
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
-    <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\EmailTemplatesController.cs" />
@@ -244,6 +244,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ObjectModel\SupervisorRequest.cs" />
+    <Compile Include="ObjectModel\UsuarioRequest.cs" />
+    <Compile Include="ObjectModel\VendedorRequest.cs" />
     <Compile Include="ObjectModel\ClienteRequest.cs" />
     <Compile Include="ObjectModel\Supervisor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1376,6 +1379,9 @@
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Scripts\libs\waitMe\LICENSE.md" />
     <Content Include="Scripts\libs\waitMe\README.md" />
+    <Content Include="Views\Supervisor\Create.cshtml" />
+    <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
+    <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

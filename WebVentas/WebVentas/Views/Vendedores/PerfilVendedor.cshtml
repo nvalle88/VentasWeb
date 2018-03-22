@@ -1,20 +1,25 @@
-﻿@model List<WebVentas.ObjectModel.SupervisorRequest>
+@model List<WebVentas.ObjectModel.VendedorRequest>
+
 @{
-    ViewBag.Title = "Index";
+    ViewData["Title"] = "Index";
 }
-<link href="~/css/tabla/table.css" rel="stylesheet" />
+
 
 <!-- MAIN CONTENT -->
-
 <div id="content">
+
+
+    <br />
+    &nbsp;
 
     <div class="col col-10">
 
         @if (@ViewData["Error"].ToString() != "")
+
         {
+
             <div class="col-lg-12">
                 <div class="alert alert-block alert-dismissable">
-
                     <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
                     <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
                     <p>
@@ -22,17 +27,37 @@
                     </p>
                 </div>
             </div>
+
         }
 
     </div>
-    <p>
-        <a href="../Supervisor/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+    
+    <p></p>
+
+    <div>
+
+    </div>
+
+    <p></p>
+
+    <a asp-action="Create">
+        
+        <button type="button" asp-action="Create" class="btn btn-default" style="color:#3276B1">
+            <!--
+            <span class="btn-label">
+             -->
             <i class="glyphicon glyphicon-plus"></i>
-        </a>
-    </p>
+            <!--
+            </span>
+            -->
+        </button>
+        
+    </a>
+
+
+    <p> </p>
 
     <!-- widget grid -->
-
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -55,7 +80,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Supervisor</h2>
+                        <h2>Clientes</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -68,67 +93,54 @@
                         <div class="widget-body no-padding">
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
+
                                     <tr>
 
-                                        <th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                        </th>
 
+                                        <th>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres)
-
                                         </th>
 
                                         <th>
-
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
-
                                         </th>
 
                                         <th>
-
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
-
                                         </th>
 
                                         <th>Opciones</th>
-
                                     </tr>
-
                                 </thead>
-
                                 <tbody>
-
                                     @foreach (var item in Model)
-
                                     {
-
                                         <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                            </td>
 
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Nombres)
-
                                             </td>
 
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Apellidos)
-
                                             </td>
 
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Direccion)
-
                                             </td>
+
                                             <td>
-
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdSupervisor }) |
-
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSupervisor }, new { onclick = "return confirm('Desea eliminar la Ciudad... ?');" })
-
+                                                @Html.ActionLink("Perfil", "Perfil", new { id = item.IdVendedor }) |
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdVendedor }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdVendedor }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
-
                                         </tr>
-
                                     }
                                 </tbody>
                             </table>

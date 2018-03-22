@@ -5,13 +5,15 @@ using System.Web;
 
 namespace WebVentas.ObjectModel
 {
-    public class Supervisor
+    public class SupervisorRequest
     {
         public int IdSupervisor { get; set; }
 
         public int? IdUsuario { get; set; }
 
         public int IdGerente { get; set; }
+        public bool? Estado { get; set; }
+        public string Correo { get; set; }
 
         public string Direccion { get; set; }
 
