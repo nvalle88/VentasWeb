@@ -234,6 +234,7 @@
     <Compile Include="Services\ApiServicio.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Response.cs" />
+    <Compile Include="Utils\WebApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Landing\Content\color\default.css" />
