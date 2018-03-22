@@ -198,6 +198,7 @@
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\EmailTemplatesController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Controllers\IntelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MiscController.cs" />
+    <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -230,6 +232,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ObjectModel\Cliente.cs" />
+    <Compile Include="ObjectModel\Supervisor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServicio.cs" />
     <Compile Include="Startup.cs" />
