@@ -29,7 +29,7 @@ namespace WebVentas.Controllers
         
 
         // GET: Vendedores
-        public async Task<ActionResult> Index(string mensaje)
+        public async Task<ActionResult> VendedorIndex(string mensaje)
         {
             List<VendedorRequest> lista = new List<VendedorRequest>();
             InicializarMensaje("");
@@ -48,6 +48,28 @@ namespace WebVentas.Controllers
                 return View(lista);
             }
         }
+
+
+        public async Task<ActionResult> PerfilVendedor(string mensaje)
+        {
+            List<VendedorRequest> lista = new List<VendedorRequest>();
+            InicializarMensaje("PerfilVendedor");
+
+            try
+            {
+                lista = await ApiServicio.Listar<VendedorRequest>(new Uri(WebApp.BaseAddress)
+                                                                  , "api/Vendedores/ListarVendedores");
+
+
+
+                return View(lista);
+            }
+            catch
+            {
+                return View(lista);
+            }
+        }
+
 
     }
 }
