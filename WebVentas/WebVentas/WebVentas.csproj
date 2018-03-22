@@ -1345,6 +1345,7 @@
     <Content Include="Views\Tables\DataTables.cshtml" />
     <Content Include="Views\Tables\JQGrid.cshtml" />
     <Content Include="Views\Tables\Normal.cshtml" />
+    <Content Include="Views\Supervisor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
