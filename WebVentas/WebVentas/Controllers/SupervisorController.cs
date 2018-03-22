@@ -1,17 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebVentas.ObjectModel;
+using WebVentas.Services;
+using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
     public class SupervisorController : Controller
     {
+
         // GET: Supervisor
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        private void InicializarMensaje(string mensaje)
+
         {
-            return View();
+
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+
+            ViewData["Error"] = mensaje;
+        }
+
+        public async Task<ActionResult> Index(string mensaje)
+        {
+            List<Supervisor> lista = new List<Supervisor>();
+            InicializarMensaje("");
+
+            try
+            {
+                lista = await ApiServicio.Listar<Supervisor>(new Uri(WebApp.BaseAddress)
+                                                                  , "api/Supervisor/ListarSupervisores");
+                return View(lista);
+            }
+            catch
+            {
+                return View(lista);
+            }
         }
     }
 }
