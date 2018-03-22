@@ -228,11 +228,23 @@
     <Compile Include="Migrations\201803221730426_MigracionNombreQuitar.Designer.cs">
       <DependentUpon>201803221730426_MigracionNombreQuitar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803222125248_addEmpresaId.cs" />
+    <Compile Include="Migrations\201803222125248_addEmpresaId.Designer.cs">
+      <DependentUpon>201803222125248_addEmpresaId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803222139175_camposnuevos.cs" />
+    <Compile Include="Migrations\201803222139175_camposnuevos.Designer.cs">
+      <DependentUpon>201803222139175_camposnuevos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803222235482_camposnuevosEstado.cs" />
+    <Compile Include="Migrations\201803222235482_camposnuevosEstado.Designer.cs">
+      <DependentUpon>201803222235482_camposnuevosEstado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="ObjectModel\Cliente.cs" />
+    <Compile Include="ObjectModel\ClienteRequest.cs" />
     <Compile Include="ObjectModel\Supervisor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServicio.cs" />
@@ -1391,6 +1403,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803221730426_MigracionNombreQuitar.resx">
       <DependentUpon>201803221730426_MigracionNombreQuitar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803222125248_addEmpresaId.resx">
+      <DependentUpon>201803222125248_addEmpresaId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803222139175_camposnuevos.resx">
+      <DependentUpon>201803222139175_camposnuevos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803222235482_camposnuevosEstado.resx">
+      <DependentUpon>201803222235482_camposnuevosEstado.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

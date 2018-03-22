@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,46 +14,26 @@ namespace WebVentas.Controllers
     public class ClientesController : Controller
     {
 
-        
-        private void InicializarMensaje(string mensaje)
-
-        {
-
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-
-            ViewData["Error"] = mensaje;
-        }
-
-        /*
-        // GET: Clientes
-        public ActionResult Index()
-        {
-            return View();
-        }
-        */
-
-        // GET: Clientes
         public async Task<ActionResult> Index(string mensaje)
         {
-            List<Cliente> lista = new List<Cliente>();
-            InicializarMensaje("");
+            var userWithClaims = (ClaimsPrincipal)User;
+            var fname = userWithClaims.Claims.First(c => c.Type == "IdEmpresa");
+            
+            var lista = await ApiServicio.Listar<ClienteRequest>(new Uri(WebApp.BaseAddress)
+                                                                , "api/Clientes/ListarClientes");
+            return View(lista);
 
-            try
-            {
-                lista = await ApiServicio.Listar<Cliente>(new Uri(WebApp.BaseAddress)
-                                                                  , "api/Clientes/ListarClientes");
+        }
 
+        public async Task<ActionResult> Create()
+        {
+            //var listaTipoCliente= ApiServicio.Listar<ClienteRequest>(new Uri(WebApp.BaseAddress)
+            //                                                    , "api/Clientes/ListarClientes");
 
+            //ViewBag.IdEdades = new SelectList(db.Edades, "IdEdades", "Descripcion");
+            //ViewBag.IdEdades = new SelectList(db.Edades, "IdEdades", "Descripcion");
+            return View();
 
-                return View(lista);
-            }
-            catch
-            {
-                return View(lista);
-            }
         }
 
     }
