@@ -1,0 +1,232 @@
+﻿@model CuelloUterino.Informe
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Informe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Anticoncepcion.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anticoncepcion.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiagnosticoCitologico.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiagnosticoCitologico.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Edades.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edades.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstudioSolicitado.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstudioSolicitado.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fechas.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fechas.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Material.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Material.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MuestraPieza.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MuestraPieza.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paridad.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paridad.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultadoPruebaHibrida.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultadoPruebaHibrida.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoHistologico.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoHistologico.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoHistologico1.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoHistologico1.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valoracion.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valoracion.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.edad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.edad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechamuestra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechamuestra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Identificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.historiaclinica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.historiaclinica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonoConvencional)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonoConvencional)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonoCelular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonoCelular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombresApellidosReferencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombresApellidosReferencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GradoAfinidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GradoAfinidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.terapia_hormonal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.terapia_hormonal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Recomendaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recomendaciones)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

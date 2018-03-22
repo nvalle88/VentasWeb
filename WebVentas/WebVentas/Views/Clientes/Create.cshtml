@@ -1,0 +1,612 @@
+﻿@model CuelloUterino.ModeloDatos.Informe
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+<script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <p></p>
+    <a href="../../informes/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <p></p>
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <div class="row">
+
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="true" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>NUEVO TAMIZAJE DE CÁNCER CÉRVICOUTERINO</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form id="checkout-form" method="post" class="smart-form" novalidate="novalidate">
+                                @Html.AntiForgeryToken()
+                                <fieldset>
+                                    <article>
+                                        <legend>Datos personales</legend>
+                                        <br />
+                                        <div class="row">
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.Nombres)</label>
+                                                <label class="input">
+                                                    <input maxlength="60" name="Nombres" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.Apellidos)</label>
+                                                <label class="input">
+                                                    <input maxlength="60" name="Apellidos" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+
+                                        <div class="row">
+                                            <section class="col col-2">
+                                                <label>@Html.DisplayNameFor(model => model.Edad)</label>
+                                                <label class="input">
+                                                    <input maxlength="2" name="Edad" type="number" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.Edad, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-2">
+                                                <label>@Html.DisplayNameFor(model => model.FechaMuestra)</label>
+                                                <label class="input">
+                                                    <input name="FechaMuestra" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                                    @Html.ValidationMessageFor(model => model.FechaMuestra, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-2">
+                                                <label>@Html.DisplayNameFor(model => model.HistoriaClinica)</label>
+                                                <label class="input">
+                                                    <input maxlength="5" name="HistoriaClinica" class="form-control" type="number" />
+                                                    @Html.ValidationMessageFor(model => model.HistoriaClinica, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
+                                                <label class="input">
+                                                    <input maxlength="30" name="Identificacion" class="form-control" type="number" />
+                                                    @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.Correo)</label>
+                                                <label class="input">
+
+                                                    <input maxlength="60" name="Correo" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.TelefonoConvencional)</label>
+                                                <label class="input">
+
+                                                    <input name="TelefonoConvencional" data-mask="999999999" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.TelefonoConvencional, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.TelefonoCelular)</label>
+                                                <label class="input">
+
+                                                    <input name="TelefonoCelular" data-mask="9999999999" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.TelefonoCelular, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.CitologiaVPH)</label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="CitologiaVPH" value="true" checked="checked">
+                                                    <input type="hidden" name="CitologiaVPH" value="false" />
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.Histopatologia)</label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="Histopatologia" value="true" >
+                                                    <input type="hidden" name="Histopatologia" value="false" checked="checked" />
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </article>
+                                    <br />                                    
+                                    <article>
+                                        <legend>Referencia</legend>
+                                        <br />
+                                        <div class="row">
+                                            <section class=" col col-lg-12">
+                                                <label>@Html.DisplayNameFor(model => model.NombresApellidosReferencia)</label>
+                                                <label class="input">
+                                                    <input maxlength="120" name="NombresApellidosReferencia" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.NombresApellidosReferencia, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                <label>@Html.DisplayNameFor(model => model.GradoAfinidad)</label>
+                                                <label class="input">
+                                                    <input maxlength="15" name="GradoAfinidad" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.GradoAfinidad, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <label>@Html.DisplayNameFor(model => model.TelefonoCelularReferencia)</label>
+                                                <label class="input">
+                                                    <input name="TelefonoCelularReferencia" data-mask="9999999999" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.TelefonoCelularReferencia, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <label>@Html.DisplayNameFor(model => model.TelefonoConvencionalReferencia)</label>
+                                                <label class="input">
+                                                    <input name="TelefonoConvencionalReferencia" data-mask="999999999" class="form-control" />
+                                                    @Html.ValidationMessageFor(model => model.TelefonoConvencionalReferencia, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+
+
+                                    </article>
+                                    <br />
+                                    <article>
+                                        <legend>Datos básicos para citología vaginal</legend>
+                                        <br />
+                                        <div class="row">
+
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.IdMaterial)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdMaterial", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdMaterial, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.IdParidad)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdParidad", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdParidad, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.IdAnticoncepcion)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdAnticoncepcion", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdAnticoncepcion, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.IdEdades)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdEdades", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdEdades, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+
+
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.UltimaMenstruacion)</label>
+                                                <label class="input">
+                                                    <input name="UltimaMenstruacion" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                                    @Html.ValidationMessageFor(model => model.UltimaMenstruacion, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.UltimaCitologia)</label>
+                                                <label class="input">
+                                                    <input name="UltimaCitologia" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                                    @Html.ValidationMessageFor(model => model.UltimaCitologia, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.UltimoParto)</label>
+                                                <label class="input">
+                                                    <input name="UltimoParto" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                                    @Html.ValidationMessageFor(model => model.UltimoParto, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label>@Html.DisplayNameFor(model => model.TerapiaHormonal)</label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="TerapiaHormonal" value="true" >
+                                                    <input type="hidden" name="TerapiaHormonal" value="false" checked="checked" />
+                                                    <i></i>
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-12">
+                                                <label>@Html.DisplayNameFor(model => model.IdDiagnosticoCitologico)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdDiagnosticoCitologico", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdDiagnosticoCitologico, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </article>
+                                    <br />
+                                    <article>
+                                        <legend>Informe de captura híbrida para el Virus del Papiloma Humano (VPH)</legend>
+                                        <br />
+                                        <div class="row">
+
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.IdValoracion)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdValoracion", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdValoracion, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.IdResultadoPruebaHibrida)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdResultadoPruebaHibrida", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdResultadoPruebaHibrida, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <fieldset>
+                                            <div class="row">
+                                                <section>
+                                                    <label>@Html.DisplayNameFor(model => model.Recomendaciones)</label>
+                                                    <label class="textarea">
+                                                        <textarea rows="10" cols="60" maxlength="2000" name="Recomendaciones"></textarea>
+                                                        @Html.ValidationMessageFor(model => model.Recomendaciones, "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </fieldset>
+
+                                    </article>
+                                    <br />
+                                    <article>
+                                        <legend>Informe de histopatología</legend>
+                                        <br />
+                                        <div class="row">
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.Coloscopia)</label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="Coloscopia" value="true" >
+                                                    <input type="hidden" name="Coloscopia" value="false" checked="checked"/>
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.Biopsia)</label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="Biopsia" value="true" >
+                                                    <input type="hidden" name="Biopsia" value="false" checked="checked" />
+                                                    <i></i>
+                                                </label>
+                                            </section>
+
+
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.IdMuestraPieza)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdMuestraPieza", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdMuestraPieza, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.IdTipoHistologico)</label>
+                                                <label class="input">
+                                                    @Html.DropDownList("IdTipoHistologico", null, htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.IdTipoHistologico, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+
+                                    </article>
+                                    <br />
+                                </fieldset>
+                                <footer>
+                                    <button type="submit" id="insertarMuestra" class="btn btn-primary">
+                                        Guardar
+                                    </button>
+                                    <a class=" btn btn-default" id="regresar1" href="/informes/index">Cancelar</a>
+
+                                </footer>
+                            </form>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+
+                <!-- end widget -->
+
+            </article>
+
+            <!-- END COL -->
+
+        </div>
+
+        <!-- END ROW -->
+
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+
+@section pagespecific {
+
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+       
+
+
+        $(document).ready(function () {
+            
+            var $checkoutForm = $('#checkout-form').validate({
+                // Rules for form validation
+                rules: {
+                    Nombres: {
+                        required: true
+                    },
+                    Apellidos: {
+                        required: true
+                    },
+                    Correo: {
+                        required: true,
+                        email: true
+                    },
+                    Edad: {
+                        required: true
+                    },
+                    FechaMuestra: {
+                        required: true
+                    },
+                    Identificacion: {
+                        required: true,
+                        digits: true
+                    },
+                    HistoriaClinica: {
+                        required: true,
+
+                    },
+                    TelefonoConvencional: {
+                        required: true
+                    },
+                    TelefonoCelular: {
+                        required: true
+                    },
+                    NombresApellidosReferencia: {
+                        required: true
+
+                    },
+                    GradoAfinidad: {
+                        required: true
+                    },
+                    Telefono: {
+                        required: true
+                    },
+                    IdEstudio: {
+                        required: true
+                    },
+
+                    IdMaterial: {
+                        required: true
+                    },
+                    IdAnticoncepcion: {
+                        required: true
+                    },
+                    IdEdades: {
+                        required: true
+                    },
+                    IdParidad: {
+                        required: true
+                    },
+                    IdFechas: {
+                        required: true
+                    },
+                    IdDiagnosticoCitologico: {
+                        required: true
+                    },
+
+                    IdValoracion: {
+                        required: true
+                    },
+                    IdResultadoPruebaHibrida: {
+                        required: true
+                    },
+                    Recomendaciones: {
+                        required: true
+                    },
+                    IdMuestraPieza: {
+                        required: true
+                    },
+                    IdTipoHistologico: {
+                        required: true
+                    },
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    Nombres: {
+                        required: ""
+                    },
+                    Apellidos: {
+                        required: ""
+                    },
+                    Correo: {
+                        required: "",
+                        email: "Formato de correo INVÁLIDO"
+                    },
+                    Edad: {
+                        required: ""
+                    },
+                    FechaMuestra: {
+                        required: ""
+                    },
+                    Identificacion: {
+                        required: ""
+                    },
+                    HistoriaClinica: {
+                        required: ""
+
+                    },
+                    TelefonoConvencional: {
+                        required: ""
+                    },
+                    TelefonoCelular: {
+                        required: ""
+                    },
+                    NombresApellidosReferencia: {
+                        required: ""
+
+                    },
+                    GradoAfinidad: {
+                        required: ""
+                    },
+                    Telefono: {
+                        required: ""
+                    },
+                    IdEstudio: {
+                        required: ""
+                    },
+
+                    IdMaterial: {
+                        required: ""
+                    },
+                    TerapiaHormonal: {
+                        required: ""
+                    },
+                    IdAnticoncepcion: {
+                        required: ""
+                    },
+                    IdEdades: {
+                        required: ""
+                    },
+                    IdParidad: {
+                        required: ""
+                    },
+                    IdFechas: {
+                        required: ""
+                    },
+                    IdDiagnosticoCitologico: {
+                        required: ""
+                    },
+
+                    IdValoracion: {
+                        required: ""
+                    },
+                    IdResultadoPruebaHibrida: {
+                        required: ""
+                    },
+                    Recomendaciones: {
+                        required: ""
+                    },
+                    IdMuestraPieza: {
+                        required: ""
+                    },
+                    IdTipoHistologico: {
+                        required: ""
+                    },
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+
+            // START AND FINISH DATE
+            $('#startdate').datepicker({
+                dateFormat: 'dd.mm.yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#finishdate').datepicker('option', 'minDate', selectedDate);
+                }
+            });
+
+            $('#finishdate').datepicker({
+                dateFormat: 'dd.mm.yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#startdate').datepicker('option', 'maxDate', selectedDate);
+                }
+            });
+
+
+            $("#regresar1").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#118df9'
+                });
+            });
+            $("#regresar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#118df9'
+                });
+            });
+        })
+
+        
+
+       
+       
+    </script>
+}
