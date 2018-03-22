@@ -219,7 +219,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ApiServicio.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\Response.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Landing\Content\color\default.css" />
