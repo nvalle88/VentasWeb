@@ -10,7 +10,7 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
-    public class ClientesController : Controller
+    public class VendedoresController : Controller
     {
 
         
@@ -26,24 +26,18 @@ namespace WebVentas.Controllers
             ViewData["Error"] = mensaje;
         }
 
-        /*
-        // GET: Clientes
-        public ActionResult Index()
-        {
-            return View();
-        }
-        */
+        
 
-        // GET: Clientes
+        // GET: Vendedores
         public async Task<ActionResult> Index(string mensaje)
         {
-            List<Cliente> lista = new List<Cliente>();
+            List<VendedorRequest> lista = new List<VendedorRequest>();
             InicializarMensaje("");
 
             try
             {
-                lista = await ApiServicio.Listar<Cliente>(new Uri(WebApp.BaseAddress)
-                                                                  , "api/Clientes/ListarClientes");
+                lista = await ApiServicio.Listar<VendedorRequest>(new Uri(WebApp.BaseAddress)
+                                                                  , "api/Vendedores/ListarVendedores");
 
 
 
