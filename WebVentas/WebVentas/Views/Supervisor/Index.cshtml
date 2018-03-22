@@ -1,4 +1,4 @@
-﻿@model List<WebVentas.ObjectModel.Supervisor>
+﻿@model List<WebVentas.ObjectModel.SupervisorRequest>
 @{
     ViewBag.Title = "Index";
 }
@@ -26,18 +26,8 @@
 
     </div>
     <p>
-        <a asp-action="Create">
-
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-
-                <span class="btn-label">
-
-                    <i class="glyphicon glyphicon-plus"></i>
-
-                </span>Nuevo
-
-            </button>
-
+        <a href="../Supervisor/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i>
         </a>
 
     </p>

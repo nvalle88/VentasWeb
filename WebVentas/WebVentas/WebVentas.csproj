@@ -233,7 +233,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="ObjectModel\Cliente.cs" />
-    <Compile Include="ObjectModel\Supervisor.cs" />
+    <Compile Include="ObjectModel\SupervisorRequest.cs" />
+    <Compile Include="ObjectModel\UsuarioRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServicio.cs" />
     <Compile Include="Startup.cs" />
@@ -1364,6 +1365,7 @@
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Scripts\libs\waitMe\LICENSE.md" />
     <Content Include="Scripts\libs\waitMe\README.md" />
+    <Content Include="Views\Supervisor\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
