@@ -33,12 +33,12 @@ namespace WebVentas.Controllers
 
         public async Task<ActionResult> Index(string mensaje)
         {
-            List<Supervisor> lista = new List<Supervisor>();
+            List<SupervisorRequest> lista = new List<SupervisorRequest>();
             InicializarMensaje("");
 
             try
             {
-                lista = await ApiServicio.Listar<Supervisor>(new Uri(WebApp.BaseAddress)
+                lista = await ApiServicio.Listar<SupervisorRequest>(new Uri(WebApp.BaseAddress)
                                                                   , "api/Supervisor/ListarSupervisores");
                 return View(lista);
             }
@@ -46,6 +46,19 @@ namespace WebVentas.Controllers
             {
                 return View(lista);
             }
+        }
+        public async Task<ActionResult> Create(string mensaje)
+
+        {
+
+            ViewData["IdPais"] = new SelectList(await ApiServicio.Listar<UsuarioRequest>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
+
+            
+
+            InicializarMensaje(mensaje);
+
+            return View();
+
         }
     }
 }
