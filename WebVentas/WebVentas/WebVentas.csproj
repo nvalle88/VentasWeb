@@ -745,6 +745,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\star_outline.png" />
+    <Content Include="Imagenes\star_selected.png" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1415,6 +1417,8 @@
     <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
     <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
     <Content Include="Views\Supervisor\_PartialView.cshtml" />
+    <Content Include="Views\Vendedores\_PartialView.cshtml" />
+    <Content Include="Views\Vendedores\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
