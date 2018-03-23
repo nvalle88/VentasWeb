@@ -34,8 +34,8 @@
                                         <th data-hide="phone">Identificación</th>
                                         <th data-hide="phone">Email</th>
                                         <th data-class="expand"> Teléfono</th>
+                                        <th data-hide="phone">Teléfono móvil</th>
                                         <th data-hide="phone"> Tipo de cliente </th>
-                                        <th data-hide="phone">Edad</th>
                                         <th data-hide="phone,tablet"> Vendedor </th>
                                         <th data-hide="phone,tablet"> Opciones </th>
                                     </tr>
@@ -55,6 +55,9 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Telefono)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TelefonoMovil)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.TipoCliente)
