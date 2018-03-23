@@ -52,7 +52,8 @@ namespace WebVentas.ObjectModel
         public string Telefono { get; set; }
 
         public int? idEmpresa { get; set; }
-
+        
+        public List<ClienteRequest> ListaClientes { get; set; }
 
     }
 }

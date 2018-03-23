@@ -1,4 +1,4 @@
-@model List<WebVentas.ObjectModel.VendedorRequest>
+@model WebVentas.ObjectModel.VendedorRequest
 
 @{
     ViewData["Title"] = "Index";
@@ -31,7 +31,7 @@
         }
 
     </div>
-    
+
     <p></p>
 
     <div>
@@ -41,7 +41,7 @@
     <p></p>
 
     <a asp-action="Create">
-        
+
         <button type="button" asp-action="Create" class="btn btn-default" style="color:#3276B1">
             <!--
             <span class="btn-label">
@@ -51,11 +51,41 @@
             </span>
             -->
         </button>
-        
+
     </a>
 
 
+
     <p> </p>
+
+    <section id="DatosPersonales" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    
+                    <div class="widget-body">
+
+
+                        <div class="row" >
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <legend>Datos Básicos</legend>
+
+                            </article>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -97,38 +127,32 @@
                                     <tr>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                            @Html.DisplayNameFor(model => model.ListaClientes.FirstOrDefault().Nombre)
                                         </th>
 
                                         <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres)
+                                            @Html.DisplayNameFor(model => model.ListaClientes.FirstOrDefault().Apellido)
                                         </th>
 
                                         <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
+                                            @Html.DisplayNameFor(model => model.ListaClientes.FirstOrDefault().Direccion)
                                         </th>
 
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
-                                        </th>
 
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaClientes)
                                     {
                                         <tr>
+
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                                @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombres)
-                                            </td>
-
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Apellidos)
+                                                @Html.DisplayFor(modelItem => item.Apellido)
                                             </td>
 
                                             <td>

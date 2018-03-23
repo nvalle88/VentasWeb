@@ -73,24 +73,43 @@ namespace WebVentas.Controllers
         }
 
 
-        public async Task<ActionResult> PerfilVendedor(string mensaje)
+        public async Task<ActionResult> PerfilVendedor(string mensaje,int idVendedor)
         {
-            List<VendedorRequest> lista = new List<VendedorRequest>();
+            VendedorRequest vendedor = new VendedorRequest();
+            vendedor.IdVendedor = idVendedor;
+
+            try
+            {
+                var userWithClaims = (ClaimsPrincipal)User;
+                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+                vendedor.idEmpresa = Convert.ToInt32(idEmpresa);
+            }
+            catch (Exception ex)
+            {
+
+                InicializarMensaje(Mensaje.ErrorIdEmpresa);
+            }
+
+             
+
             InicializarMensaje("PerfilVendedor");
 
             try
             {
-                lista = await ApiServicio.Listar<VendedorRequest>(new Uri(WebApp.BaseAddress)
-                                                                  , "api/Vendedores/ListarVendedores");
+
+                vendedor = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(vendedor,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/ListarClientesPorVendedor");
 
 
                 InicializarMensaje("all ok");
-                return View(lista);
+                return View(vendedor);
             }
             catch
             {
                 InicializarMensaje(Mensaje.Excepcion);
-                return View(lista);
+                return View(vendedor);
             }
         }
 
