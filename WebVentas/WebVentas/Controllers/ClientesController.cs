@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -17,9 +18,10 @@ namespace WebVentas.Controllers
         public async Task<ActionResult> Index(string mensaje)
         {
             var userWithClaims = (ClaimsPrincipal)User;
-            var fname = userWithClaims.Claims.First(c => c.Type == "IdEmpresa");
-            
-            var lista = await ApiServicio.Listar<ClienteRequest>(new Uri(WebApp.BaseAddress)
+            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
+
+            var lista = await ApiServicio.Listar<ClienteRequest>(empresaActual,new Uri(WebApp.BaseAddress)
                                                                 , "api/Clientes/ListarClientes");
             return View(lista);
 

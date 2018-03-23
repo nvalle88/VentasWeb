@@ -25,6 +25,7 @@ namespace WebVentas.Controllers
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
+          
             UserManager = userManager;
             SignInManager = signInManager;
         }
