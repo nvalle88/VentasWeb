@@ -1413,6 +1413,7 @@
     <Content Include="Views\Supervisor\Create.cshtml" />
     <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
     <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
+    <Content Include="Views\Supervisor\_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

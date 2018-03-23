@@ -9,7 +9,7 @@ namespace WebVentas.ObjectModel
     {
         public int IdSupervisor { get; set; }
 
-        public int? IdUsuario { get; set; }
+        public string IdUsuario { get; set; }
 
         public int IdGerente { get; set; }
         public bool? Estado { get; set; }
@@ -24,5 +24,8 @@ namespace WebVentas.ObjectModel
         public string Apellidos { get; set; }
 
         public string Telefono { get; set; }
+        public int IdEmpresa { get; set; }
+        public int OpcionMenu { get; set; }
+        
     }
 }
