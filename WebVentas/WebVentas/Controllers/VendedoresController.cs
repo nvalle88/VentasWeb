@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using VentaServicios.Utils;
 using WebVentas.ObjectModel;
 using WebVentas.Services;
 using WebVentas.Utils;
@@ -32,19 +35,39 @@ namespace WebVentas.Controllers
         public async Task<ActionResult> VendedorIndex(string mensaje)
         {
             List<VendedorRequest> lista = new List<VendedorRequest>();
+            VendedorRequest vr = new VendedorRequest();
+            Response response = new Response();
+
             InicializarMensaje("");
+
 
             try
             {
-                lista = await ApiServicio.Listar<VendedorRequest>(new Uri(WebApp.BaseAddress)
-                                                                  , "api/Vendedores/ListarVendedores");
+                var userWithClaims = (ClaimsPrincipal)User;
+                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+                vr.idEmpresa = Convert.ToInt32( idEmpresa );
+            }
+            catch (Exception ex) {
+
+                InicializarMensaje(Mensaje.ErrorIdEmpresa);
+            }
 
 
+            try
+            {
+                
 
+                lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vr,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/ListarVendedores");
+
+                
                 return View(lista);
             }
             catch
             {
+                InicializarMensaje(Mensaje.Excepcion);
                 return View(lista);
             }
         }
@@ -61,11 +84,12 @@ namespace WebVentas.Controllers
                                                                   , "api/Vendedores/ListarVendedores");
 
 
-
+                InicializarMensaje("all ok");
                 return View(lista);
             }
             catch
             {
+                InicializarMensaje(Mensaje.Excepcion);
                 return View(lista);
             }
         }
