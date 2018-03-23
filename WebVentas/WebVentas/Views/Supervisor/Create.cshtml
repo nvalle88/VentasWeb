@@ -1,4 +1,8 @@
 ﻿@model WebVentas.ObjectModel.SupervisorRequest
+@using WebVentas.ObjectModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
+@{ Html.RenderPartial("_PartialView", modelo);}
 
 @{
 
@@ -11,11 +15,11 @@
 
 <div id="content">
 
-    @*<p></p>
+    <p></p>
 
-        <a href="../../informes/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <a href="../../Supervisor/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
 
-        <p></p>*@
+    <p></p>
 
     <!-- widget grid -->
 
@@ -75,12 +79,8 @@
                                 @Html.AntiForgeryToken()
 
                                 <fieldset>
-
+                                    <legend>Datos personales</legend>
                                     <article>
-
-                                        <legend>Datos personales</legend>
-
-                                        <br />
 
                                         <div class="row">
 
@@ -177,7 +177,12 @@
                                 </footer>
                             </form>
                         </div>
+
                         <!-- END ROW -->
+                    </div>
+                    </div>
+            </article>
+            </div>
     </section>
 
     <!-- end widget grid -->
@@ -345,16 +350,6 @@
             });
 
         })
-
-
-
-
-
-
-
-
-
-
 
     </script>
 

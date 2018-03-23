@@ -3,33 +3,33 @@
 
     @if (Model.OpcionMenu == 0)
     {
-        <a asp-action="Asignados" asp-controller="Supervisor" style="background-color:#3276b1;color:white;" class="btn btn-default">Supervisor <br /> </a>
+        <a href="../../Supervisor/Index" style="background-color:#3276b1;color:white;" class="btn btn-default">Supervisor <br /> </a>
     }
     else
     {
-        <a asp-action="Asignados" asp-controller="Supervisor" class="btn btn-default">Servidores <br /> Asignados</a>
+        <a asp-action="Supervisor" asp-controller="Supervisor" class="btn btn-default">Servidores <br /> Supervisor</a>
     }
     @if (Model.OpcionMenu == 1)
     {
-        <a asp-action="AsignarEmpleadoFAO" asp-controller="Supervisor" style="background-color:#3276b1;color:white;" class="btn btn-default"> Asignar <br /> Sevidor FAO</a>
+        <a  style="background-color:#3276b1;color:white;" class="btn btn-default"> Reportes</a>
     }
     else
     {
-        <a asp-action="AsignarEmpleadoFAO" asp-controller="Supervisor" class="btn btn-default"> Asignar<br /> Sevidor FAO</a>
+        <a class="btn btn-default"> Reportes</a>
     }
 
 
     @if (Model.OpcionMenu == 2)
     {
-        <a  style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br />a un nuevo <br /> puesto</a>
+        <a  style="background-color:#3276b1;color:white;" class="btn btn-default">Informe <br />gerencial</a>
 
     }
     else
     {
-        <a  class="btn btn-default">Servidores <br />a un nuevo <br /> puesto</a>
+        <a class="btn btn-default">Informe <br />gerencial</a>
     }
 
-    @if (Model.OpcionMenu == 3)
+    @*@if (Model.OpcionMenu == 3)
     {
         <a  style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br />sin cambio <br /> puesto</a>
 
@@ -48,7 +48,7 @@
     else
     {
         <a class="btn btn-default">Hist&oacutericos</a>
-    }
+    }*@
 
 
 </div>

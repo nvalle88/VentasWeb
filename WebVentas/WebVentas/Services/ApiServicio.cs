@@ -295,7 +295,7 @@ namespace WebVentas.Services
                     return response;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<WebVentas.ObjectModel.SupervisorRequest>
+@using WebVentas.ObjectModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
+@{ Html.RenderPartial("_PartialView", modelo);}
 
 @{
     ViewBag.Title = "Index";
@@ -70,66 +74,40 @@
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-
                                         <th>
-
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres)
-
                                         </th>
-
                                         <th>
-
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
-
                                         </th>
-
                                         <th>
-
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
-
                                         </th>
-
                                         <th>Opciones</th>
-
                                     </tr>
-
                                 </thead>
-
                                 <tbody>
 
                                     @foreach (var item in Model)
-
                                     {
-
                                         <tr>
-
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Nombres)
-
                                             </td>
-
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Apellidos)
-
                                             </td>
-
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Direccion)
 
                                             </td>
                                             <td>
-
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdSupervisor }) |
 
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSupervisor }, new { onclick = "return confirm('Desea eliminar la Ciudad... ?');" })
+                                                @Html.ActionLink("Desactivar", "Delete", new { id = item.IdUsuario }, new { onclick = "return confirm('Desea desactivar supervisor... ?');" })
 
                                             </td>
-
                                         </tr>
-
                                     }
                                 </tbody>
                             </table>

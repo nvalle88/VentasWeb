@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\InformesGerencialesController.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -1415,6 +1416,8 @@
     <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
     <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
     <Content Include="Views\Supervisor\_PartialView.cshtml" />
+    <Content Include="Views\Supervisor\Edit.cshtml" />
+    <Content Include="Views\InformesGerenciales\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
