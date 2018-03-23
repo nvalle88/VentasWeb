@@ -1,8 +1,13 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
+using WebVentas.ObjectModel;
+using WebVentas.Services;
+using WebVentas.Utils;
 
 namespace WebVentas.Models
 {
@@ -26,8 +31,16 @@ namespace WebVentas.Models
 
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Agregar aquí notificaciones personalizadas de usuario
            
+            var userRequest = new UserRequest { Id = userIdentity.GetUserId() };
+            var response = await ApiServicio.ObtenerElementoAsync1<Response>(userRequest, new Uri(WebApp.BaseAddress)
+                                                                , "api/Empresa/ObtenerEmpresaPorCliente");
+
+            if (response.IsSuccess)
+            {
+                var empresa = JsonConvert.DeserializeObject<AspNetUsers>(response.Resultado.ToString());
+                userIdentity.AddClaim(new Claim(Constantes.Empresa, Convert.ToString(empresa.IdEmpresa)));
+            }
 
             return userIdentity;
         }
