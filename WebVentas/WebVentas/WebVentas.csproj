@@ -277,12 +277,13 @@
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
-    <Compile Include="ObjectModel\VendedorRequest.cs" />
     <Compile Include="ObjectModel\ClienteRequest.cs" />
+    <Compile Include="ObjectModel\VendedorRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServicio.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Constantes.cs" />
+    <Compile Include="Utils\Mensaje.cs" />
     <Compile Include="Utils\Response.cs" />
     <Compile Include="Utils\WebApp.cs" />
   </ItemGroup>
