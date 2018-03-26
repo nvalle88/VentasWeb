@@ -250,7 +250,7 @@ namespace WebVentas.Services
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

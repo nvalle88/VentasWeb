@@ -12,15 +12,15 @@ namespace WebVentas.ObjectModel
         // Campos de la tabla vendedor
         public int IdVendedor { get; set; }
 
-        public int? TiempoSeguimiento { get; set; } 
-        
-        public int IdSupervisor { get; set; }
-        
+        public int? TiempoSeguimiento { get; set; }
+
+        public int? IdSupervisor { get; set; }
+
 
 
 
         //Campos de tabla usuario
-        public int IdUsuario { get; set; }
+        public string IdUsuario { get; set; }
 
         [StringLength(250)]
         public string TokenContrasena { get; set; }
@@ -28,7 +28,7 @@ namespace WebVentas.ObjectModel
         [StringLength(500)]
         public string Foto { get; set; }
 
-        public bool? Estado { get; set; }
+        public int Estado { get; set; }
 
         [StringLength(500)]
         public string Contrasena { get; set; }
@@ -52,6 +52,8 @@ namespace WebVentas.ObjectModel
         public string Telefono { get; set; }
 
         public int? idEmpresa { get; set; }
+
+        public List<ClienteRequest> ListaClientes { get; set; }
 
 
     }

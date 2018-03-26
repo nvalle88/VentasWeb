@@ -274,7 +274,9 @@
     <Compile Include="Models\Vendedor.cs" />
     <Compile Include="Models\Visita.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
+    <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
+    <Compile Include="ObjectModel\TipoClienteRequest.cs" />
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
     <Compile Include="ObjectModel\VendedorRequest.cs" />
@@ -827,6 +829,7 @@
     <Content Include="Content\sound\voice_on.ogg" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\datatables\init.js" />
     <Content Include="Scripts\demo.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1413,6 +1416,9 @@
     <Content Include="Views\Supervisor\Create.cshtml" />
     <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
     <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
+    <Content Include="Views\Account\RecuperarContrasena.cshtml" />
+    <Content Include="Views\Account\IntroducirCodigo.cshtml" />
+    <Content Include="Views\Account\IngresarContrasena.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,379 +8,506 @@
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
 <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+
+<style>
+
+    #map_container {
+        position: relative;
+    }
+
+
+
+    #map {
+        height: 0;
+        overflow: hidden;
+        padding-bottom: 30.25%;
+        padding-top: 10px;
+        position: relative;
+    }
+</style>
 <!-- MAIN CONTENT -->
 <div id="content">
 
     <p></p>
-    <a href="../../informes/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <a href="../../clientes/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
     <p></p>
-    <!-- widget grid -->
-    <section id="widget-grid" class="">
+
+
 
         <div class="row">
 
-            <!-- NEW COL START -->
             <article class="col-sm-12 col-md-12 col-lg-12">
 
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="true" data-widget-custombutton="false">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-close="false" data-widget-custombutton="false">
 
-                    <header>
-                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Nuevo Cliente</h2>
+                    <header draggable="true">
+
+                        <span class="widget-icon"> <i class="fa fa-map-marker"></i> </span>
+
+                        <h2>Click en el mapa para agregar la ubicaci&oacute;n del cajero</h2>
 
                     </header>
 
-                    <!-- widget div-->
                     <div>
 
-                        <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
 
                         </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
+
                         <div class="widget-body no-padding">
 
-                            <form id="checkout-form" method="post" class="smart-form" novalidate="novalidate">
-                                @Html.AntiForgeryToken()
-                                <fieldset>
-                                    <article>
-                                        <legend>Datos personales</legend>
-                                        <br />
-                                        <div class="row">
-                                            <section class="col col-6">
-                                                <label>@Html.DisplayNameFor(model => model.Nombre)</label>
-                                                <label class="input">
-                                                    <input maxlength="60" name="Nombre" class="form-control" />
-                                                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label>@Html.DisplayNameFor(model => model.Apellido)</label>
-                                                <label class="input">
-                                                    <input maxlength="60" name="Apellido" class="form-control" />
-                                                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
+                            <fieldset>
 
-                                        <div class="row">
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.Telefono)</label>
-                                                <label class="input">
+                                <div class="row">
 
-                                                    <input name="Telefono" data-mask="999999999" class="form-control" />
-                                                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.TelefonoMovil)</label>
-                                                <label class="input">
+                                    <div class="col-sm-12">
 
-                                                    <input name="TelefonoMovil" data-mask="9999999999" class="form-control" />
-                                                    @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
-                                                <label class="input">
-                                                    <input maxlength="30" name="Identificacion" class="form-control" type="number" />
-                                                    @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.Email)</label>
-                                                <label class="input">
+                                        <div id="map_container"></div>
 
-                                                    <input maxlength="60" name="Correo" class="form-control" />
-                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
+                                        <div id="map"></div>
 
-                                        <div class="row">
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.IdTipoCliente)</label>
-                                                <label class="input">
-                                                    @Html.DropDownList("idTipoCliente", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.IdTipoCliente, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
+                                    </div>
 
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.IdVendedor)</label>
-                                                <label class="input">
-                                                    @Html.DropDownList("idVendedor", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
+                                </div>
 
-                                        </div>
-                                    </article>
-                                </fieldset>
-                                <footer>
-                                    <button type="submit" id="insertarMuestra" class="btn btn-primary">
-                                        Guardar
-                                    </button>
-                                    <a class=" btn btn-default" id="regresar1" href="/informes/index">Cancelar</a>
-
-                                </footer>
-                            </form>
+                            </fieldset>
 
                         </div>
-                        <!-- end widget content -->
 
                     </div>
-                    <!-- end widget div -->
 
                 </div>
+                <!-- widget grid -->
+                <section id="widget-grid" class="">
 
-                <!-- end widget -->
+                    <div class="row">
 
+                        <!-- NEW COL START -->
+                        <article class="col-sm-12 col-md-12 col-lg-12">
+
+                            <!-- Widget ID (each widget will need unique ID)-->
+                            <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="true" data-widget-custombutton="false">
+
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                    <h2>Nuevo cliente</h2>
+
+                                </header>
+
+                                <!-- widget div-->
+                                <div>
+
+                                    <!-- widget edit box -->
+                                    <div class="jarviswidget-editbox">
+                                        <!-- This area used as dropdown edit box -->
+
+                                    </div>
+                                    <!-- end widget edit box -->
+                                    <!-- widget content -->
+                                    <div class="widget-body no-padding">
+
+                                        <form id="checkout-form" class="smart-form" novalidate="novalidate">
+
+                                            <fieldset>
+                                                <article>
+                                                    <legend>Datos personales</legend>
+                                                    <br />
+                                                    <div class="row">
+                                                        <section class="col col-6">
+                                                            <label>@Html.DisplayNameFor(model => model.Nombre)</label>
+                                                            <label class="input">
+                                                                <input maxlength="60" id="Nombre" name="Nombre" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-6">
+                                                            <label>@Html.DisplayNameFor(model => model.Apellido)</label>
+                                                            <label class="input">
+                                                                <input maxlength="60" id="Apellido" name="Apellido" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                    </div>
+                                                    <div class="row">
+                                                        <section class="col col-lg-12">
+                                                            <label>@Html.DisplayNameFor(model => model.Direccion)</label>
+                                                            <label class="input">
+                                                                <input maxlength="60" id="Direccion" name="Direccion" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <section class="col col-3">
+                                                            <label>@Html.DisplayNameFor(model => model.Telefono)</label>
+                                                            <label class="input">
+
+                                                                <input name="Telefono" id="Telefono" data-mask="999999999" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-3">
+                                                            <label>@Html.DisplayNameFor(model => model.TelefonoMovil)</label>
+                                                            <label class="input">
+
+                                                                <input name="TelefonoMovil" id="TelefonoMovil" data-mask="9999999999" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-3">
+                                                            <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
+                                                            <label class="input">
+                                                                <input maxlength="30" id="Identificacion" name="Identificacion" class="form-control" type="number" />
+                                                                @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                        <section class="col col-3">
+                                                            <label>@Html.DisplayNameFor(model => model.Email)</label>
+                                                            <label class="input">
+
+                                                                <input maxlength="60" id="Email" name="Email" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <section class="col col-6">
+                                                            <label>@Html.DisplayNameFor(model => model.IdTipoCliente)</label>
+                                                            <label class="input">
+                                                                @Html.DropDownList("IdTipoCliente", null, htmlAttributes: new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.IdTipoCliente, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+
+                                                        <section class="col col-6">
+                                                            <label>@Html.DisplayNameFor(model => model.IdVendedor)</label>
+                                                            <label class="input">
+                                                                @Html.DropDownList("IdVendedor", null, htmlAttributes: new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+
+                                                    </div>
+                                                </article>
+                                            </fieldset>
+
+                                        </form>
+
+                                        <footer>
+                                            <button type="submit" id="insertarCliente" class="btn btn-primary">
+                                                Guardar
+                                            </button>
+                                            <a class=" btn btn-default" id="regresar1" href="/clientes/index">Cancelar</a>
+
+                                        </footer>
+                                        
+                                    </div>
+                                    <!-- end widget content -->
+
+                                </div>
+                                <!-- end widget div -->
+
+                            </div>
+
+                            <!-- end widget -->
+
+                        </article>
+
+                        <!-- END COL -->
+
+                    </div>
+
+                    <!-- END ROW -->
+
+                </section>
+                <!-- end widget grid -->
+                <!-- Modal -->
             </article>
-
-            <!-- END COL -->
-
         </div>
+        </div>
+        <!-- END MAIN CONTENT -->
 
-        <!-- END ROW -->
+        @section pagespecific {
 
-    </section>
-    <!-- end widget grid -->
-    <!-- Modal -->
+            <script type="text/javascript">
+                var opcion = 0;
+                var MyMarker = null;
+                $(document).ready(function () {
 
-</div>
-<!-- END MAIN CONTENT -->
+                    
 
-@section pagespecific {
+                    $("#regresar").click(function () {
+                        $('#content').waitMe({
+                            effect: 'ios',
+                            text: '',
+                            bg: 'rgba(255, 255, 255, 0.1)',
+                            color: '#118df9'
+                        });
+                    });
+                    $("#regresar").click(function () {
+                        $('#content').waitMe({
+                            effect: 'ios',
+                            text: '',
+                            bg: 'rgba(255, 255, 255, 0.1)',
+                            color: '#118df9'
+                        });
+                    });
+                    $("#insertarCliente").click(function () {
+                        $('#content').waitMe({
+                            effect: 'ios',
+                            text: '',
+                            bg: 'rgba(255, 255, 255, 0.1)',
+                            color: '#118df9'
+                        });
+                    });
+                })
+            </script>
 
-    <script type="text/javascript">
+            <script>
 
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        function geoLocation(map) {
+            var infoWindow = new google.maps.InfoWindow({ map: map });
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
 
-       
-
-
-        $(document).ready(function () {
-            
-            var $checkoutForm = $('#checkout-form').validate({
-                // Rules for form validation
-                rules: {
-                    Nombres: {
-                        required: true
-                    },
-                    Apellidos: {
-                        required: true
-                    },
-                    Correo: {
-                        required: true,
-                        email: true
-                    },
-                    Edad: {
-                        required: true
-                    },
-                    FechaMuestra: {
-                        required: true
-                    },
-                    Identificacion: {
-                        required: true,
-                        digits: true
-                    },
-                    HistoriaClinica: {
-                        required: true,
-
-                    },
-                    TelefonoConvencional: {
-                        required: true
-                    },
-                    TelefonoCelular: {
-                        required: true
-                    },
-                    NombresApellidosReferencia: {
-                        required: true
-
-                    },
-                    GradoAfinidad: {
-                        required: true
-                    },
-                    Telefono: {
-                        required: true
-                    },
-                    IdEstudio: {
-                        required: true
-                    },
-
-                    IdMaterial: {
-                        required: true
-                    },
-                    IdAnticoncepcion: {
-                        required: true
-                    },
-                    IdEdades: {
-                        required: true
-                    },
-                    IdParidad: {
-                        required: true
-                    },
-                    IdFechas: {
-                        required: true
-                    },
-                    IdDiagnosticoCitologico: {
-                        required: true
-                    },
-
-                    IdValoracion: {
-                        required: true
-                    },
-                    IdResultadoPruebaHibrida: {
-                        required: true
-                    },
-                    Recomendaciones: {
-                        required: true
-                    },
-                    IdMuestraPieza: {
-                        required: true
-                    },
-                    IdTipoHistologico: {
-                        required: true
-                    },
-
-                },
-
-                // Messages for form validation
-                messages: {
-                    Nombres: {
-                        required: ""
-                    },
-                    Apellidos: {
-                        required: ""
-                    },
-                    Correo: {
-                        required: "",
-                        email: "Formato de correo INVÁLIDO"
-                    },
-                    Edad: {
-                        required: ""
-                    },
-                    FechaMuestra: {
-                        required: ""
-                    },
-                    Identificacion: {
-                        required: ""
-                    },
-                    HistoriaClinica: {
-                        required: ""
-
-                    },
-                    TelefonoConvencional: {
-                        required: ""
-                    },
-                    TelefonoCelular: {
-                        required: ""
-                    },
-                    NombresApellidosReferencia: {
-                        required: ""
-
-                    },
-                    GradoAfinidad: {
-                        required: ""
-                    },
-                    Telefono: {
-                        required: ""
-                    },
-                    IdEstudio: {
-                        required: ""
-                    },
-
-                    IdMaterial: {
-                        required: ""
-                    },
-                    TerapiaHormonal: {
-                        required: ""
-                    },
-                    IdAnticoncepcion: {
-                        required: ""
-                    },
-                    IdEdades: {
-                        required: ""
-                    },
-                    IdParidad: {
-                        required: ""
-                    },
-                    IdFechas: {
-                        required: ""
-                    },
-                    IdDiagnosticoCitologico: {
-                        required: ""
-                    },
-
-                    IdValoracion: {
-                        required: ""
-                    },
-                    IdResultadoPruebaHibrida: {
-                        required: ""
-                    },
-                    Recomendaciones: {
-                        required: ""
-                    },
-                    IdMuestraPieza: {
-                        required: ""
-                    },
-                    IdTipoHistologico: {
-                        required: ""
-                    },
-                },
-
-                // Do not change code below
-                errorPlacement: function (error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
-
-
-            // START AND FINISH DATE
-            $('#startdate').datepicker({
-                dateFormat: 'dd.mm.yy',
-                prevText: '<i class="fa fa-chevron-left"></i>',
-                nextText: '<i class="fa fa-chevron-right"></i>',
-                onSelect: function (selectedDate) {
-                    $('#finishdate').datepicker('option', 'minDate', selectedDate);
-                }
-            });
-
-            $('#finishdate').datepicker({
-                dateFormat: 'dd.mm.yy',
-                prevText: '<i class="fa fa-chevron-left"></i>',
-                nextText: '<i class="fa fa-chevron-right"></i>',
-                onSelect: function (selectedDate) {
-                    $('#startdate').datepicker('option', 'maxDate', selectedDate);
-                }
-            });
-
-
-            $("#regresar1").click(function () {
-                $('#content').waitMe({
-                    effect: 'ios',
-                    text: '',
-                    bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Posici&oacute;n actual');
+                    map.setCenter(pos);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
                 });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function initMap() {
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: { lat: -0.173689784, lng: -78.49555141 },
             });
-            $("#regresar").click(function () {
-                $('#content').waitMe({
-                    effect: 'ios',
-                    text: '',
-                    bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+
+
+            map.addListener('click', function (e) {
+                placeMarkerAndPanTo(e.latLng, map);
+            });
+
+        }
+
+        function placeMarkerAndPanTo(latLng, map) {
+
+            var iconCPN =
+                {
+                    //con el icono
+                    url: "../Content/img/logo-o.png", // url
+                    size: new google.maps.Size(48, 48),
+                    scaledSize: new google.maps.Size(48, 48), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(24, 48) // anchor
+                };
+
+
+            if (MyMarker != null) {
+                MyMarker.setMap(null);
+            }
+
+            var markerNuevo = new google.maps.Marker({
+                position: latLng,
+                icon: iconCPN,
+                map: map,
+            });
+
+            MyMarker = markerNuevo;
+
+            map.panTo(latLng);
+
+        }
+
+
+
+        var nombre;
+        var modelo;
+
+        var cordenadas;
+
+                //function validarFormulario()
+                //{
+
+                //    var $checkoutForm = $('#checkout-form').validate({
+
+
+                //        // Rules for form validation
+                //        rules: {
+                //            Nombre: {
+                //                required: true
+                //            },
+                //            Apellido: {
+                //                required: true
+                //            },
+                //            Email: {
+                //                required: true,
+                //                email: true
+                //            },
+                //            Telefono: {
+                //                required: true
+                //            },
+                //            TelefonoMovil: {
+                //                required: true
+                //            },
+                //            Identificacion: {
+                //                required: true
+
+                //            },
+                //            IdVendedor: {
+                //                required: true
+                //            },
+                //            IdTipoCliente: {
+                //                required: true
+                //            },
+
+                //        },
+
+                //        // Messages for form validation
+                //        messages: {
+                //            Nombre: {
+                //                required: ""
+                //            },
+                //            Apellido: {
+                //                required: ""
+                //            },
+                //            Email: {
+                //                required: "",
+                //                email: "Formato de correo INVÁLIDO"
+                //            },
+                //            Telefono: {
+                //                required: ""
+                //            },
+                //            TelefonoMovil: {
+                //                required: ""
+                //            },
+                //            Identificacion: {
+                //                required: ""
+                //            },
+                //            IdVendedor: {
+                //                required: ""
+                //            },
+                //            IdTipoCliente: {
+                //                required: ""
+                //            },
+                //        },
+
+                //        // Do not change code below
+                //        errorPlacement: function (error, element) {
+                //            opcion = -1;
+                //            error.insertAfter(element.parent());
+                //        }
+                //    });
+
+                //}
+
+                $(document).ready(function () {
+
+
+                    $("#insertarCliente").click(function () {
+
+                        if (MyMarker == null) {
+                            alert("Tiene que introducir la posición del cliente ");
+                            $("#content").waitMe("hide");
+                            return false;
+                        } else {
+
+
+                            var latitud = MyMarker.position.lat();
+                            var longitud = MyMarker.position.lng();
+                            var flatitud;
+                            var flongitud;
+
+                            $.ajax({
+
+                                type: 'POST',
+
+                                url: href = '@Url.Action("CreateCliente")',
+
+                                dataType: 'json',
+
+                                data: {
+                                    flatitud: latitud,
+                                    flongitud: longitud,
+                                    nombre: $("#Nombre").val(),
+                                    apellido: $("#Apellido").val(),
+                                    telefono: $("#Telefono").val(),
+                                    telefonomovil: $("#TelefonoMovil").val(),
+                                    identificacion: $("#Identificacion").val(),
+                                    email: $("#Email").val(),
+                                    tipocliente: $("#IdTipoCliente").val(),
+                                    vendedor: $("#IdVendedor").val(),
+                                    direccion: $("#Direccion").val()
+                                },
+
+                                success: function (data) {
+
+                                    if (data == true) {
+
+                                      location.href = '@Url.Action("Index")';
+
+                                    }
+                                    if (data == "Error") {
+
+                                        alert("Ha ocurrido un error al conectarse al servicio");
+                                        $("#content").waitMe("hide");
+                                        return false;
+
+                                    }
+                                    if (data == "Existe") {
+
+                                        alert("Existe un cliente con igual información");
+                                        $("#content").waitMe("hide");
+                                        return false;
+
+                                    }
+                                    if (data == false) {
+
+                                        alert("Ha ocurrido un error inesperado");
+                                        $("#content").waitMe("hide");
+                                        return false;
+
+                                    }
+
+                                }, complete: function (data) {
+
+                                },
+
+                                error: function (ex) {
+
+                                    alert('Ha ocurrido un error inesperado .' + ex);
+
+                                }
+
+                            });
+
+
+                        }
+
+
+                    });
+
+
                 });
-            });
-        })
 
-        
 
-       
-       
-    </script>
-}
+            </script>
+
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
+                    async defer></script>
+
+
+        }

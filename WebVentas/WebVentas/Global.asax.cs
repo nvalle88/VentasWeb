@@ -17,7 +17,7 @@ namespace WebVentas
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            Constantes.EmailAdmin= System.Configuration.ConfigurationManager.AppSettings["EmailAdmin"];
             WebApp.BaseAddress= System.Configuration.ConfigurationManager.AppSettings["ServiciosVentas"];
         }
     }

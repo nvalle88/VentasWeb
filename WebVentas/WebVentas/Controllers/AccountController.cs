@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,7 +10,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebVentas.Models;
+using WebVentas.ObjectModel;
 using WebVentas.Services;
+using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
@@ -60,6 +63,84 @@ namespace WebVentas.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult RecuperarContrasena()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult IngresarContrasena(string Email)
+        {
+            var vista = new RecuperarContrasenaRequest { Email = Email};
+            return View(vista);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> IngresarContrasena(RecuperarContrasenaRequest recuperarContrasenaRequest)
+        {
+
+            if (recuperarContrasenaRequest.Contrasena != recuperarContrasenaRequest.ConfirmarContrasena)
+            {
+                ModelState.AddModelError("", "La contraseña y la confirmación no coinciden...");
+            }
+                var user = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
+                await UserManager.RemovePasswordAsync(user.Id);
+               var pass= await UserManager.AddPasswordAsync(user.Id,recuperarContrasenaRequest.ConfirmarContrasena);
+            if (!pass.Succeeded)
+            {
+                ModelState.AddModelError("", "La contraseña no cumple con el formato establecido ...");
+                return View(recuperarContrasenaRequest);
+            }
+
+          return  RedirectToAction("Login");
+        }
+
+        [AllowAnonymous]
+        public ActionResult IntroducirCodigo(string Email)
+        {
+            var vista = new RecuperarContrasenaRequest { Email = Email };
+            return View(vista);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> IntroducirCodigo(RecuperarContrasenaRequest recuperarContrasenaRequest)
+        {
+
+            var response = await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Usuarios/VerificarCodigo");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("IngresarContrasena", new {recuperarContrasenaRequest.Email});
+            }
+            ModelState.AddModelError("", "El código no es correcto");
+            return View(recuperarContrasenaRequest);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> RecuperarContrasena(RecuperarContrasenaRequest recuperarContrasenaRequest)
+        {
+
+            if (string.IsNullOrEmpty(recuperarContrasenaRequest.Email))
+            {
+                ModelState.AddModelError("", "Debe introducir el correo electrónico");
+            }
+
+            var response = await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest, new Uri(WebApp.BaseAddress)
+                                                               , "api/Usuarios/GenerarCodigo");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("IntroducirCodigo",new { recuperarContrasenaRequest.Email});
+            }
+            ModelState.AddModelError("Email", "El correo electrónico no está registrado");
             return View();
         }
 
