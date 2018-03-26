@@ -14,7 +14,7 @@ namespace WebVentas.ObjectModel
 
         public int? TiempoSeguimiento { get; set; } 
         
-        public int IdSupervisor { get; set; }
+        public int? IdSupervisor { get; set; }
         
 
 
@@ -52,7 +52,8 @@ namespace WebVentas.ObjectModel
         public string Telefono { get; set; }
 
         public int? idEmpresa { get; set; }
-
+        
+        public List<ClienteRequest> ListaClientes { get; set; }
 
     }
 }
