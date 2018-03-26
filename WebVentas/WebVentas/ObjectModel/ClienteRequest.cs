@@ -55,6 +55,7 @@ namespace WebVentas.ObjectModel
 
         public string Direccion { get; set; }
 
+        public string Direccion { get; set; }
 
     }
 }

@@ -33,20 +33,10 @@
     </div>
 
     <p></p>
-    <a asp-action="Create">
-        
-        <button type="button" asp-action="Create" class="btn btn-default" style="color:#3276B1">
-            <!--
-            <span class="btn-label">
-             -->
-            <i class="glyphicon glyphicon-plus"></i>
-            <!--
-            </span>
-            -->
-        </button>
-        
+    
+    <a href="../Vendedores/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+        <i class="glyphicon glyphicon-plus"></i>
     </a>
-
 
     <p> </p>
 
@@ -129,7 +119,7 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Perfil", "Perfil", new { id = item.IdVendedor }) |
+                                                @Html.ActionLink("Perfil", "PerfilVendedor", new { idVendedor = item.IdVendedor }) |
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdVendedor }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdVendedor }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>

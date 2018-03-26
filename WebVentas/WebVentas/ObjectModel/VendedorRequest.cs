@@ -12,10 +12,10 @@ namespace WebVentas.ObjectModel
         // Campos de la tabla vendedor
         public int IdVendedor { get; set; }
 
-        public int? TiempoSeguimiento { get; set; }
-
+        public int? TiempoSeguimiento { get; set; } 
+        
         public int? IdSupervisor { get; set; }
-
+        
 
 
 
@@ -52,9 +52,8 @@ namespace WebVentas.ObjectModel
         public string Telefono { get; set; }
 
         public int? idEmpresa { get; set; }
-
+        
         public List<ClienteRequest> ListaClientes { get; set; }
-
 
     }
 }

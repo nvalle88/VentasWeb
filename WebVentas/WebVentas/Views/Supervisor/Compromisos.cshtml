@@ -1,0 +1,11 @@
+﻿@model WebVentas.ObjectModel.SupervisorRequest
+@using WebVentas.ObjectModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new SupervisorRequest { OpcionMenu = 3 }; }
+@{ Html.RenderPartial("_PartialView", modelo);}
+@{
+    ViewBag.Title = "Compromisos";
+}
+
+<h2>Compromisos</h2>
+
