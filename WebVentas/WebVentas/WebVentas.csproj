@@ -1418,6 +1418,7 @@
     <Content Include="Views\Supervisor\_PartialView.cshtml" />
     <Content Include="Views\Supervisor\Edit.cshtml" />
     <Content Include="Views\InformesGerenciales\Index.cshtml" />
+    <Content Include="Views\Supervisor\MapaCalor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

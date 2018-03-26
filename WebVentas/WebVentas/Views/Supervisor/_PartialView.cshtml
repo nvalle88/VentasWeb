@@ -7,7 +7,7 @@
     }
     else
     {
-        <a asp-action="Supervisor" asp-controller="Supervisor" class="btn btn-default">Servidores <br /> Supervisor</a>
+        <a href="../../Supervisor/Index" class="btn btn-default">Supervisor</a>
     }
     @if (Model.OpcionMenu == 1)
     {
@@ -21,12 +21,12 @@
 
     @if (Model.OpcionMenu == 2)
     {
-        <a  style="background-color:#3276b1;color:white;" class="btn btn-default">Informe <br />gerencial</a>
+        <a href="../../Supervisor/MapaCalor"  style="background-color:#3276b1;color:white;" class="btn btn-default">Informe <br />gerencial</a>
 
     }
     else
     {
-        <a class="btn btn-default">Informe <br />gerencial</a>
+        <a href="../../Supervisor/MapaCalor" class="btn btn-default">Informe <br />gerencial</a>
     }
 
     @*@if (Model.OpcionMenu == 3)

@@ -27,7 +27,10 @@ namespace WebVentas.Controllers
             }
             ViewData["Error"] = mensaje;
         }
-
+        public ActionResult MapaCalor()
+        {
+            return View();
+        }
         public async Task<ActionResult> Index(string mensaje)
         {
                InicializarMensaje("");
