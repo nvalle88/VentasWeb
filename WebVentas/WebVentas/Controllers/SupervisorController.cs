@@ -174,6 +174,72 @@ namespace WebVentas.Controllers
 
             return View();
         }
+        
+        public async Task<ActionResult>Quitarvendedor(string id, string idsupervisor)
+        {
+            try
+            {
+                var super = new SupervisorRequest
+                {
+                    IdVendedor = Convert.ToInt32(id)
+                    
+                };
+
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var response = await ApiServicio.ObtenerElementoAsync(super,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "api/Supervisor/Quitarvendedor");
+
+                    if (response.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+                        return RedirectToAction("edit",new { id=idsupervisor});
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+
+            }
+            return View();
+        }
+        public async Task<ActionResult> Asignarvendedor(string id, string idsupervisor)
+        {
+            try
+            {
+                var super = new SupervisorRequest
+                {
+                    IdVendedor = Convert.ToInt32(id),
+                    IdSupervisor = Convert.ToInt32(idsupervisor)
+
+                };
+
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var response = await ApiServicio.ObtenerElementoAsync(super,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "api/Supervisor/Asignarvendedor");
+
+                    if (response.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+                       return RedirectToAction("edit", new { id = idsupervisor });
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+
+            }
+            return View();
+        }
     }
     
 
