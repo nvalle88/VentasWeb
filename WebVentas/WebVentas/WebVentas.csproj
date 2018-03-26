@@ -1434,6 +1434,7 @@
     <Content Include="Views\Supervisor\Edit.cshtml" />
     <Content Include="Views\InformesGerenciales\Index.cshtml" />
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
+    <Content Include="Views\Supervisor\Compromisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

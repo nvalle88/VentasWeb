@@ -31,6 +31,10 @@ namespace WebVentas.Controllers
         {
             return View();
         }
+        public ActionResult Compromisos()
+        {
+            return View();
+        }
         public async Task<ActionResult> Index(string mensaje)
         {
                InicializarMensaje("");
@@ -77,6 +81,7 @@ namespace WebVentas.Controllers
             Direccion=supervisorRequest.Direccion,Telefono = supervisorRequest.Telefono, IdEmpresa = empresaActual.IdEmpresa };
             var result = await userManager.CreateAsync(user, "A123345.1a");
             db.SaveChanges();
+            userManager.AddToRoles(user.Id, "Supervisor");
                 if (result != null) {
 
                     supervisorRequest.IdEmpresa = Convert.ToInt32(idEmpresa);
@@ -149,6 +154,7 @@ namespace WebVentas.Controllers
             user.Telefono = supervisorRequest.Telefono;
             var result =  await userManager.UpdateAsync(user);
             db.SaveChanges();
+            
             if (result!=null)
             {
                 return RedirectToAction("Index");
