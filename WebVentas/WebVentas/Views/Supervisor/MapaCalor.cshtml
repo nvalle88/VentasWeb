@@ -1,7 +1,12 @@
-﻿
+﻿@model WebVentas.ObjectModel.SupervisorRequest
+@using WebVentas.ObjectModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new SupervisorRequest { OpcionMenu = 2 }; }
+@{ Html.RenderPartial("_PartialView", modelo);}
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "MapaCalor";
 }
+
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap.min.js"></script>
 
@@ -26,7 +31,6 @@
         padding-top: 30px;
         position: relative;
     }
-
 </style>
 <div id="content">
 
@@ -45,12 +49,12 @@
                                 <div class="widget-body no-padding">
                                     <fieldset>
                                         @*<div id="floating-panel">
-                                            <label>Mapa de Calor:</label>
-                                            <input onclick="toggleHeatmap()"
-                                                   type="checkbox"
-                                                   value="true"
-                                                   checked="checked" />
-                                        </div>*@
+                                                <label>Mapa de Calor:</label>
+                                                <input onclick="toggleHeatmap()"
+                                                       type="checkbox"
+                                                       value="true"
+                                                       checked="checked" />
+                                            </div>*@
                                         <div class="row">
                                             <div class="col-sm-12">
 
@@ -121,4 +125,5 @@
             async defer></script>
 
 }
+
 

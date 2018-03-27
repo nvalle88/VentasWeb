@@ -27,7 +27,14 @@ namespace WebVentas.Controllers
             }
             ViewData["Error"] = mensaje;
         }
-
+        public ActionResult MapaCalor()
+        {
+            return View();
+        }
+        public ActionResult Compromisos()
+        {
+            return View();
+        }
         public async Task<ActionResult> Index(string mensaje)
         {
                InicializarMensaje("");
@@ -74,6 +81,7 @@ namespace WebVentas.Controllers
             Direccion=supervisorRequest.Direccion,Telefono = supervisorRequest.Telefono, IdEmpresa = empresaActual.IdEmpresa };
             var result = await userManager.CreateAsync(user, "A123345.1a");
             db.SaveChanges();
+            userManager.AddToRoles(user.Id, "Supervisor");
                 if (result != null) {
 
                     supervisorRequest.IdEmpresa = Convert.ToInt32(idEmpresa);
@@ -146,6 +154,7 @@ namespace WebVentas.Controllers
             user.Telefono = supervisorRequest.Telefono;
             var result =  await userManager.UpdateAsync(user);
             db.SaveChanges();
+            
             if (result!=null)
             {
                 return RedirectToAction("Index");
@@ -169,6 +178,72 @@ namespace WebVentas.Controllers
                 return RedirectToAction("Index");
             }
 
+            return View();
+        }
+        
+        public async Task<ActionResult>Quitarvendedor(string id, string idsupervisor)
+        {
+            try
+            {
+                var super = new SupervisorRequest
+                {
+                    IdVendedor = Convert.ToInt32(id)
+                    
+                };
+
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var response = await ApiServicio.ObtenerElementoAsync(super,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "api/Supervisor/Quitarvendedor");
+
+                    if (response.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+                        return RedirectToAction("edit",new { id=idsupervisor});
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+
+            }
+            return View();
+        }
+        public async Task<ActionResult> Asignarvendedor(string id, string idsupervisor)
+        {
+            try
+            {
+                var super = new SupervisorRequest
+                {
+                    IdVendedor = Convert.ToInt32(id),
+                    IdSupervisor = Convert.ToInt32(idsupervisor)
+
+                };
+
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var response = await ApiServicio.ObtenerElementoAsync(super,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "api/Supervisor/Asignarvendedor");
+
+                    if (response.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+                       return RedirectToAction("edit", new { id = idsupervisor });
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+
+            }
             return View();
         }
     }

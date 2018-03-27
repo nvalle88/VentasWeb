@@ -12,6 +12,7 @@ namespace WebVentas.ObjectModel
         public string IdUsuario { get; set; }
 
         public int IdGerente { get; set; }
+        public int IdVendedor { get; set; }
         public bool? Estado { get; set; }
         public string Correo { get; set; }
 
@@ -26,6 +27,9 @@ namespace WebVentas.ObjectModel
         public string Telefono { get; set; }
         public int IdEmpresa { get; set; }
         public int OpcionMenu { get; set; }
-        
+        public List<VendedorRequest> ListaVendedores { get; set; }
+        public List<VendedorRequest> ListaVendedoresAsignados { get; set; }
+        public List<VendedorRequest> ListaVendedoresSinAsignar { get; set; }
+
     }
 }

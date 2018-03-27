@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,8 +19,12 @@ namespace WebVentas
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Conecte su servicio de correo electrónico aquí para enviar correo electrónico.
-            return Task.FromResult(0);
+            
+            SmtpClient client = new SmtpClient();
+            return client.SendMailAsync("email from web.config here",
+                                        message.Destination,
+                                        message.Subject,
+                                        message.Body);
         }
     }
 
