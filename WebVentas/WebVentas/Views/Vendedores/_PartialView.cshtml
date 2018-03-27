@@ -3,12 +3,18 @@
 
 <fieldset>
     <div class="row">
+        <input name="IdUsuario" type="hidden" value="@Model.IdUsuario" />
+        <input name="IdVendedor" type="hidden" value="@Model.IdVendedor" />
+        <input name="IdSupervisor" type="hidden" value="@Model.IdSupervisor" />
+        <input name="TiempoSeguimiento" type="hidden" value="@Model.TiempoSeguimiento" />
+
+
+
         <section class="col col-4">
             <label>@Html.DisplayNameFor(model => model.Nombres)</label>
 
             <label class="input">
-                <input name="Nombres" class="form-control" type="text"/>
-                @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+                <input name="Nombres" class="form-control" type="text" pattern="[a-z A-Z]+" placeholder="solo letras" value="@Model.Nombres" required />
             </label>
         </section>
 
@@ -16,8 +22,7 @@
             <label>@Html.DisplayNameFor(model => model.Apellidos)</label>
 
             <label class="input">
-                <input name="Apellidos" class="form-control" type="text"/>
-                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                <input name="Apellidos" class="form-control" type="text" pattern="[a-z A-Z]+" placeholder="solo letras" value="@Model.Apellidos" required />
             </label>
         </section>
 
@@ -25,8 +30,7 @@
             <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
 
             <label class="input">
-                <input name="Identificacion" class="form-control" type="text"/>
-                @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                <input name="Identificacion" class="form-control" type="text" pattern="[^ ]+[a-z,A-Z,0-9]+" placeholder="solo letras y números sin espacios" value="@Model.Identificacion" required />
             </label>
         </section>
 
@@ -37,8 +41,7 @@
             <label>@Html.DisplayNameFor(model => model.Direccion)</label>
 
             <label class="input">
-                <input name="Direccion" class="form-control" type="text"/>
-                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                <input name="Direccion" class="form-control" type="text" pattern="[0-9,a-z ]+" placeholder="solo letras y números" value="@Model.Direccion" required/>
             </label>
         </section>
 
@@ -46,8 +49,7 @@
             <label>@Html.DisplayNameFor(model => model.Telefono)</label>
 
             <label class="input">
-                <input name="Telefono" class="form-control" type="text"/>
-                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                <input name="Telefono" class="form-control" type="text" pattern="[0-9 ]+" placeholder="solo números" value="@Model.Telefono" required/>
             </label>
         </section>
 
@@ -55,8 +57,7 @@
             <label>@Html.DisplayNameFor(model => model.Correo)</label>
 
             <label class="input">
-                <input name="Correo" class="form-control" type="email"/>
-                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                <input name="Correo" class="form-control" type="email" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" placeholder="alguien123@("@").dirección.com" value="@Model.Correo" required/>
             </label>
         </section>
 

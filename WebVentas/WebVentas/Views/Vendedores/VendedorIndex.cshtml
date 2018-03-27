@@ -34,7 +34,7 @@
 
     <p></p>
     
-    <a href="../Vendedores/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+    <a href="../Vendedores/CrearVendedor" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
         <i class="glyphicon glyphicon-plus"></i>
     </a>
 
@@ -119,9 +119,10 @@
                                             </td>
 
                                             <td>
+                                                
                                                 @Html.ActionLink("Perfil", "PerfilVendedor", new { idVendedor = item.IdVendedor }) |
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdVendedor }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdVendedor }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                @Html.ActionLink("Editar", "EditarVendedor", new { id = item.IdVendedor }) |
+                                                @Html.ActionLink("Eliminar", "DeshabilitarVendedor", new { idUsuario = item.IdUsuario }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
                                     }
