@@ -294,6 +294,7 @@
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
     <Compile Include="ObjectModel\TipoClienteRequest.cs" />
+    <Compile Include="ObjectModel\UbicacionPersonaRequest.cs" />
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
     <Compile Include="ObjectModel\ClienteRequest.cs" />
@@ -764,11 +765,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Imagenes\cliente.png" />
     <Content Include="Imagenes\marcador_Mapa.png" />
+    <Content Include="Imagenes\pushpin cliente-01.png" />
+    <Content Include="Imagenes\pushpin vendedor-01.png" />
     <Content Include="Imagenes\star_outline.png" />
     <Content Include="Imagenes\star_selected.png" />
-    <Content Include="Imagenes\vendedor.gif" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -850,6 +851,7 @@
     <Content Include="Content\sound\voice_alert.ogg" />
     <Content Include="Content\sound\voice_off.ogg" />
     <Content Include="Content\sound\voice_on.ogg" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\datatables\init.js" />

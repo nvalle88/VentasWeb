@@ -54,8 +54,7 @@ namespace WebVentas.ObjectModel
         public string ApellidosVendedor { get; set; }
 
         public string Direccion { get; set; }
-
-        public string Direccion { get; set; }
+        
 
     }
 }

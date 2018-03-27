@@ -54,6 +54,8 @@ namespace  WebVentas.Models
         [StringLength(250)]
         public string Direccion { get; set; }
 
+        public int Estado { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Agenda> Agenda { get; set; }
 

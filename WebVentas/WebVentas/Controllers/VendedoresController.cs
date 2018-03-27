@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
+using SmartAdminMvc;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -38,7 +39,11 @@ namespace WebVentas.Controllers
         public async Task<ActionResult> VendedorIndex(string mensaje)
         {
             List<VendedorRequest> lista = new List<VendedorRequest>();
-            VendedorRequest vr = new VendedorRequest();
+            VendedorRequest vendedorRequest = new VendedorRequest();
+            SupervisorRequest supervisorRequest = new SupervisorRequest();
+
+            int idEmpresaInt = 0;
+
             Response response = new Response();
 
             InicializarMensaje(mensaje);
@@ -49,8 +54,9 @@ namespace WebVentas.Controllers
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
 
+                idEmpresaInt = Convert.ToInt32(idEmpresa);
 
-                vr.idEmpresa = Convert.ToInt32( idEmpresa );
+                vendedorRequest.idEmpresa = idEmpresaInt;
             }
             catch (Exception ex) {
 
@@ -61,16 +67,43 @@ namespace WebVentas.Controllers
 
             try
             {
-                
 
-                lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vr,
+
+                ApplicationDbContext db = new ApplicationDbContext();
+
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+
+                var idUsuarioActual = User.Identity.GetUserId();
+
+                supervisorRequest.IdUsuario = idUsuarioActual;
+                supervisorRequest.IdEmpresa = idEmpresaInt;
+
+                if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+                {
+                    response = await ApiServicio.InsertarAsync(supervisorRequest,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                    supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                    vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
+
+                    lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/ListarVendedoresPorSupervisor");
+
+                }
+                else //(userManager.IsInRole(idUsuarioActual, "GerenteComercial"))
+                {
+                    lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/Vendedores/ListarVendedores");
+                }
 
-                
+
                 return View(lista);
             }
-            catch
+            catch(Exception ex)
             {
                 InicializarMensaje(Mensaje.Excepcion);
                 return View(lista);
@@ -80,15 +113,20 @@ namespace WebVentas.Controllers
 
         public async Task<ActionResult> PerfilVendedor(string mensaje,int idVendedor)
         {
+            SupervisorRequest supervisorRequest = new SupervisorRequest();
             VendedorRequest vendedor = new VendedorRequest();
             vendedor.IdVendedor = idVendedor;
+
+            int idEmpresaInt = 0;
 
             try
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
 
-                vendedor.idEmpresa = Convert.ToInt32(idEmpresa);
+                idEmpresaInt = Convert.ToInt32(idEmpresa);
+
+                vendedor.idEmpresa = idEmpresaInt;
             }
             catch (Exception ex)
             {
@@ -103,10 +141,11 @@ namespace WebVentas.Controllers
             try
             {
 
+                
                 vendedor = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(vendedor,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/Vendedores/ListarClientesPorVendedor");
-
+                    new Uri(WebApp.BaseAddress),
+                    "api/Vendedores/ListarClientesPorVendedor");
+                
 
                 InicializarMensaje("");
                 return View(vendedor);
@@ -199,7 +238,7 @@ namespace WebVentas.Controllers
                     guardar = true;
 
                 }
-                guardar = true; ///RRRRRRRRRRRRRRRRRRRRRR borrar este guardar, solo esta porque aun no hay mi rol
+                
 
                 if (guardar == false)
                 {
@@ -404,27 +443,28 @@ namespace WebVentas.Controllers
         {
 
             ApplicationDbContext db = new ApplicationDbContext();
-
+            
             using (var transaction = db.Database.BeginTransaction())
             {
 
                 try
                 {
-
-
+                    
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     var InstanciaUsuario = await userManager.FindByIdAsync(idUsuario);
-
-                    InstanciaUsuario.Estado = 0; // revisar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    
+                    InstanciaUsuario.Estado = 0;
 
 
                     db.Entry(InstanciaUsuario).State = EntityState.Modified;
                     await db.SaveChangesAsync();
 
+                    transaction.Commit();
                     return RedirectToAction("VendedorIndex", new { mensaje = Mensaje.BorradoSatisfactorio });
                 }
                 catch (Exception ex)
                 {
+                    transaction.Rollback();
                     return RedirectToAction("VendedorIndex", new { mensaje = Mensaje.Error });
                 }
             }

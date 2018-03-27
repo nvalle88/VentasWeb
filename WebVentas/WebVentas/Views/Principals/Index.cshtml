@@ -150,10 +150,10 @@
 
 
             var marcadoresVendedor = [];
-            var imagenIconoVendedor = "../Imagenes/vendedor.gif";
+            var imagenIconoVendedor = "../Imagenes/pushpin vendedor-01.png";
             
             var marcadoresCliente = [];
-            var imagenIconoCliente = "../Imagenes/cliente.png";
+            var imagenIconoCliente = "../Imagenes/pushpin cliente-01.png";
             
 
 
@@ -180,9 +180,49 @@
 
             // ****************************************************************************** Añadir un grupo - vendedores -
 
-            AddToVendedorList("j", -0.16054644784609212, -78.21604034618044);
-            AddToVendedorList("j2", -0.20054644784609212, -78.21604034618044);
-            AddToVendedorList("j2", -0.30054644784609212, -78.21604034618044);
+            //AddToVendedorList("j", -0.16054644784609212, -78.21604034618044);
+            //AddToVendedorList("j2", -0.20054644784609212, -78.21604034618044);
+            //AddToVendedorList("j2", -0.30054644784609212, -78.21604034618044);
+
+            $.ajax({
+                type: 'POST',
+                url: '../Principals/ListaVendedores',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+                    
+                    for (var i = 0; i < arreglo.length; i++) {
+
+                        if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
+                            AddToVendedorList(arreglo[i].Nombres + " " + arreglo[i].Apellidos, arreglo[i].Latitud, arreglo[i].Longitud);
+
+                            DibujarVendedores(map);
+                        }
+
+                        
+                    }
+                    /*
+                    heatmap = new google.maps.visualization.HeatmapLayer({
+                        data: heatmapData,
+                        radius: 20,
+                        maxIntensity: 4,
+                        dissipating: true
+                    });
+                    heatmap.setMap(map);
+                    */
+
+                    
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
+
 
             var iconoVendedor =
                 {
@@ -238,9 +278,9 @@
             // ****************************************************************************** Añadir un grupo - Clientes -
 
 
-            AddToClientList("j", -0.16054644784609212, -78.31604034618044);
-            AddToClientList("j2", -0.20054644784609212, -78.31604034618044);
-            AddToClientList("j2", -0.30054644784609212, -78.31604034618044);
+            //AddToClientList("j", -0.16054644784609212, -78.31604034618044);
+            //AddToClientList("j2", -0.20054644784609212, -78.31604034618044);
+            //AddToClientList("j2", -0.30054644784609212, -78.31604034618044);
 
             var iconoCliente =
                 {
