@@ -132,7 +132,7 @@ namespace WebVentas.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> CreateCliente(string flatitud,string flongitud,string nombre,string direccion, string apellido,string telefono,string telefonomovil, string identificacion,string email,string tipocliente, string vendedor)
+        public async Task<JsonResult> CreateCliente(string razonSocial, string flatitud,string flongitud,string nombre,string direccion, string apellido,string telefono,string telefonomovil, string identificacion,string email,string tipocliente, string vendedor)
         {
             var userWithClaims = (ClaimsPrincipal)User;
             var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
@@ -171,6 +171,7 @@ namespace WebVentas.Controllers
                 Nombre=nombre,
                 Telefono=telefono,
                 TelefonoMovil=telefonomovil,
+                RazonSocial=razonSocial,
             };
 
             var respuestaInsertar = await ApiServicio.InsertarAsync<Response>(clienteInsertar, new Uri(WebApp.BaseAddress)
