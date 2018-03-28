@@ -384,7 +384,7 @@
             // Función para Crear rutas
             function DibujarRutas(idVendedor) {
 
-
+                var numeradorVisita = 1;
 
                 $.ajax({
                     type: 'POST',
@@ -405,7 +405,8 @@
                         marcadoresVendedor.forEach(function (marker) {
                             marker.setMap(null);
                         });
-                        
+                        vendedoresLista = [];
+
 
                         for (var i = 0; i < arreglo.length; i++) {
 
@@ -413,13 +414,20 @@
                                 
                                 var coordenada = { lat: arreglo[i].Latitud, lng: arreglo[i].Longitud };
 
-                                AddToVendedorList(
-                                    i,
-                                    arreglo[i].Latitud,
-                                    arreglo[i].Longitud,
-                                    0,
-                                    i+""
-                                );
+                                if (arreglo[i].IdLogRutaVendedor == 0) {
+                                    
+
+                                    AddToVendedorList(
+                                        i,
+                                        arreglo[i].Latitud,
+                                        arreglo[i].Longitud,
+                                        0,
+                                        numeradorVisita + ""
+                                    );
+
+                                    numeradorVisita++;
+                                }
+                                
 
                                 DibujarVendedores(map);
                                 

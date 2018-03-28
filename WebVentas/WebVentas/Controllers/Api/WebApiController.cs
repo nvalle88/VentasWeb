@@ -10,7 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-
+using WebVentas.Utils;
 
 namespace WebVentas.Controllers.Api
 {
@@ -58,7 +58,7 @@ namespace WebVentas.Controllers.Api
             return new string[] { "value1", "value2" };
         }
 
-        public HttpResponseMessage Post([FromBody]JToken jsonbody)
+        public Response Post([FromBody]JToken jsonbody)
         {
             AccountController accountController = new AccountController();
 
@@ -71,13 +71,23 @@ namespace WebVentas.Controllers.Api
 
             if (result.Equals(SignInStatus.Success))
             {
-                User.Identity.GetUserId();
-                return new HttpResponseMessage(HttpStatusCode.Accepted);
+                return new Response
+                {
+                    Message = "LoginOk",
+                    IsSuccess = true,
+                    Resultado = User.Identity.GetUserId()
+                };
 
             }
             else
             {
-                return new HttpResponseMessage(HttpStatusCode.Forbidden);
+                return new Response
+                {
+                    Message = "Incorrecto",
+                    IsSuccess = false,
+                    Resultado = false,
+                };
+               
             }
         }
     }

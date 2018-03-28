@@ -12,6 +12,9 @@ namespace WebVentas.ObjectModel
 
         public int? IdEmpresa { get; set; }
 
+        [DisplayName("Razón social")]
+        public string RazonSocial { get; set; }
+
         [DisplayName("Foto")]
         public string Foto { get; set; }
 
