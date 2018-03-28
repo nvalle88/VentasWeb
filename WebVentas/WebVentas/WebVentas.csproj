@@ -302,6 +302,7 @@
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
     <Compile Include="ObjectModel\ClienteRequest.cs" />
     <Compile Include="ObjectModel\VendedorRequest.cs" />
+    <Compile Include="ObjectModel\VisitaRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApiServicio.cs" />
     <Compile Include="Startup.cs" />
@@ -1326,12 +1327,13 @@
     <Content Include="Views\Vendedores\EditarVendedor.cshtml" />
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
     <Content Include="Views\Supervisor\Compromisos.cshtml" />
-    <Content Include="Views\Calendarios\_PartialView.cshtml" />
+    <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
     <Content Include="Views\Calendarios\CrearVendedor.cshtml" />
     <Content Include="Views\Calendarios\EditarVendedor.cshtml" />
     <Content Include="Views\Calendarios\PerfilVendedor.cshtml" />
     <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
     <Content Include="Views\Clientes\PerfilCliente.cshtml" />
+    <Content Include="Views\Calendarios\_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

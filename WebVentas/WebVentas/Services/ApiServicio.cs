@@ -114,7 +114,7 @@ namespace WebVentas.Services
                     return respuesta;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
