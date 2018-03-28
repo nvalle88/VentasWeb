@@ -767,6 +767,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\marcador_Mapa.png" />
+    <Content Include="Imagenes\pushpin cliente-01.png" />
+    <Content Include="Imagenes\pushpin vendedor-01.png" />
     <Content Include="Imagenes\star_outline.png" />
     <Content Include="Imagenes\star_selected.png" />
     <Content Include="Scripts\app.config.js" />
@@ -850,6 +853,7 @@
     <Content Include="Content\sound\voice_alert.ogg" />
     <Content Include="Content\sound\voice_off.ogg" />
     <Content Include="Content\sound\voice_on.ogg" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\datatables\init.js" />
@@ -1439,17 +1443,18 @@
     <Content Include="Views\Supervisor\Create.cshtml" />
     <Content Include="Views\Vendedores\PerfilVendedor.cshtml" />
     <Content Include="Views\Vendedores\VendedorIndex.cshtml" />
+    <Content Include="Views\Account\RecuperarContrasena.cshtml" />
+    <Content Include="Views\Account\IntroducirCodigo.cshtml" />
+    <Content Include="Views\Account\IngresarContrasena.cshtml" />
     <Content Include="Views\Supervisor\_PartialView.cshtml" />
     <Content Include="Views\Supervisor\Edit.cshtml" />
     <Content Include="Views\InformesGerenciales\Index.cshtml" />
+    <Content Include="Views\Vendedores\_PartialView.cshtml" />
+    <Content Include="Views\Vendedores\CrearVendedor.cshtml" />
+    <Content Include="Views\Principals\Index.cshtml" />
+    <Content Include="Views\Vendedores\EditarVendedor.cshtml" />
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
     <Content Include="Views\Supervisor\Compromisos.cshtml" />
-    <Content Include="Views\Principals\Index.cshtml" />
-    <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
-    <Content Include="Views\Calendarios\CrearVendedor.cshtml" />
-    <Content Include="Views\Calendarios\EditarVendedor.cshtml" />
-    <Content Include="Views\Calendarios\PerfilVendedor.cshtml" />
-    <Content Include="Views\Calendarios\_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
