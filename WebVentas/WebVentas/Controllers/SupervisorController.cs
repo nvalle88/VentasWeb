@@ -31,9 +31,80 @@ namespace WebVentas.Controllers
         {
             return View();
         }
-        public ActionResult Compromisos()
+        public async Task<ActionResult> Compromisos()
         {
-            return View();
+            
+            var userWithClaims = (ClaimsPrincipal)User;
+            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
+            var user = new SupervisorRequest
+            { 
+                IdUsuario = User.Identity.GetUserId(),
+                IdEmpresa = empresaActual.IdEmpresa
+
+            };
+            try
+            {
+                var lista = await ApiServicio.Listar<SupervisorRequest>(user, new Uri(WebApp.BaseAddress)
+                                                              , "api/Supervisor/ListarVendedores");
+                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "NombresApellido");
+                var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+                return View(lista);
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+
+            }
+           var vista = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+            return View(vista);
+
+            //ViewBag.IdVendedor = new SelectList(db.Valoracion, "IdValoracion", "Descripcion");
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Compromisos(SupervisorRequest supervisorRequest)
+        {
+           // InicializarMensaje("");
+
+            var lista = await ApiServicio.Listar<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vista/ListarVisitas");
+            return View(lista);
+
+        }
+
+
+        public async Task<JsonResult> ClienteVendor(string idVendedor)
+        {
+
+            var userWithClaims = (ClaimsPrincipal)User;
+            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
+            var user = new SupervisorRequest
+            {
+                IdVendedor = Convert.ToUInt16(idVendedor),
+                IdEmpresa = empresaActual.IdEmpresa
+
+            };
+            try
+            {
+                var respusta = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(user, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarClientesPorVendedor");
+                //var a = respusta.ListaClientes.ToString();
+                var listaSalida = JsonConvert.DeserializeObject<List<SupervisorRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
+                return Json(listaSalida);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+
+            }
+            
+
         }
         public async Task<ActionResult> Index(string mensaje)
         {
