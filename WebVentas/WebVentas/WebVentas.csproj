@@ -293,6 +293,7 @@
     <Compile Include="Models\Visita.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
+    <Compile Include="ObjectModel\RutaRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
     <Compile Include="ObjectModel\TipoClienteRequest.cs" />
     <Compile Include="ObjectModel\UbicacionPersonaRequest.cs" />
