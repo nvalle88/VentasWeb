@@ -14,6 +14,7 @@ namespace WebVentas
                 "~/scripts/app.config.js",
                 "~/scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js",
                 "~/scripts/bootstrap/bootstrap.min.js",
+                "~/scripts/libs/waitMe/waitMe.min.js",
                 "~/scripts/notification/SmartNotification.min.js",
                 "~/scripts/smartwidgets/jarvis.widget.min.js",
                 "~/scripts/plugin/jquery-validate/jquery.validate.min.js",

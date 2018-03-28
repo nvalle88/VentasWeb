@@ -1,0 +1,481 @@
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+
+    .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    #txtBuscador {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+    }
+
+        #txtBuscador:focus {
+            border-color: #4d90fe;
+        }
+</style>
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+
+    <br />
+    &nbsp;
+
+    <div class="col col-10">
+
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+                <div class="alert alert-block alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+    <p></p>
+
+    <a href="../Vendedores/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+
+    <p> </p>
+
+
+    <p></p>
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Principal</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <div id="map_container"></div>
+                            <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
+                            <div id="map"></div>
+
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section pagespecific{
+
+    <script src="~/Scripts/datatables/init.js"></script>
+    
+    <script>
+
+        
+        function initMap() {
+            
+            // Variables de dibujo
+            var map;
+            var posicionActual;
+            var iconoLugar = "../Imagenes/marcador_Mapa.png";
+            var tiempoAnimacion = 1200;
+            var markers = [];
+            
+
+
+            var marcadoresVendedor = [];
+            var imagenIconoVendedor = "../Imagenes/pushpin vendedor-01.png";
+            
+            var marcadoresCliente = [];
+            var imagenIconoCliente = "../Imagenes/pushpin cliente-01.png";
+            
+
+
+            // Variables de datos
+            var vendedoresLista = new Array();
+            var clientesLista = new Array(); 
+
+
+            posicionActual = { lat: -0.199273058641198, lng: -78.49731476024294 };
+
+
+
+            // funciones de prueba
+
+            function Ir(latLng, mapa, icono) {
+                var marker = new google.maps.Marker({
+
+                    position: latLng,
+                    map: mapa
+                });
+                mapa.panTo(latLng);
+            }
+
+
+            // ****************************************************************************** Añadir un grupo - vendedores -
+
+            //AddToVendedorList("j", -0.16054644784609212, -78.21604034618044);
+            //AddToVendedorList("j2", -0.20054644784609212, -78.21604034618044);
+            //AddToVendedorList("j2", -0.30054644784609212, -78.21604034618044);
+
+            $.ajax({
+                type: 'POST',
+                url: '../Principals/ListaVendedores',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+                    
+                    for (var i = 0; i < arreglo.length; i++) {
+
+                        if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
+                            AddToVendedorList(arreglo[i].Nombres + " " + arreglo[i].Apellidos, arreglo[i].Latitud, arreglo[i].Longitud);
+
+                            DibujarVendedores(map);
+                        }
+
+                        
+                    }
+
+                    
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
+
+
+            var iconoVendedor =
+                {
+                    url: imagenIconoVendedor,
+                    
+                    size: new google.maps.Size(48, 48),
+                    scaledSize: new google.maps.Size(48, 48), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(24, 48) // anchor
+                    
+                    
+                };
+
+
+            function AddToVendedorList(nombre, latitud, longitud) {
+
+                var vendedor = { nombre: nombre, latitud: latitud, longitud: longitud };
+
+                vendedoresLista.push(vendedor);
+            }
+            
+
+            function DibujarVendedores(mapa) {
+
+                for (var i = 0; i < vendedoresLista.length; i++) {
+
+                    var posicion = { lat: vendedoresLista[i]["latitud"], lng: vendedoresLista[i]["longitud"] }; 
+
+                    AddMarketVendedorTimer( mapa, posicion, i * tiempoAnimacion, vendedoresLista[i]["nombre"]);
+                    
+                    
+                }
+            }
+
+            function AddMarketVendedorTimer(mapa, posicion, timer, titulo) {
+
+                setTimeout(function () {
+                    marcadoresVendedor.push(new google.maps.Marker({
+                        map: mapa,
+                        icon: iconoVendedor,
+                        title: titulo,
+                        position: posicion,
+                        animation: google.maps.Animation.DROP
+                    }));
+                }, timer);
+                
+
+            }
+            
+            /**************************************************************************/
+
+
+            // ****************************************************************************** Añadir un grupo - Clientes -
+
+
+            //AddToClientList("j", -0.16054644784609212, -78.31604034618044);
+            //AddToClientList("j2", -0.20054644784609212, -78.31604034618044);
+            //AddToClientList("j2", -0.30054644784609212, -78.31604034618044);
+
+            $.ajax({
+                type: 'POST',
+                url: '../Principals/ListaClientes',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+
+                    for (var i = 0; i < arreglo.length; i++) {
+
+                        if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
+                            AddToClientList(arreglo[i].Nombre + " " + arreglo[i].Apellido, arreglo[i].Latitud, arreglo[i].Longitud);
+
+
+                            DibujarClientes(map);
+                        }
+
+
+                    }
+
+
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
+
+            var iconoCliente =
+                {
+                    url: imagenIconoCliente,
+
+                    size: new google.maps.Size(48, 48),
+                    scaledSize: new google.maps.Size(48, 48), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(24, 48) // anchor
+
+
+                };
+
+
+            function AddToClientList(nombre, latitud, longitud) {
+
+                var cliente = { nombre: nombre, latitud: latitud, longitud: longitud };
+
+                clientesLista.push(cliente);
+            }
+
+
+            function DibujarClientes(mapa) {
+
+                for (var i = 0; i < clientesLista.length; i++) {
+
+                    var posicion = { lat: clientesLista[i]["latitud"], lng: clientesLista[i]["longitud"] };
+
+                    AddMarketClienteTimer(mapa, posicion, i * tiempoAnimacion, clientesLista[i]["nombre"]);
+
+
+                }
+            }
+
+            function AddMarketClienteTimer(mapa, posicion, timer, titulo) {
+
+                setTimeout(function () {
+                    marcadoresCliente.push(new google.maps.Marker({
+                        map: mapa,
+                        icon: iconoCliente,
+                        title: titulo,
+                        position: posicion,
+                        animation: google.maps.Animation.DROP
+                    }));
+                }, timer);
+
+
+            }
+
+            /**************************************************************************/
+
+
+
+
+            // Función para dibujar el mapa con todos los componentes
+
+            function DibujarMapa(idMapa) {
+
+                var elementoMapa = document.getElementById(idMapa);
+
+                map = new google.maps.Map(elementoMapa, {
+                    zoom: 10,
+                    center: posicionActual,
+                    mapTypeId: 'roadmap'
+                });
+                
+                AddEventoClick(map);
+
+
+                // Elementos del mapa
+                AddBuscador("txtBuscador", map);
+                DibujarVendedores(map);
+                DibujarClientes(map);
+            }
+
+    
+
+            function AddEventoClick(mapa) {
+                
+                mapa.addListener('click', function (e) {
+
+                    //alert("latitud: " + e.latLng.lat() + " longitud: " + e.latLng.lng());
+                    
+                    //Ir(e.latLng,map);
+                });
+
+            }
+            
+
+            
+            
+
+
+            // Funcion para hacer funcionar el buscador
+
+            function AddBuscador(idBuscador, mapa) {
+
+                var txtBuscador = document.getElementById(idBuscador);
+                var buscar = new google.maps.places.SearchBox(txtBuscador);
+
+                mapa.controls[google.maps.ControlPosition.TOP_LEFT].push(txtBuscador);
+
+                mapa.addListener('bounds_changed', function () {
+                    buscar.setBounds(map.getBounds());
+                });
+
+
+                buscar.addListener('places_changed', function () {
+
+                    var places = buscar.getPlaces();
+
+                    if (places.length == 0) {
+                        return;
+                    }
+
+                    // Clear out the old markers.
+                    markers.forEach(function (marker) {
+                        marker.setMap(null);
+                    });
+                    markers = [];
+
+                    // For each place, get the icon, name and location.
+                    var bounds = new google.maps.LatLngBounds();
+                    places.forEach(function (place) {
+                        if (!place.geometry) {
+                            console.log("Returned place contains no geometry");
+                            return;
+                        }
+                        var icon = {
+
+                            url: iconoLugar,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(60, 60),
+                            scaledSize: new google.maps.Size(60, 60)
+                        };
+
+                        // Create a marker for each place.
+                        markers.push(new google.maps.Marker({
+                            map: map,
+                            icon: icon,
+                            title: place.name,
+                            position: place.geometry.location
+                        }));
+
+                        if (place.geometry.viewport) {
+                            // Only geocodes have viewport.
+                            bounds.union(place.geometry.viewport);
+                        } else {
+                            bounds.extend(place.geometry.location);
+                        }
+
+                    });
+
+                    mapa.fitBounds(bounds);
+                });
+            }
+
+            
+            DibujarMapa("map");
+
+        }
+
+        
+
+        
+
+
+    </script>
+
+   
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
+    </script>
+}
