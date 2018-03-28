@@ -110,29 +110,62 @@
 
                                             <fieldset>
                                                 <article>
-                                                    <legend>Datos personales</legend>
+                                                    <div class="row" >
+                                                        <section class="col col-lg-6">
+                                                            <label>@Html.DisplayNameFor(model => model.RazonSocial)</label>
+                                                            <label class="input">
+                                                                <input maxlength="60" id="RazonSocial" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
+                                                                @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                                                            </label>
+                                                        </section>
+                                                    </div>
+                                                    <legend>Datos del cliente</legend>
                                                     <br />
                                                     <div class="row">
                                                         <section class="col col-6">
+                                                            <label>Seleccionar logo...</label>
+                                                            <div class="input input-file">
+                                                                <input asp-for="Url" id="file" type="file" name="files" value="Seleccionar logo" onchange="loadFile(event)">
+                                                                <script>
+                                                                    var imgByte;
+                                                                    var loadFile = function (event) {
+                                                                        var output = document.getElementById('output');
+                                                                        output.data = URL.createObjectURL(event.target.files[0]);
+                                                                        imgByte = event.target.files[0];
+                                                                        document.getElementById("fotocliente").style.visibility = "visible";
+                                                                    };
+                                                                    
+                                                                </script>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-6">
                                                             <label>@Html.DisplayNameFor(model => model.Nombre)</label>
                                                             <label class="input">
-                                                                <input maxlength="60" id="Nombre" name="Nombre" class="form-control" />
+                                                                <input maxlength="60" id="Nombre" pattern="[0-9,a-z ]+"  name="Nombre" class="form-control" />
                                                                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                                             </label>
+                                                        </section>
+                                                       
+                                                    </div>
+                                                   
+                                                    <br />
+                                                    <div class="row">
+                                                        <section id="fotocliente" class="col col-6">
+                                                            <section class="col col-lg-12">
+                                                                    <object id="output" type="" width="100%" height="100%"></object>
+                                                            </section>
                                                         </section>
                                                         <section class="col col-6">
                                                             <label>@Html.DisplayNameFor(model => model.Apellido)</label>
                                                             <label class="input">
-                                                                <input maxlength="60" id="Apellido" name="Apellido" class="form-control" />
+                                                                <input maxlength="60" id="Apellido" pattern="[0-9,a-z A-Z]+"  name="Apellido" class="form-control" />
                                                                 @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                                                             </label>
                                                         </section>
-                                                    </div>
-                                                    <div class="row">
-                                                        <section class="col col-lg-12">
+                                                        <section class="col col-lg-6">
                                                             <label>@Html.DisplayNameFor(model => model.Direccion)</label>
                                                             <label class="input">
-                                                                <input maxlength="60" id="Direccion" name="Direccion" class="form-control" />
+                                                                <input maxlength="60" id="Direccion" pattern="[0-9,a-z A-Z ]+"  name="Direccion" class="form-control" />
                                                                 @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                                                             </label>
                                                         </section>
@@ -143,7 +176,7 @@
                                                             <label>@Html.DisplayNameFor(model => model.Telefono)</label>
                                                             <label class="input">
 
-                                                                <input name="Telefono" id="Telefono" data-mask="999999999" class="form-control" />
+                                                                <input name="Telefono" id="Telefono" pattern="[0-9]+"  data-mask="999999999" class="form-control" />
                                                                 @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                                                             </label>
                                                         </section>
@@ -338,107 +371,24 @@
 
         var cordenadas;
 
-                //function validarFormulario()
-                //{
-
-                //    var $checkoutForm = $('#checkout-form').validate({
-
-
-                //        // Rules for form validation
-                //        rules: {
-                //            Nombre: {
-                //                required: true
-                //            },
-                //            Apellido: {
-                //                required: true
-                //            },
-                //            Email: {
-                //                required: true,
-                //                email: true
-                //            },
-                //            Telefono: {
-                //                required: true
-                //            },
-                //            TelefonoMovil: {
-                //                required: true
-                //            },
-                //            Identificacion: {
-                //                required: true
-
-                //            },
-                //            IdVendedor: {
-                //                required: true
-                //            },
-                //            IdTipoCliente: {
-                //                required: true
-                //            },
-
-                //        },
-
-                //        // Messages for form validation
-                //        messages: {
-                //            Nombre: {
-                //                required: ""
-                //            },
-                //            Apellido: {
-                //                required: ""
-                //            },
-                //            Email: {
-                //                required: "",
-                //                email: "Formato de correo INVÁLIDO"
-                //            },
-                //            Telefono: {
-                //                required: ""
-                //            },
-                //            TelefonoMovil: {
-                //                required: ""
-                //            },
-                //            Identificacion: {
-                //                required: ""
-                //            },
-                //            IdVendedor: {
-                //                required: ""
-                //            },
-                //            IdTipoCliente: {
-                //                required: ""
-                //            },
-                //        },
-
-                //        // Do not change code below
-                //        errorPlacement: function (error, element) {
-                //            opcion = -1;
-                //            error.insertAfter(element.parent());
-                //        }
-                //    });
-
-                //}
-
                 $(document).ready(function () {
-
-
                     $("#insertarCliente").click(function () {
-
                         if (MyMarker == null) {
                             alert("Tiene que introducir la posición del cliente ");
                             $("#content").waitMe("hide");
                             return false;
                         } else {
 
-
                             var latitud = MyMarker.position.lat();
                             var longitud = MyMarker.position.lng();
                             var flatitud;
                             var flongitud;
-
                             $.ajax({
-
                                 type: 'POST',
-
                                 url: href = '@Url.Action("CreateCliente")',
-
                                 dataType: 'json',
-
                                 data: {
+                                    razonSocial: $("#RazonSocial").val(),
                                     flatitud: latitud,
                                     flongitud: longitud,
                                     nombre: $("#Nombre").val(),
