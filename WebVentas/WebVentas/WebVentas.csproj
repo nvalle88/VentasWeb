@@ -215,8 +215,6 @@
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\InformesGerencialesController.cs" />
-    <Compile Include="Controllers\PrincipalsController.cs" />
-    <Compile Include="Controllers\CalendariosController.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -291,6 +289,7 @@
     <Compile Include="Models\TipoVisita.cs" />
     <Compile Include="Models\Vendedor.cs" />
     <Compile Include="Models\Visita.cs" />
+    <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\RutaRequest.cs" />
