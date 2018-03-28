@@ -204,15 +204,6 @@
 
                         
                     }
-                    /*
-                    heatmap = new google.maps.visualization.HeatmapLayer({
-                        data: heatmapData,
-                        radius: 20,
-                        maxIntensity: 4,
-                        dissipating: true
-                    });
-                    heatmap.setMap(map);
-                    */
 
                     
                 },
@@ -281,6 +272,37 @@
             //AddToClientList("j", -0.16054644784609212, -78.31604034618044);
             //AddToClientList("j2", -0.20054644784609212, -78.31604034618044);
             //AddToClientList("j2", -0.30054644784609212, -78.31604034618044);
+
+            $.ajax({
+                type: 'POST',
+                url: '../Principals/ListaClientes',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+
+                    for (var i = 0; i < arreglo.length; i++) {
+
+                        if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
+                            AddToClientList(arreglo[i].Nombre + " " + arreglo[i].Apellido, arreglo[i].Latitud, arreglo[i].Longitud);
+
+
+                            DibujarClientes(map);
+                        }
+
+
+                    }
+
+
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
 
             var iconoCliente =
                 {

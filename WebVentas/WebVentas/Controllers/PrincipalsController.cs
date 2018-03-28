@@ -48,9 +48,7 @@ namespace WebVentas.Controllers
 
             SupervisorRequest supervisorRequest = new SupervisorRequest();
             VendedorRequest vendedorRequest = new VendedorRequest();
-
-            vendedorRequest.IdSupervisor = 8; //va 0 para probar hasta que este el rol supervisor!!!!!!
-
+            
             int idEmpresaInt = 0;
 
             try
@@ -91,11 +89,6 @@ namespace WebVentas.Controllers
                     //** agregar el id del supervisor al vendedorRequest **
                     vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
                 }
-
-                   
-
-
-                
                 
 
                 lista = await ApiServicio.ObtenerElementoAsync1<List<UbicacionPersonaRequest>>(vendedorRequest,
@@ -114,28 +107,58 @@ namespace WebVentas.Controllers
             }
             
         }
-        /*
+        
         public async Task<JsonResult> ListaClientes()
         {
             var lista = new List<ClienteRequest>();
 
+            SupervisorRequest supervisorRequest = new SupervisorRequest();
             VendedorRequest vendedorRequest = new VendedorRequest();
-            int idEmpresaInt = 0;
+
+            int idEmpresaInt = 0; ;
 
             try
             {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+                // obtener el idEmpresa
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
 
+                // convertir el idEmpresa a int
                 idEmpresaInt = Convert.ToInt32(idEmpresa);
 
+
+                //** agregar el idEmpresa al vendedorRequest **
                 vendedorRequest.idEmpresa = idEmpresaInt;
 
 
-                lista = await ApiServicio.ObtenerElementoAsync1<List<UbicacionPersonaRequest>>(vendedorRequest,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/Vendedores/ListarVendedoresConUbicacion");
+                var idUsuarioActual = User.Identity.GetUserId();
 
+                supervisorRequest.IdUsuario = idUsuarioActual;
+                supervisorRequest.IdEmpresa = idEmpresaInt;
+
+
+                if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+                {
+
+                    // obtener el Id del supervisor
+                    Response response = await ApiServicio.InsertarAsync(supervisorRequest,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                    supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+
+
+                    //** agregar el id del supervisor al vendedorRequest **
+                    vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
+                }
+
+
+                lista = await ApiServicio.ObtenerElementoAsync1<List<ClienteRequest>>(vendedorRequest,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/ListarClientesPorSupervisor");
 
 
                 return Json(lista);
@@ -149,6 +172,6 @@ namespace WebVentas.Controllers
             }
 
         }
-        */
+        
     }
 }
