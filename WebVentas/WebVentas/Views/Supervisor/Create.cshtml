@@ -74,7 +74,7 @@
 
                         <div class="widget-body no-padding">
 
-                            <form id="checkout-form" method="post" class="smart-form" novalidate="novalidate">
+                            <form id="checkout-form" method="post" class="smart-form" >
 
                                 @Html.AntiForgeryToken()
 
@@ -145,7 +145,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Telefono" class="form-control" type="number" />
+                                                    <input name="Telefono" type="number" class="form-control" />
 
                                                     @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
 

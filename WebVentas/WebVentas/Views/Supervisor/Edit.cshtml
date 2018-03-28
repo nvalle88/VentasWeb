@@ -143,7 +143,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Telefono" value="@Model.Telefono" class="form-control" type="number" />
+                                                    <input name="Telefono" type="number" value="@Model.Telefono" class="form-control"  />
 
                                                     @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
 
@@ -182,28 +182,27 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @if (Model.ListaVendedoresAsignados != null)
+                                                                {
+                                                                    foreach (var item in Model.ListaVendedoresAsignados)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Nombres)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Apellidos)
+                                                                            </td>
 
-                                                                @*@foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Nombres)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Apellidos)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Direccion)
+                                                                            <td>
+                                                                                @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor,idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
 
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdSupervisor }) |
+                                                                            </td>
 
-                                        @Html.ActionLink("Desactivar", "Delete", new { id = item.IdUsuario }, new { onclick = "return confirm('Desea desactivar supervisor... ?');" })
+                                                                        </tr>
 
-                                    </td>
-                                </tr>
-                            }*@
+                                                                    }
+                                                                }
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -229,28 +228,28 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @if (Model.ListaVendedoresSinAsignar != null)
+                                                                {
+                                                                    foreach (var item in Model.ListaVendedoresSinAsignar)
+                                                                    {
+                                                                        <tr>
 
-                                                                @*@foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Nombres)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Apellidos)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Direccion)
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Nombres)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Apellidos)
+                                                                            </td>
 
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdSupervisor }) |
+                                                                            <td>
 
-                                        @Html.ActionLink("Desactivar", "Delete", new { id = item.IdUsuario }, new { onclick = "return confirm('Desea desactivar supervisor... ?');" })
+                                                                                @Html.ActionLink("Asignar", "Asignarvendedor", new { id = item.IdVendedor, idsupervisor = Model.IdSupervisor }, new { onclick = "return confirm('Desea asignar vendedor... ?');" })
+                                                                            </td>
 
-                                    </td>
-                                </tr>
-                            }*@
+                                                                        </tr>
+                                                                    }
+                                                                }
+
                                                             </tbody>
                                                         </table>
                                                     </div>
