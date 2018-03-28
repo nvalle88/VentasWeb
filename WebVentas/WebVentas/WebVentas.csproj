@@ -1331,6 +1331,7 @@
     <Content Include="Views\Calendarios\EditarVendedor.cshtml" />
     <Content Include="Views\Calendarios\PerfilVendedor.cshtml" />
     <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
+    <Content Include="Views\Clientes\PerfilCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

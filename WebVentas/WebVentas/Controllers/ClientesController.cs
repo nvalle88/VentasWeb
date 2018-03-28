@@ -47,6 +47,29 @@ namespace WebVentas.Controllers
 
         }
 
+
+        public async Task<ActionResult> PerfilCliente(int? id)
+        {
+            if (id==null)
+            {
+                RedirectToAction("Index");
+            };
+            var cliente = new ClienteRequest
+            {
+                IdCliente =Convert.ToInt32(id),
+            };
+            var respuesta = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
+                                                                 , "api/Clientes/ObtenerCliente");
+
+            var clienteRequest = JsonConvert.DeserializeObject<ClienteRequest>(respuesta.Resultado.ToString());
+
+           var foto= string.IsNullOrEmpty(clienteRequest.Foto)!=true ? clienteRequest.Foto.Replace("~", WebApp.BaseAddress):"";
+            clienteRequest.Foto = foto;
+            var firma = string.IsNullOrEmpty(clienteRequest.Firma) != true ? clienteRequest.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
+            clienteRequest.Firma = firma;
+            return View(clienteRequest);
+
+        }
         public async Task<ActionResult> Edit(int id)
         {
             var userWithClaims = (ClaimsPrincipal)User;
