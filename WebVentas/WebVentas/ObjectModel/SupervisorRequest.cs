@@ -10,7 +10,8 @@ namespace WebVentas.ObjectModel
         public int IdSupervisor { get; set; }
 
         public string IdUsuario { get; set; }
-        public string IdCliente { get; set; }
+        public int Idvisita { get; set; }
+        public int IdCliente { get; set; }
         public string NombresApellido { get; set; }
         public int IdGerente { get; set; }
         public int IdVendedor { get; set; }
@@ -31,9 +32,11 @@ namespace WebVentas.ObjectModel
         public int IdEmpresa { get; set; }
         public int OpcionMenu { get; set; }
         public List<ClienteRequest> ListarCliente { get; set; }
+        public List<VisitaRequest> Listarvisita { get; set; }
         public List<VendedorRequest> ListaVendedores { get; set; }
         public List<VendedorRequest> ListaVendedoresAsignados { get; set; }
         public List<VendedorRequest> ListaVendedoresSinAsignar { get; set; }
+        public List<CompromisoRequest> Listarcompromiso { get; set; }
         public DateTime? FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
 

@@ -1,4 +1,5 @@
-﻿@model List<WebVentas.ObjectModel.SupervisorRequest>
+﻿@*@model List<WebVentas.ObjectModel.SupervisorRequest>*@
+@model WebVentas.ObjectModel.SupervisorRequest
 @using WebVentas.ObjectModel
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @{ var modelo = new SupervisorRequest { OpcionMenu = 3 }; }
@@ -12,6 +13,8 @@
 <!-- MAIN CONTENT -->
 
 <div id="content">
+    @Html.HiddenFor(x => x.ListaVendedores)
+    @Html.HiddenFor(x => x.ListarCliente)
     <div class="row col col-lg-12">
         <form id="buscar" method="post" novalidate="novalidate">
             <section class="col col-lg-5">
@@ -52,40 +55,49 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres)
+                                @Html.DisplayNameFor(model => model.Nombres)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
+                                @Html.DisplayNameFor(model => model.Apellidos)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
+                                @Html.DisplayNameFor(model => model.Direccion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Direccion)
                             </th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if (modelo.Listarcompromiso != null)
+                        {
+                            foreach (var item in Model.Listarcompromiso)
+                            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdCompromiso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tipocompromiso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
 
-                        @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombres)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Apellidos)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Direccion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Solucion)
 
-                    </td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.IdSupervisor }) |
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.idVisita }) |
 
-                        @Html.ActionLink("Desactivar", "Delete", new { id = item.IdUsuario }, new { onclick = "return confirm('Desea desactivar supervisor... ?');" })
+                                @*@Html.ActionLink("Desactivar", "Delete", new { id = item.IdUsuario }, new { onclick = "return confirm('Desea desactivar supervisor... ?');" })*@
 
-                    </td>
-                </tr>
-}
+                            </td>
+                        </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </section>
