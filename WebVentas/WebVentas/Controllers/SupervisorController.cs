@@ -66,12 +66,13 @@ namespace WebVentas.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Compromisos(SupervisorRequest supervisorRequest)
+        public async Task<ActionResult> Compromisos(VendedorRequest vendedorRequest)
         {
            // InicializarMensaje("");
 
-            var lista = await ApiServicio.Listar<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
-                                                              , "api/Vista/ListarVisitas");
+            var lista = await ApiServicio.Listar<VendedorRequest>(vendedorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarClientesPorVendedor");
+            ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "NombresApellido");
             return View(lista);
 
         }

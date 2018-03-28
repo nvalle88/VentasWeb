@@ -213,8 +213,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\WebApiController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
+    <Compile Include="Controllers\CalendariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\InformesGerencialesController.cs" />
+    <Compile Include="Controllers\PrincipalsController.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -291,7 +293,10 @@
     <Compile Include="Models\Visita.cs" />
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
+    <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
+    <Compile Include="ObjectModel\TipoClienteRequest.cs" />
+    <Compile Include="ObjectModel\UbicacionPersonaRequest.cs" />
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
     <Compile Include="ObjectModel\ClienteRequest.cs" />
@@ -1439,6 +1444,12 @@
     <Content Include="Views\InformesGerenciales\Index.cshtml" />
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
     <Content Include="Views\Supervisor\Compromisos.cshtml" />
+    <Content Include="Views\Principals\Index.cshtml" />
+    <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
+    <Content Include="Views\Calendarios\CrearVendedor.cshtml" />
+    <Content Include="Views\Calendarios\EditarVendedor.cshtml" />
+    <Content Include="Views\Calendarios\PerfilVendedor.cshtml" />
+    <Content Include="Views\Calendarios\_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
