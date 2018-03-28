@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using VentaServicios.Utils;
 using WebVentas.Models;
 using WebVentas.ObjectModel;
 using WebVentas.Services;
@@ -33,46 +34,114 @@ namespace WebVentas.Controllers
         }
         public async Task<ActionResult> Compromisos()
         {
-            
-            var userWithClaims = (ClaimsPrincipal)User;
-            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-
-            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
-            var user = new SupervisorRequest
-            { 
-                IdUsuario = User.Identity.GetUserId(),
-                IdEmpresa = empresaActual.IdEmpresa
-
-            };
+            //bUSCA LA EMPRESA
+            var idEmpresaInt = 0;
             try
             {
-                var lista = await ApiServicio.Listar<SupervisorRequest>(user, new Uri(WebApp.BaseAddress)
-                                                              , "api/Supervisor/ListarVendedores");
-                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "NombresApellido");
-                var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
-                return View(lista);
+                var userWithClaims = (ClaimsPrincipal)User;
+                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+                idEmpresaInt = Convert.ToInt32(idEmpresa);
+                
+            }
+            catch (Exception ex)
+            {
+
+                InicializarMensaje(Mensaje.ErrorIdEmpresa);
+                return View();
+            }
+            //FIN
+            SupervisorRequest supervisorRequest = new SupervisorRequest();
+
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+            var idUsuarioActual = User.Identity.GetUserId();
+
+            supervisorRequest.IdUsuario = idUsuarioActual;
+            supervisorRequest.IdEmpresa = idEmpresaInt;
+
+            if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+            {
+                Response response = await ApiServicio.InsertarAsync(supervisorRequest,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                  var userWithClaims = (ClaimsPrincipal)User;
+                try
+                {
+                    var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarVendedoresPorSupervisor2");
+                    //var objeto = JsonConvert.DeserializeObject<SupervisorRequest>(lista.ListaVendedores.ToString());
+                   ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "Nombres");
+                    var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+                    
+                    return View(lista);
+
+                }
+                catch (Exception ex)
+                {
+
+                    ex.ToString();
+                    var vista = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+                    return View();
+                }
+
+                ;
+            }
+            return View();
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> Compromisos(SupervisorRequest supervisorRequest)
+        {
+
+            //bUSCA LA EMPRESA
+            var idEmpresaInt = 0;
+            try
+            {
+                var userWithClaims = (ClaimsPrincipal)User;
+                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+                idEmpresaInt = Convert.ToInt32(idEmpresa);
 
             }
             catch (Exception ex)
             {
-                ex.ToString();
 
+                InicializarMensaje(Mensaje.ErrorIdEmpresa);
+                return View();
             }
-           var vista = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
-            return View(vista);
+            //FIN
+            SupervisorRequest supervisorRequest1 = new SupervisorRequest();
 
-            //ViewBag.IdVendedor = new SelectList(db.Valoracion, "IdValoracion", "Descripcion");
+            ApplicationDbContext db = new ApplicationDbContext();
 
-        }
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
-        [HttpPost]
-        public async Task<ActionResult> Compromisos(SupervisorRequest supervisorRequest)
-        {
-           // InicializarMensaje("");
+            var idUsuarioActual = User.Identity.GetUserId();
 
-            var lista = await ApiServicio.Listar<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+            supervisorRequest1.IdUsuario = idUsuarioActual;
+            supervisorRequest1.IdEmpresa = idEmpresaInt;
+
+            if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+            {
+                Response response = await ApiServicio.InsertarAsync(supervisorRequest1,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                supervisorRequest1 = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                supervisorRequest.IdSupervisor = supervisorRequest1.IdSupervisor;
+                var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vista/ListarVisitas");
-            return View(lista);
+
+                ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "Nombres");
+
+                return View(lista);
+            }
+            return View();
 
         }
 
