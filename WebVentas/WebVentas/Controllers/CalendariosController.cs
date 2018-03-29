@@ -36,27 +36,9 @@ namespace WebVentas.Controllers
         }
 
         
-        public async Task<ActionResult> CalendarioIndex(string mensaje)
-        {
-            
-
-            InicializarMensaje(mensaje);
-
-
-            try
-            {
-                
-
-
-                return View();
-            }
-            catch(Exception ex)
-            {
-                InicializarMensaje(Mensaje.Excepcion);
-                return View();
-            }
-        }
-
         
+
+
+
     }
 }

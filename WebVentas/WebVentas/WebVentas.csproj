@@ -216,7 +216,6 @@
     <Compile Include="Controllers\CalendariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\InformesGerencialesController.cs" />
-    <Compile Include="Controllers\PrincipalsController.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -293,10 +292,13 @@
     <Compile Include="Models\Visita.cs" />
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
+    <Compile Include="ObjectModel\MapaCalorRequest.cs" />
+    <Compile Include="ObjectModel\EventoRequest.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\RutaRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
     <Compile Include="ObjectModel\TipoClienteRequest.cs" />
+    <Compile Include="ObjectModel\TipoCompromisoRequest.cs" />
     <Compile Include="ObjectModel\UbicacionPersonaRequest.cs" />
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
@@ -651,6 +653,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Imagenes\marcador_Mapa.png" />
     <Content Include="Imagenes\pushpin cliente-01.png" />
+    <Content Include="Imagenes\pushpin vacio.png" />
     <Content Include="Imagenes\pushpin vendedor-01.png" />
     <Content Include="Imagenes\star_outline.png" />
     <Content Include="Imagenes\star_selected.png" />
@@ -1326,17 +1329,11 @@
     <Content Include="Views\InformesGerenciales\Index.cshtml" />
     <Content Include="Views\Vendedores\_PartialView.cshtml" />
     <Content Include="Views\Vendedores\CrearVendedor.cshtml" />
-    <Content Include="Views\Principals\Index.cshtml" />
+    <Content Include="Views\Vendedores\MapaIndex.cshtml" />
     <Content Include="Views\Vendedores\EditarVendedor.cshtml" />
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
     <Content Include="Views\Supervisor\Compromisos.cshtml" />
-    <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
-    <Content Include="Views\Calendarios\CrearVendedor.cshtml" />
-    <Content Include="Views\Calendarios\EditarVendedor.cshtml" />
-    <Content Include="Views\Calendarios\PerfilVendedor.cshtml" />
-    <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
-    <Content Include="Views\Clientes\PerfilCliente.cshtml" />
-    <Content Include="Views\Calendarios\_PartialView.cshtml" />
+    <Content Include="Views\Vendedores\CalendarioIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

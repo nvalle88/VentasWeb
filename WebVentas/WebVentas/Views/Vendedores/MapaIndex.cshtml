@@ -159,7 +159,7 @@
             var iconoLugar = "../Imagenes/marcador_Mapa.png";
             var tiempoAnimacion = 1200;
             var markers = [];
-            
+            var imageniconoPosicion = "../Imagenes/pushpin vacio.png";
 
 
             var marcadoresVendedor = [];
@@ -189,7 +189,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '../Principals/ListaVendedores',
+                url: '../Vendedores/ListaVendedores',
                 dataType: 'json',
                 data: {},
                 success: function (data) {
@@ -236,6 +236,18 @@
                     
                 };
 
+            var iconoPosicionVendedor =
+                {
+                    url: imageniconoPosicion,
+
+                    size: new google.maps.Size(48, 48),
+                    scaledSize: new google.maps.Size(48, 48), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(24, 48) // anchor
+
+
+                };
+
 
             function AddToVendedorList(nombre, latitud, longitud, idVendedor, texto) {
 
@@ -261,14 +273,20 @@
 
             function AddMarketVendedorTimer(mapa, posicion, timer, titulo, idVendedor,texto) {
 
+                var icono = iconoVendedor;
+
+                if ( texto.trim().length > 0 ) {
+                    icono = iconoPosicionVendedor;
+                }
+
                 setTimeout(function () {
                     var newMarker = new google.maps.Marker({
                         map: mapa,
-                        icon: iconoVendedor,
+                        icon: icono,
                         title: titulo,
                         position: posicion,
                         animation: google.maps.Animation.DROP,
-                        label: { text: texto, color: "yellow", fontSize: "30px"}
+                        label: { text: texto, color: "#645F9F", fontSize: "20px"}
                     });
 
                     newMarker.addListener('click', function () {
@@ -299,7 +317,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '../Principals/ListaClientes',
+                url: '../Vendedores/ListaClientes',
                 dataType: 'json',
                 data: {},
                 success: function (data) {
@@ -364,6 +382,8 @@
             function AddMarketClienteTimer(mapa, posicion, timer, titulo) {
 
                 setTimeout(function () {
+                    
+                    
                     marcadoresCliente.push(new google.maps.Marker({
                         map: mapa,
                         icon: iconoCliente,
@@ -371,6 +391,7 @@
                         position: posicion,
                         animation: google.maps.Animation.DROP
                     }));
+                    
                 }, timer);
 
 
@@ -388,7 +409,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '../Principals/ListaRutas',
+                    url: '../Vendedores/ListaRutas',
                     dataType: 'json',
                     data: { IdVendedor : idVendedor },
                     success: function (data) {
