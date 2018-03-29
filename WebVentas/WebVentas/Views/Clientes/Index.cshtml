@@ -11,10 +11,25 @@
 
 
 <div id="content">
-
+    <div class="row">
+        <form id="buscar" method="post" novalidate="novalidate">
+            <section class="col col-lg-2"> <a href="../Clientes/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>    </a></section>
+            <section class="col col-lg-4">
+                <label>@Html.DisplayNameFor(model => model.FirstOrDefault().Estado):</label>
+                <label class="input">
+                    @Html.DropDownList("IdEstadoCliente", null, htmlAttributes: new { @class = "form-control" })
+                </label>
+            </section>
+            <section class="col col-lg-2">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <button type="submit" id="buscarCliente" class="buscar btn btn-default">
+                    <i class="fa fa-search fa-lg"></i>
+                </button>
+            </section>
+            </form>
+    </div>
     <p></p>
-    <a href="../Clientes/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>    </a>
-    <p> </p>
+    <p></p>
     <section id="" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -43,35 +58,45 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)  @Html.DisplayFor(modelItem => item.Apellido)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Email)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Telefono)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoMovil)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TipoCliente)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombresVendedor) @Html.DisplayFor(modelItem => item.ApellidosVendedor)
-                                            </td>
-
-                                            <td>
-                                                @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "eliminar" })
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCliente }, new { @class = "eliminar", onclick = "return confirm('Desea eliminar el registro... ?');" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)  @Html.DisplayFor(modelItem => item.Apellido)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Identificacion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Telefono)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TelefonoMovil)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoCliente)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombresVendedor) @Html.DisplayFor(modelItem => item.ApellidosVendedor)
+                                        </td>
+                                        @if (item.Estado == 0)
+                                        {
+                                    <td>
+                                        @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" })
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
+                                        @Html.ActionLink("Activar", "Activar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "activar" })
+                                    </td>
+                                        }
+                                        @if (item.Estado == 1)
+                                        {
+                                    <td>
+                                        @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" })
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
+                                        @Html.ActionLink("Desactivar", "Desactivar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "desactivar" })
+                                    </td>
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -111,7 +136,16 @@
                     effect: 'ios',
                     text: '',
                     bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    color: '#ff5722'
+                });
+            });
+
+            $("#buscarCliente").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
                 });
             });
 
@@ -120,16 +154,34 @@
                     effect: 'ios',
                     text: '',
                     bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    color: '#ff5722'
                 });
             });
 
-            $("a.eliminar").click(function () {
+            $("a.perfil").click(function () {
                 $('#content').waitMe({
                     effect: 'ios',
                     text: '',
                     bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    color: '#ff5722'
+                });
+            });
+
+            $("a.activar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+
+            $("a.desactivar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
                 });
             });
 
@@ -137,5 +189,7 @@
         })
 
     </script>
+
+
     <script src="../../Scripts/datatables/init.js"></script>
 }

@@ -22,9 +22,37 @@ namespace WebVentas
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+           
+
             ApplicationDbContext db = new ApplicationDbContext();
             CreateRoles(db);
             WebApp.BaseAddress= System.Configuration.ConfigurationManager.AppSettings["ServiciosVentas"];
+
+            ListaClientesEstados.ListaEstados = new List<EstadoClienteNombre>();
+
+            ListaClientesEstados.ListaEstados.Add(new EstadoClienteNombre
+            {
+                IdEstado = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteActivado"]),
+                Nombre = "Activos",
+            });
+
+            ListaClientesEstados.ListaEstados.Add(new EstadoClienteNombre
+            {
+                IdEstado = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteDesactivado"]),
+                Nombre = "Inactivos",
+            });
+            ListaClientesEstados.ListaEstados.Add(new EstadoClienteNombre
+
+            {
+                IdEstado = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteTodos"]),
+                Nombre = "Todos",
+            });
+
+            EstadoCliente.Activo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteActivado"]);
+            EstadoCliente.Inactivo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteDesactivado"]);
+            EstadoCliente.Todos = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteTodos"]);
+
         }
 
         private void CreateRoles(ApplicationDbContext db)
