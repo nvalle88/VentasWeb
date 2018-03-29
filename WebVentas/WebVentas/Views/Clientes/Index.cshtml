@@ -8,18 +8,33 @@
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
 <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
 <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
-
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
 
 <div id="content">
-
+    <div class="row">
+        <form id="buscar" method="post">
+            <section class="col col-lg-2"> <a href="../Clientes/Create" id="nuevo" type="bt"  title="Nuevo" class="btn btn-default butoon"><i class="glyphicon glyphicon-plus"></i>    </a></section>
+            <section class="col col-lg-3">
+                <label><b>@Html.DisplayNameFor(model => model.FirstOrDefault().Estado):</b></label>
+                <label class="input">
+                    @Html.DropDownList("IdEstadoCliente", null, htmlAttributes: new { @class = "form-control" })
+                </label>
+            </section>
+            <section class="col col-lg-2">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <button type="submit" id="butoon"  class="buscar btn btn-default butoon">
+                    <i class="fa fa-search fa-lg"></i>
+                </button>
+            </section>
+            </form>
+    </div>
     <p></p>
-    <a href="../Clientes/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>    </a>
-    <p> </p>
+    <p></p>
     <section id="" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <header>
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Clientes</h2>
                     </header>
@@ -43,35 +58,45 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)  @Html.DisplayFor(modelItem => item.Apellido)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Email)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Telefono)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoMovil)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TipoCliente)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombresVendedor) @Html.DisplayFor(modelItem => item.ApellidosVendedor)
-                                            </td>
-
-                                            <td>
-                                                @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "eliminar" })
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCliente }, new { @class = "eliminar", onclick = "return confirm('Desea eliminar el registro... ?');" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)  @Html.DisplayFor(modelItem => item.Apellido)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Identificacion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Telefono)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TelefonoMovil)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoCliente)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombresVendedor) @Html.DisplayFor(modelItem => item.ApellidosVendedor)
+                                        </td>
+                                        @if (item.Estado == 0)
+                                        {
+                                    <td>
+                                        @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" })
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
+                                        @Html.ActionLink("Activar", "Activar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "activar" })
+                                    </td>
+                                        }
+                                        @if (item.Estado == 1)
+                                        {
+                                    <td>
+                                        @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" })
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
+                                        @Html.ActionLink("Desactivar", "Desactivar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "desactivar" })
+                                    </td>
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -111,7 +136,16 @@
                     effect: 'ios',
                     text: '',
                     bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    color: '#ff5722'
+                });
+            });
+
+            $("#butoon").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
                 });
             });
 
@@ -120,16 +154,34 @@
                     effect: 'ios',
                     text: '',
                     bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    color: '#ff5722'
                 });
             });
 
-            $("a.eliminar").click(function () {
+            $("a.perfil").click(function () {
                 $('#content').waitMe({
                     effect: 'ios',
                     text: '',
                     bg: 'rgba(255, 255, 255, 0.1)',
-                    color: '#118df9'
+                    color: '#ff5722'
+                });
+            });
+
+            $("a.activar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+
+            $("a.desactivar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
                 });
             });
 
@@ -137,5 +189,7 @@
         })
 
     </script>
-    <script src="../../Scripts/datatables/init.js"></script>
+
+
+    <script src="~/Scripts/datatables/init.js"></script>
 }
