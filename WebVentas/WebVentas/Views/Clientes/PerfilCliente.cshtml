@@ -1,5 +1,5 @@
 @model WebVentas.ObjectModel.ClienteRequest
-    @using WebVentas.Utils
+@using WebVentas.Utils
 
 @{
     ViewData["Title"] = "Index";
@@ -8,6 +8,7 @@
 }
 @Html.HiddenFor(model => model.Latitud)
 @Html.HiddenFor(model => model.Longitud)
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
 <style>
 
     #map_container {
@@ -48,6 +49,11 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
+
+    <p></p>
+    <a href="../../clientes/Index" id="regresar" type="bt" title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <p></p>
+
     <div class="row">
 
         <legend>&nbsp;&nbsp;&nbsp;&nbsp;<b> Perfil del cliente</b></legend>
@@ -161,7 +167,7 @@
     </script>
 
 
-        <script>
+    <script>
 
         var opcion = 1;
         var MyMarker = null;
@@ -210,7 +216,7 @@
                         }
                     })(marker, contentString, infowindow));
 
-                   
+
 
         }
 
@@ -236,10 +242,10 @@
         var nombre;
         var modelo;
         var cordenadas;
-        </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
-                async defer></script>
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
+            async defer></script>
 
 
 
-    }
+}

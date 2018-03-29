@@ -1,7 +1,12 @@
 ﻿#table {
     background-color:#ffffff;
-    color: white;
+    color: black;
 }
 #butoon {
     background-color: #ff5722;
+}
+
+.butoon {
+    background-color: #ff5722;
+    color: white ;
 }

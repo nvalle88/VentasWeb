@@ -153,6 +153,12 @@ namespace WebVentas.Controllers
 
                 ViewBag.IdTipoCliente = new SelectList(listaTipoCliente, "IdTipoCliente", "Tipo", cliente.IdTipoCliente);
                 ViewBag.IdVendedor = new SelectList(listaVendedores, "IdVendedor", "Nombres", cliente.IdVendedor);
+               
+                var foto = string.IsNullOrEmpty(cliente.Foto) != true ? cliente.Foto.Replace("~", WebApp.BaseAddress) : "";
+                cliente.Foto = foto;
+                var firma = string.IsNullOrEmpty(cliente.Firma) != true ? cliente.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
+                cliente.Firma = firma;
+
                 return View(cliente);
             }
 
