@@ -1,0 +1,245 @@
+@model WebVentas.ObjectModel.ClienteRequest
+    @using WebVentas.Utils
+
+@{
+    ViewData["Title"] = "Index";
+
+    int calificacion = 5;
+}
+@Html.HiddenFor(model => model.Latitud)
+@Html.HiddenFor(model => model.Longitud)
+<style>
+
+    #map_container {
+        position: relative;
+    }
+
+
+
+    #map {
+        height: 0;
+        overflow: hidden;
+        padding-bottom: 100%;
+        padding-top: 50px;
+        position: relative;
+    }
+</style>
+<style>
+    .et-label {
+        color: black;
+    }
+
+    .et-data {
+        color: blue;
+    }
+
+    .et-calificacion {
+        border-radius: 5px;
+        background-color: gray;
+        text-align: center;
+        color: white;
+    }
+
+    .et-estrellas-sin-relleno {
+        height: 23px;
+        width: 23px;
+    }
+</style>
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    <div class="row">
+
+        <legend>&nbsp;&nbsp;&nbsp;&nbsp;<b> Perfil del cliente</b></legend>
+        <article class="col-sm-12 col-md-12 col-lg-5">
+            <b>&nbsp;</b>
+            <b>&nbsp;</b>
+            <b>&nbsp;</b>
+            <b>&nbsp;</b>
+            <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-close="false" data-widget-custombutton="false">
+                <header draggable="true">
+                    <span class="widget-icon"> <i class="fa fa-map-marker"></i> </span>
+                    <h2>Ubicación del cliente</h2>
+                </header>
+                <div>
+
+                    <div class="widget-body no-padding">
+                        <fieldset>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="map_container"></div>
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="col-sm-12 col-md-12 col-lg-7">
+            <div class="row col-lg-12">
+                <section class="col-lg-12">
+                    <h3><b>@Model.RazonSocial</b></h3>
+                    <legend></legend>
+                </section>
+                <section class="col-lg-12">
+                    <img src="@Model.Foto" />
+                </section>
+                <b>&nbsp;</b>
+                <section class="col-lg-12">
+                    <b>Nombre:&nbsp;&nbsp;</b>@Model.Nombre @Model.Apellido
+                </section>
+                <section class="col-lg-12">
+                    <b>Dirección:&nbsp;&nbsp;</b>@Model.Direccion
+                </section>
+                <section class="col-lg-12">
+                    <b>Correo:&nbsp;&nbsp;</b>@Model.Email
+                </section>
+                <section class="col-lg-12">
+                    <b>Teléfono:&nbsp;&nbsp;</b>@Model.Telefono
+                </section>
+                <section class="col-lg-12">
+                    <b>Móvil:&nbsp;&nbsp;</b>@Model.TelefonoMovil
+                </section>
+                <section class="col-lg-12">
+                    <b>Tipo de cliente:&nbsp;&nbsp;</b>@Model.TipoCliente
+                </section>
+                <section class="col-lg-12">
+                    <b>Vendedor asignado:</b>@Model.NombresVendedor @Model.ApellidosVendedor
+                    <legend></legend>
+                </section>
+                <section class="col-lg-12">
+                    <img src="@Model.Firma" />
+                    <p>&nbsp;</p>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;<b>Firma</b></label>
+                </section>
+
+            </div>
+        </article>
+    </div>
+
+    <div class="row">
+        <legend>&nbsp;&nbsp;&nbsp;&nbsp;<b>Estadísticas</b></legend>
+
+    </div>
+
+</div>
+<!-- END MAIN CONTENT -->
+
+@section pagespecific {
+
+    <script type="text/javascript">
+        var opcion = 0;
+        var MyMarker = null;
+        $(document).ready(function () {
+            $("#regresar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#118df9'
+                });
+            });
+            $("#regresar").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#118df9'
+                });
+            });
+            $("#insertarCliente").click(function () {
+                $('#content').waitMe({
+                    effect: 'ios',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#118df9'
+                });
+            });
+        })
+    </script>
+
+
+        <script>
+
+        var opcion = 1;
+        var MyMarker = null;
+        var marker;
+        var iconCPN;
+        function initMap() {
+            var iconCPN =
+                {
+                    //con el icono
+                    url: "../../Content/img/logo-o.png", // url
+                    size: new google.maps.Size(48, 48),
+                    scaledSize: new google.maps.Size(48, 48), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(24, 48) // anchor
+                };
+
+            var lat1 = $("#Latitud").val().replace(",",".");
+            var log = $("#Longitud").val().replace(",", ".");
+            var myLatLng = { lat: parseFloat(lat1), lng: parseFloat(log) };
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: myLatLng
+            });
+            //geoLocation(map);
+
+                     marker = new google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        icon:iconCPN,
+                    });
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<p><b>Nombre:</b>' + "@Model.Nombre @Model.Apellido" + '.</p>' +
+                        '</div>' +
+                        '</div>';
+                    var infowindow = new google.maps.InfoWindow();
+
+                    google.maps.event.addListener(marker, "click", (function (marker, contentString, infowindow) {
+                        // !!! PROBLEM HERE
+                        return function (evt) {
+
+                            infowindow.setContent(contentString);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, contentString, infowindow));
+
+                   
+
+        }
+
+        function placeMarkerAndPanTo(latLng, map) {
+
+            marker.setMap(null);
+            if (MyMarker != null) {
+                MyMarker.setMap(null);
+            }
+
+                    var markerNuevo = new google.maps.Marker({
+                        position: latLng,
+                        icon:iconCPN,
+                        map: map,
+                    });
+
+                    MyMarker = markerNuevo;
+
+                    map.panTo(latLng);
+
+                }
+
+        var nombre;
+        var modelo;
+        var cordenadas;
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
+                async defer></script>
+
+
+
+    }

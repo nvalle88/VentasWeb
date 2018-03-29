@@ -67,6 +67,7 @@
                                             </td>
 
                                             <td>
+                                                @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "eliminar" })
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCliente }, new { @class = "eliminar", onclick = "return confirm('Desea eliminar el registro... ?');" })
                                             </td>

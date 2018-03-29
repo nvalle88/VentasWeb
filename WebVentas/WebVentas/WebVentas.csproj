@@ -1332,6 +1332,8 @@
     <Content Include="Views\Calendarios\CrearVendedor.cshtml" />
     <Content Include="Views\Calendarios\EditarVendedor.cshtml" />
     <Content Include="Views\Calendarios\PerfilVendedor.cshtml" />
+    <Content Include="Views\Calendarios\CalendarioIndex.cshtml" />
+    <Content Include="Views\Clientes\PerfilCliente.cshtml" />
     <Content Include="Views\Calendarios\_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
