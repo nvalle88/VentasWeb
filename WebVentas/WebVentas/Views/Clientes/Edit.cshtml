@@ -13,30 +13,12 @@
 
 
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-
-<script src="~/Scripts/jquery-3.2.1.js"></script>
-
-<script src="~/Scripts/jquery-1.10.2.js"></script>
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-
-<script src="~/Scripts/jquery-1.11.1.js"></script>
-
-<script src="~/Scripts/jquery-1.11.1.min.js"></script>
-
-<script src="~/Scripts/jquery-2.1.1.js"></script>
-
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
 
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
 
 <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
-
-<script src="~/Scripts/Site.js"></script>
-
 
 <style>
 
@@ -56,12 +38,12 @@
 </style>
 
 <div id="content">
+    <p></p>
+    <a href="../../clientes/Index" id="regresar" type="bt" title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <p></p>
 
     <div class="row">
-
         <article class="col-sm-12 col-md-12 col-lg-12">
-
-
             <section id="widget-grid" class="">
 
                 <div class="row">
@@ -112,49 +94,40 @@
                 </div>
 
             </section>
-
             <section id="widget-grid" class="">
-
                 <div class="row">
-
-                    <!-- NEW COL START -->
                     <article class="col-sm-12 col-md-12 col-lg-12">
-
-                        <!-- Widget ID (each widget will need unique ID)-->
                         <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="true" data-widget-custombutton="false">
-
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                 <h2>Nuevo cliente</h2>
-
                             </header>
-
-                            <!-- widget div-->
                             <div>
-
-                                <!-- widget edit box -->
                                 <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-
                                 </div>
-                                <!-- end widget edit box -->
-                                <!-- widget content -->
                                 <div class="widget-body no-padding">
-
                                     <form id="checkout-form" class="smart-form" novalidate="novalidate">
-
                                         <fieldset>
                                             <article>
                                                 <div class="row">
-                                                    <section class="col col-lg-6">
+                                                    <section class="col col-lg-12">
                                                         <label>@Html.DisplayNameFor(model => model.RazonSocial)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" id="RazonSocial" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
+                                                            <input maxlength="60" id="RazonSocial" value="@Model.RazonSocial" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
-                                                    <section class="col col-lg-6">
-                                                        <img src="@Model.Firma" />
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-6" style="height:150px;">
+                                                        <img src="@Model.Firma" class="col col-lg-6" style="align-content" width="100%" height="100%" />
+                                                        <br />
+                                                        <label class="col-lg-12">&nbsp;&nbsp;&nbsp;&nbsp;<b>Firma</b></label>
+                                                    </section>
+                                                    <section class="col col-lg-6" style="height:150px;">
+                                                        <img src="@Model.Foto" class="col col-lg-6" width="100%" height="100%" />
+                                                        <br />
+                                                        <label class="col-lg-12">&nbsp;&nbsp;&nbsp;&nbsp;<b>Logo</b></label>
                                                     </section>
                                                 </div>
                                                 <legend>Datos del cliente</legend>
@@ -172,20 +145,17 @@
                                                                     imgByte = event.target.files[0];
                                                                     document.getElementById("fotocliente").style.visibility = "visible";
                                                                 };
-
                                                             </script>
                                                         </div>
                                                     </section>
                                                     <section class="col col-6">
                                                         <label>@Html.DisplayNameFor(model => model.Nombre)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" id="Nombre" pattern="[0-9,a-z ]+" name="Nombre" class="form-control" />
+                                                            <input maxlength="60" id="Nombre" value="@Model.Nombre" pattern="[0-9,a-z ]+" name="Nombre" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
-
                                                 </div>
-
                                                 <br />
                                                 <div class="row">
                                                     <section id="fotocliente" class="col col-6">
@@ -196,53 +166,49 @@
                                                     <section class="col col-6">
                                                         <label>@Html.DisplayNameFor(model => model.Apellido)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" id="Apellido" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
+                                                            <input maxlength="60" id="Apellido" value="@Model.Apellido" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                     <section class="col col-lg-6">
                                                         <label>@Html.DisplayNameFor(model => model.Direccion)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" id="Direccion" pattern="[0-9,a-z A-Z ]+" name="Direccion" class="form-control" />
+                                                            <input maxlength="60" id="Direccion" value="@Model.Direccion" pattern="[0-9,a-z A-Z ]+" name="Direccion" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                 </div>
-
                                                 <div class="row">
                                                     <section class="col col-3">
                                                         <label>@Html.DisplayNameFor(model => model.Telefono)</label>
                                                         <label class="input">
 
-                                                            <input name="Telefono" id="Telefono" pattern="[0-9]+" data-mask="999999999" class="form-control" />
+                                                            <input name="Telefono" id="Telefono" value="@Model.Telefono" pattern="[0-9]+" data-mask="999999999" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                     <section class="col col-3">
                                                         <label>@Html.DisplayNameFor(model => model.TelefonoMovil)</label>
                                                         <label class="input">
-
-                                                            <input name="TelefonoMovil" id="TelefonoMovil" data-mask="9999999999" class="form-control" />
+                                                            <input name="TelefonoMovil" id="TelefonoMovil" value="@Model.TelefonoMovil" data-mask="9999999999" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                     <section class="col col-3">
                                                         <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
                                                         <label class="input">
-                                                            <input maxlength="30" id="Identificacion" name="Identificacion" class="form-control" type="number" />
+                                                            <input maxlength="30" id="Identificacion" name="Identificacion" value="@Model.Identificacion" class="form-control" type="number" />
                                                             @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                     <section class="col col-3">
                                                         <label>@Html.DisplayNameFor(model => model.Email)</label>
                                                         <label class="input">
-
-                                                            <input maxlength="60" id="Email" name="Email" class="form-control" />
+                                                            <input maxlength="60" id="Email" name="Email" value="@Model.Email" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                 </div>
-
                                                 <div class="row">
                                                     <section class="col col-6">
                                                         <label>@Html.DisplayNameFor(model => model.IdTipoCliente)</label>
@@ -251,7 +217,6 @@
                                                             @Html.ValidationMessageFor(model => model.IdTipoCliente, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
-
                                                     <section class="col col-6">
                                                         <label>@Html.DisplayNameFor(model => model.IdVendedor)</label>
                                                         <label class="input">
@@ -259,45 +224,60 @@
                                                             @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
-
                                                 </div>
                                             </article>
                                         </fieldset>
-
                                     </form>
-
                                     <footer>
-                                        <button type="submit" id="insertarCliente" class="btn btn-primary">
+                                        <button type="submit" id="editarCliente" class="btn btn-primary">
                                             Guardar
                                         </button>
                                         <a class=" btn btn-default" id="regresar1" href="/clientes/index">Cancelar</a>
-
                                     </footer>
-
                                 </div>
-                                <!-- end widget content -->
-
                             </div>
-                            <!-- end widget div -->
-
                         </div>
-
-                        <!-- end widget -->
-
                     </article>
-
-                    <!-- END COL -->
-
                 </div>
-
-                <!-- END ROW -->
-
             </section>
         </article>
-        </div>
     </div>
+</div>
 
 @section pagespecific {
+    <script type="text/javascript">
+        var opcion = 0;
+        var MyMarker = null;
+        $(document).ready(function () {
+
+
+
+            $("#regresar").click(function () {
+                $('#content').waitMe({
+                    effect: 'bounce',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+            $("#regresar1").click(function () {
+                $('#content').waitMe({
+                    effect: 'bounce',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+            $("#editarCliente").click(function () {
+                $('#content').waitMe({
+                    effect: 'bounce',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+        })
+    </script>
 
     <script>
 
@@ -337,7 +317,7 @@
             //        iconCPN.url = "../../Content/images/Media.png"
             //        break
             //    case "A":
-            //        iconCPN.url = 
+            //        iconCPN.url =
             //        break
             //    default:
             //}
@@ -406,7 +386,7 @@
 
     <script type="text/javascript">
 
-        $("#EditarCliente").click(function () {
+        $("#editarCliente").click(function () {
 
                 if (MyMarker == null) {
 
@@ -427,10 +407,11 @@
                             dataType: 'json',
 
                             data: {
+                                razonSocial: $("#RazonSocial").val(),
                                 flatitud: latitud,
                                 flongitud: longitud,
-                                idcliente: $("#Nombre").val(),
-                                nombre: $("#IdCliente").val(),
+                                idcliente: $("#IdCliente").val(),
+                                nombre: $("#Nombre").val(),
                                 apellido: $("#Apellido").val(),
                                 telefono: $("#Telefono").val(),
                                 telefonomovil: $("#TelefonoMovil").val(),
