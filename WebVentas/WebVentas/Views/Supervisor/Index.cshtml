@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<WebVentas.ObjectModel.SupervisorRequest>
 @using WebVentas.ObjectModel
-<link href="~/css/tabla/table.css" rel="stylesheet" />
 @{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
 @{ Html.RenderPartial("_PartialView", modelo);}
 
@@ -44,7 +43,7 @@
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -58,7 +57,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header  style="background-color:white">
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Supervisor</h2>
                     </header>

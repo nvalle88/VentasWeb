@@ -28,11 +28,66 @@ namespace WebVentas.Controllers
             }
             ViewData["Error"] = mensaje;
         }
-        public ActionResult MapaCalor()
+
+        #region MapaCalor
+        public async Task<ActionResult> MapaCalor()
         {
+            //bUSCA LA EMPRESA
+            var idEmpresaInt = 0;
+            try
+            {
+                var userWithClaims = (ClaimsPrincipal)User;
+                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+                idEmpresaInt = Convert.ToInt32(idEmpresa);
+
+            }
+            catch (Exception ex)
+            {
+
+                InicializarMensaje(Mensaje.ErrorIdEmpresa);
+
+                return View();
+            }
+            //FIN
+            MapaCalorRequest mapacalor = new MapaCalorRequest();
+
+            mapacalor.IdEmpresa = idEmpresaInt;
+
+            var lista = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+                                                      , "api/MapaCalor/ObtenerTipoClienteTipoCompromisoPorEmpresa");
+            ViewBag.idTipoCliente = new SelectList(lista.ListaTipoCliente, "idTipoCliente", "Tipo");
+            ViewBag.IdTipoCompromiso = new SelectList(lista.ListaTipoCompromiso, "IdTipoCompromiso", "Descripcion");
             return View();
+        } 
+
+    public async Task<JsonResult> PuntosTipoCliente(int idTipoCliente)
+    {
+        try
+        {
+                MapaCalorRequest mapacalor = new MapaCalorRequest();
+
+                mapacalor.IdTipoCLiente = idTipoCliente;
+                var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+                                                          , "api/MapaCalor/ListarClientesPorTipoCliente");
+            //var a = respusta.ListaClientes.ToString();
+            var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
+            return Json(listaSalida);
+
         }
-        public async Task<ActionResult> Compromisos()
+        catch (Exception ex)
+        {
+            return Json(false);
+
+        }
+
+
+    }
+
+    #endregion
+
+    #region Compromiso
+    public async Task<ActionResult> Compromisos()
         {
             //bUSCA LA EMPRESA
             var idEmpresaInt = 0;
@@ -74,7 +129,7 @@ namespace WebVentas.Controllers
                 try
                 {
                     var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
-                                                              , "api/Vendedores/ListarVendedoresPorSupervisor2");
+                                                              , "api/Vendedores/ListarVendedoresGerente");
                     //var objeto = JsonConvert.DeserializeObject<SupervisorRequest>(lista.ListaVendedores.ToString());
                    ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "NombreApellido");
                     var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, Listarcompromiso = new List<CompromisoRequest>() };
@@ -141,7 +196,7 @@ namespace WebVentas.Controllers
                 supervisorRequest.Listarcompromiso = lista.Listarcompromiso;
 
                 var listavendedor = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
-                                                              , "api/Vendedores/ListarVendedoresPorSupervisor2");
+                                                              , "api/Vendedores/ListarVendedoresGerente");
                 ViewBag.IdVendedor = new SelectList(listavendedor.ListaVendedores, "IdVendedor", "NombreApellido");
 
                 supervisorRequest.ListaVendedores = listavendedor.ListaVendedores;
@@ -151,7 +206,9 @@ namespace WebVentas.Controllers
 
         }
 
+        #endregion
 
+        #region BuscarVendedorCliente
         public async Task<JsonResult> ClienteVendor(string idVendedor)
         {
 
@@ -181,6 +238,9 @@ namespace WebVentas.Controllers
             
 
         }
+        #endregion
+
+        #region CargarSupervisores
         public async Task<ActionResult> Index(string mensaje)
         {
                InicializarMensaje("");
@@ -196,6 +256,9 @@ namespace WebVentas.Controllers
            
             
         }
+        #endregion
+
+        #region CrearSupervisores
         public ActionResult Create(string mensaje)
 
         {
@@ -251,6 +314,9 @@ namespace WebVentas.Controllers
             return View(supervisorRequest);
 
         }
+        #endregion
+
+        #region editarSupervisores
 
         public async Task<ActionResult> Edit(string id)
         {
@@ -309,6 +375,10 @@ namespace WebVentas.Controllers
             return View();
         }
 
+        #endregion
+
+        #region DesactivarSupervisores
+
         public async Task<ActionResult> Delete(string id)
         {
             Response response = new Response();
@@ -326,7 +396,9 @@ namespace WebVentas.Controllers
 
             return View();
         }
-        
+        #endregion
+
+        #region QuitarVendedores
         public async Task<ActionResult>Quitarvendedor(string id, string idsupervisor)
         {
             try
@@ -359,6 +431,9 @@ namespace WebVentas.Controllers
             }
             return View();
         }
+        #endregion
+
+        #region AsignarVendedores
         public async Task<ActionResult> Asignarvendedor(string id, string idsupervisor)
         {
             try
@@ -392,7 +467,8 @@ namespace WebVentas.Controllers
             }
             return View();
         }
+        #endregion
     }
-    
+
 
 }
