@@ -145,29 +145,65 @@
 
                                         <fieldset>
                                             <article>
-                                                <legend>Datos personales</legend>
+                                                <div class="row">
+                                                    <section class="col col-lg-6">
+                                                        <label>@Html.DisplayNameFor(model => model.RazonSocial)</label>
+                                                        <label class="input">
+                                                            <input maxlength="60" id="RazonSocial" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
+                                                            @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-6">
+                                                        <img src="@Model.Firma" />
+                                                    </section>
+                                                </div>
+                                                <legend>Datos del cliente</legend>
                                                 <br />
                                                 <div class="row">
                                                     <section class="col col-6">
+                                                        <label>Seleccionar logo...</label>
+                                                        <div class="input input-file">
+                                                            <input asp-for="Url" id="file" type="file" name="files" value="Seleccionar logo" onchange="loadFile(event)">
+                                                            <script>
+                                                                var imgByte;
+                                                                var loadFile = function (event) {
+                                                                    var output = document.getElementById('output');
+                                                                    output.data = URL.createObjectURL(event.target.files[0]);
+                                                                    imgByte = event.target.files[0];
+                                                                    document.getElementById("fotocliente").style.visibility = "visible";
+                                                                };
+
+                                                            </script>
+                                                        </div>
+                                                    </section>
+                                                    <section class="col col-6">
                                                         <label>@Html.DisplayNameFor(model => model.Nombre)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" id="Nombre" value="@Model.Nombre" name="Nombre" class="form-control" />
+                                                            <input maxlength="60" id="Nombre" pattern="[0-9,a-z ]+" name="Nombre" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                                         </label>
+                                                    </section>
+
+                                                </div>
+
+                                                <br />
+                                                <div class="row">
+                                                    <section id="fotocliente" class="col col-6">
+                                                        <section class="col col-lg-12">
+                                                            <object id="output" type="" width="100%" height="100%"></object>
+                                                        </section>
                                                     </section>
                                                     <section class="col col-6">
                                                         <label>@Html.DisplayNameFor(model => model.Apellido)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" id="Apellido" value="@Model.Apellido" name="Apellido" class="form-control" />
+                                                            <input maxlength="60" id="Apellido" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
-                                                </div>
-                                                <div class="row">
-                                                    <section class="col col-lg-12">
+                                                    <section class="col col-lg-6">
                                                         <label>@Html.DisplayNameFor(model => model.Direccion)</label>
                                                         <label class="input">
-                                                            <input maxlength="60" value="@Model.Direccion" id="Direccion" name="Direccion" class="form-control" />
+                                                            <input maxlength="60" id="Direccion" pattern="[0-9,a-z A-Z ]+" name="Direccion" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
@@ -178,7 +214,7 @@
                                                         <label>@Html.DisplayNameFor(model => model.Telefono)</label>
                                                         <label class="input">
 
-                                                            <input name="Telefono" value="@Model.Telefono" id="Telefono" data-mask="999999999" class="form-control" />
+                                                            <input name="Telefono" id="Telefono" pattern="[0-9]+" data-mask="999999999" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
@@ -186,14 +222,14 @@
                                                         <label>@Html.DisplayNameFor(model => model.TelefonoMovil)</label>
                                                         <label class="input">
 
-                                                            <input name="TelefonoMovil" value="@Model.TelefonoMovil" id="TelefonoMovil" data-mask="9999999999" class="form-control" />
+                                                            <input name="TelefonoMovil" id="TelefonoMovil" data-mask="9999999999" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
                                                     <section class="col col-3">
                                                         <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
                                                         <label class="input">
-                                                            <input maxlength="30" value="@Model.Identificacion" id="Identificacion" name="Identificacion" class="form-control" type="number" />
+                                                            <input maxlength="30" id="Identificacion" name="Identificacion" class="form-control" type="number" />
                                                             @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
@@ -201,7 +237,7 @@
                                                         <label>@Html.DisplayNameFor(model => model.Email)</label>
                                                         <label class="input">
 
-                                                            <input maxlength="60" value="@Model.Email" id="Email" name="Email" class="form-control" />
+                                                            <input maxlength="60" id="Email" name="Email" class="form-control" />
                                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                                         </label>
                                                     </section>
@@ -231,11 +267,11 @@
                                     </form>
 
                                     <footer>
-                                        <button type="submit" id="EditarCliente" class="btn btn-primary">
+                                        <button type="submit" id="insertarCliente" class="btn btn-primary">
                                             Guardar
                                         </button>
                                         <a class=" btn btn-default" id="regresar1" href="/clientes/index">Cancelar</a>
-                                        
+
                                     </footer>
 
                                 </div>

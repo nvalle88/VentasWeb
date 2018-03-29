@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,7 +13,10 @@ namespace WebVentas.ObjectModel
         public int IdTipoCompromiso { get; set; }
 
         public int  idVisita { get; set; }
-        public string tipocompromiso { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}",
+               ApplyFormatInEditMode = true)]
+        public DateTime Fecha { get; set; }
+        //public string tipocompromiso { get; set; }
 
         public string Descripcion { get; set; }
 

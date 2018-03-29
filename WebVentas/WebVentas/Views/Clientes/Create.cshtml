@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
 <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
 <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
-
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
 <style>
 
     #map_container {
@@ -29,10 +29,8 @@
 <div id="content">
 
     <p></p>
-    <a href="../../clientes/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <a href="../../clientes/Index" id="regresar" type="bt"  title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
     <p></p>
-
-
 
         <div class="row">
 
@@ -96,14 +94,6 @@
 
                                 <!-- widget div-->
                                 <div>
-
-                                    <!-- widget edit box -->
-                                    <div class="jarviswidget-editbox">
-                                        <!-- This area used as dropdown edit box -->
-
-                                    </div>
-                                    <!-- end widget edit box -->
-                                    <!-- widget content -->
                                     <div class="widget-body no-padding">
 
                                         <form id="checkout-form" class="smart-form" novalidate="novalidate">
@@ -111,7 +101,7 @@
                                             <fieldset>
                                                 <article>
                                                     <div class="row" >
-                                                        <section class="col col-lg-6">
+                                                        <section class="col col-lg-12">
                                                             <label>@Html.DisplayNameFor(model => model.RazonSocial)</label>
                                                             <label class="input">
                                                                 <input maxlength="60" id="RazonSocial" pattern="[0-9,a-z A-Z]+" name="Apellido" class="form-control" />

@@ -16,16 +16,77 @@ namespace WebVentas.Controllers
     public class ClientesController : Controller
     {
 
-        public async Task<ActionResult> Index(string mensaje)
+        public async Task<ActionResult> Index(int? idEstado)
         {
 
             var userWithClaims = (ClaimsPrincipal)User;
             var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
+            var empresaActual = new EmpresaActual();
+            if (idEstado==null)
+            {
+               empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa), IdEstado = EstadoCliente.Activo };
+                ViewBag.IdEstadoCliente = new SelectList(ListaClientesEstados.ListaEstados, "IdEstado", "Nombre", EstadoCliente.Activo);
+            }
+            else
+            {
+              empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa), IdEstado = Convert.ToInt32(idEstado) };
+                ViewBag.IdEstadoCliente = new SelectList(ListaClientesEstados.ListaEstados, "IdEstado", "Nombre", Convert.ToInt32(idEstado));
+            }
+          
 
             var lista = await ApiServicio.Listar<ClienteRequest>(empresaActual,new Uri(WebApp.BaseAddress)
                                                                 , "api/Clientes/ListarClientes");
+
+           
             return View(lista);
+
+        }
+        [HttpPost]
+        public async Task<ActionResult> Index(string IdEstadoCliente,string s)
+        {
+
+            var userWithClaims = (ClaimsPrincipal)User;
+            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa),IdEstado=Convert.ToInt32(IdEstadoCliente) };
+
+            var lista = await ApiServicio.Listar<ClienteRequest>(empresaActual, new Uri(WebApp.BaseAddress)
+                                                                , "api/Clientes/ListarClientes");
+
+            ViewBag.IdEstadoCliente = new SelectList(ListaClientesEstados.ListaEstados, "IdEstado", "Nombre",Convert.ToInt32(IdEstadoCliente));
+            return View(lista);
+
+        }
+
+        public async Task<ActionResult> Desactivar(int id,int idEstado)
+        {
+
+            var cliente = new ClienteRequest { IdCliente = id };
+
+            var response = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
+                                                                , "api/Clientes/DesactivarCliente");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index",new { idEstado });
+            }
+
+            return null;
+
+        }
+
+        public async Task<ActionResult> Activar(int id,int idEstado)
+        {
+
+            var cliente = new ClienteRequest { IdCliente = id };
+
+            var response = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
+                                                                , "api/Clientes/ActivarCliente");
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index",new {idEstado});
+            }
+
+            return null;
 
         }
 
@@ -47,6 +108,29 @@ namespace WebVentas.Controllers
 
         }
 
+
+        public async Task<ActionResult> PerfilCliente(int? id)
+        {
+            if (id==null)
+            {
+                RedirectToAction("Index");
+            };
+            var cliente = new ClienteRequest
+            {
+                IdCliente =Convert.ToInt32(id),
+            };
+            var respuesta = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
+                                                                 , "api/Clientes/ObtenerCliente");
+
+            var clienteRequest = JsonConvert.DeserializeObject<ClienteRequest>(respuesta.Resultado.ToString());
+
+           var foto= string.IsNullOrEmpty(clienteRequest.Foto)!=true ? clienteRequest.Foto.Replace("~", WebApp.BaseAddress):"";
+            clienteRequest.Foto = foto;
+            var firma = string.IsNullOrEmpty(clienteRequest.Firma) != true ? clienteRequest.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
+            clienteRequest.Firma = firma;
+            return View(clienteRequest);
+
+        }
         public async Task<ActionResult> Edit(int id)
         {
             var userWithClaims = (ClaimsPrincipal)User;
@@ -69,6 +153,12 @@ namespace WebVentas.Controllers
 
                 ViewBag.IdTipoCliente = new SelectList(listaTipoCliente, "IdTipoCliente", "Tipo", cliente.IdTipoCliente);
                 ViewBag.IdVendedor = new SelectList(listaVendedores, "IdVendedor", "Nombres", cliente.IdVendedor);
+               
+                var foto = string.IsNullOrEmpty(cliente.Foto) != true ? cliente.Foto.Replace("~", WebApp.BaseAddress) : "";
+                cliente.Foto = foto;
+                var firma = string.IsNullOrEmpty(cliente.Firma) != true ? cliente.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
+                cliente.Firma = firma;
+
                 return View(cliente);
             }
 

@@ -8,5 +8,6 @@ namespace WebVentas.ObjectModel
     public class EmpresaActual
     {
         public int IdEmpresa { get; set; }
+        public int IdEstado { get; set; }
     }
 }

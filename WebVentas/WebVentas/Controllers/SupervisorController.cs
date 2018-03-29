@@ -48,6 +48,7 @@ namespace WebVentas.Controllers
             {
 
                 InicializarMensaje(Mensaje.ErrorIdEmpresa);
+               
                 return View();
             }
             //FIN
@@ -75,23 +76,24 @@ namespace WebVentas.Controllers
                     var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresPorSupervisor2");
                     //var objeto = JsonConvert.DeserializeObject<SupervisorRequest>(lista.ListaVendedores.ToString());
-                   ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "Nombres");
-                    var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+                   ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "NombreApellido");
+                    var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, Listarcompromiso = new List<CompromisoRequest>() };
                     
-                    return View(lista);
+                    return View(vista1);
 
                 }
                 catch (Exception ex)
                 {
 
                     ex.ToString();
-                    var vista = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+                    
                     return View();
                 }
 
                 ;
             }
-            return View();
+            var vista = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, Listarcompromiso = new List<CompromisoRequest>() };
+            return View(vista);
         }
         
         [HttpPost]
@@ -136,10 +138,14 @@ namespace WebVentas.Controllers
                 supervisorRequest.IdSupervisor = supervisorRequest1.IdSupervisor;
                 var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vista/ListarVisitas");
+                supervisorRequest.Listarcompromiso = lista.Listarcompromiso;
 
-                ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "Nombres");
+                var listavendedor = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarVendedoresPorSupervisor2");
+                ViewBag.IdVendedor = new SelectList(listavendedor.ListaVendedores, "IdVendedor", "NombreApellido");
 
-                return View(lista);
+                supervisorRequest.ListaVendedores = listavendedor.ListaVendedores;
+                return View(supervisorRequest);
             }
             return View();
 
@@ -163,7 +169,7 @@ namespace WebVentas.Controllers
                 var respusta = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(user, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarClientesPorVendedor");
                 //var a = respusta.ListaClientes.ToString();
-                var listaSalida = JsonConvert.DeserializeObject<List<SupervisorRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
+                var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
                 return Json(listaSalida);
 
             }
