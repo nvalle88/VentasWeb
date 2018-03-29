@@ -1,9 +1,10 @@
 @model  WebVentas.ObjectModel.SupervisorRequest
+<link href = "~/Content/css/Personalizado.css" rel = "stylesheet" />
 <div class="btn-group btn-group-justified">
 
     @if (Model.OpcionMenu == 0)
     {
-        <a href="../../Supervisor/Index" style="background-color:#3276b1;color:white;" class="btn btn-default">Supervisor <br /> </a>
+        <a href="../../Supervisor/Index" style="background-color:#ff5722;color:white;" class="btn btn-default">Supervisor <br /> </a>
     }
     else
     {
@@ -11,7 +12,7 @@
     }
     @if (Model.OpcionMenu == 1)
     {
-        <a style="background-color:#3276b1;color:white;" class="btn btn-default"> Reportes</a>
+        <a style="background-color:#ff5722;color:white;" class="btn btn-default"> Reportes</a>
     }
     else
     {
@@ -21,7 +22,7 @@
 
     @if (Model.OpcionMenu == 2)
     {
-        <a href="../../Supervisor/MapaCalor" style="background-color:#3276b1;color:white;" class="btn btn-default">Informe <br />gerencial</a>
+        <a href="../../Supervisor/MapaCalor" style="background-color:#ff5722;color:white;" class="btn btn-default">Informe <br />gerencial</a>
 
     }
     else
@@ -31,7 +32,7 @@
 
     @if (Model.OpcionMenu == 3)
         {
-            <a href="../../Supervisor/Compromisos"  style="background-color:#3276b1;color:white;" class="btn btn-default">Compromisos</a>
+            <a href="../../Supervisor/Compromisos"  style="background-color:#ff5722;color:white;" class="btn btn-default">Compromisos</a>
 
         }
         else
