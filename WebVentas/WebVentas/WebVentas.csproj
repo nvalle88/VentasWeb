@@ -290,6 +290,7 @@
     <Compile Include="Models\TipoVisita.cs" />
     <Compile Include="Models\Vendedor.cs" />
     <Compile Include="Models\Visita.cs" />
+    <Compile Include="ObjectModel\ArchivoRequest.cs" />
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
     <Compile Include="ObjectModel\MapaCalorRequest.cs" />
@@ -1334,6 +1335,7 @@
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
     <Content Include="Views\Supervisor\Compromisos.cshtml" />
     <Content Include="Views\Vendedores\CalendarioIndex.cshtml" />
+    <Content Include="Views\Clientes\PerfilCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
