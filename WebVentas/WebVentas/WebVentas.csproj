@@ -1326,14 +1326,11 @@
     <Content Include="Views\Account\RecuperarContrasena.cshtml" />
     <Content Include="Views\Account\IntroducirCodigo.cshtml" />
     <Content Include="Views\Account\IngresarContrasena.cshtml" />
-    <Content Include="Views\Supervisor\_PartialView.cshtml" />
     <Content Include="Views\Supervisor\Edit.cshtml" />
     <Content Include="Views\Vendedores\_PartialView.cshtml" />
     <Content Include="Views\Vendedores\CrearVendedor.cshtml" />
     <Content Include="Views\Vendedores\MapaIndex.cshtml" />
     <Content Include="Views\Vendedores\EditarVendedor.cshtml" />
-    <Content Include="Views\Supervisor\MapaCalor.cshtml" />
-    <Content Include="Views\Supervisor\Compromisos.cshtml" />
     <Content Include="Views\Vendedores\CalendarioIndex.cshtml" />
     <Content Include="Views\InformacionGerencial\MapaCalor.cshtml" />
     <Content Include="Views\Compromisos\Index.cshtml" />
