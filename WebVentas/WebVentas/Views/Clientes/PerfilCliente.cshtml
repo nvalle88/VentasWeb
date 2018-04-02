@@ -10,7 +10,32 @@
 @Html.HiddenFor(model => model.Longitud)
 <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
 <style>
+    .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        width: 30px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
 
+    #txtBuscador {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+    }
+
+        #txtBuscador:focus {
+            border-color: #4d90fe;
+        }
     #map_container {
         position: relative;
     }
@@ -75,6 +100,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div id="map_container"></div>
+                                    <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
                                     <div id="map"></div>
                                 </div>
                             </div>
@@ -116,7 +142,7 @@
                     <legend></legend>
                 </section>
                 <section class="col-lg-12">
-                    <img src="@Model.Firma" class="col col-lg-12"/>
+                    <img src="@Model.Firma" class="col col-lg-12" />
                     <p>&nbsp;</p>
                     <label>&nbsp;&nbsp;&nbsp;&nbsp;<b>Firma</b></label>
                 </section>
@@ -138,6 +164,9 @@
     <script type="text/javascript">
         var opcion = 0;
         var MyMarker = null;
+
+        var markers = [];
+        var map;
         $(document).ready(function () {
             $("#regresar").click(function () {
                 $('#content').waitMe({
@@ -173,6 +202,75 @@
         var MyMarker = null;
         var marker;
         var iconCPN;
+        var markers = [];
+        var map;
+
+
+        function AddBuscador(idBuscador, mapa) {
+
+
+            var txtBuscador = document.getElementById(idBuscador);
+            var buscar = new google.maps.places.SearchBox(txtBuscador);
+
+
+            mapa.controls[google.maps.ControlPosition.TOP_LEFT].push(txtBuscador);
+
+            mapa.addListener('bounds_changed', function () {
+                buscar.setBounds(map.getBounds());
+            });
+
+
+            buscar.addListener('places_changed', function () {
+
+                var places = buscar.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+
+                        url: "",
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(60, 60),
+                        scaledSize: new google.maps.Size(60, 60)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+
+                });
+
+                mapa.fitBounds(bounds);
+            });
+        }
+            
         function initMap() {
             var iconCPN =
                 {
@@ -188,10 +286,12 @@
             var log = $("#Longitud").val().replace(",", ".");
             var myLatLng = { lat: parseFloat(lat1), lng: parseFloat(log) };
 
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 center: myLatLng
             });
+
+            AddBuscador("txtBuscador", map);
             //geoLocation(map);
 
                      marker = new google.maps.Marker({
@@ -243,8 +343,9 @@
         var modelo;
         var cordenadas;
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
-            async defer></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
+    </script>
 
 
 

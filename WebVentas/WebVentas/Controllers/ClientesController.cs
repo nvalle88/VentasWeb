@@ -14,6 +14,7 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
+    [Authorize( Roles ="Supervisor,GerenteGeneral")]
     public class ClientesController : Controller
     {
 
