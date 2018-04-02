@@ -1,0 +1,55 @@
+@model  WebVentas.ObjectModel.SupervisorRequest
+<link href = "~/Content/css/Personalizado.css" rel = "stylesheet" />
+<div class="btn-group btn-group-justified">
+
+    @if (Model.OpcionMenu == 0)
+    {
+    <a href="../../InformacionGerencial/MapaCalor" style="background-color:#ff5722;color:white;" class="btn btn-default">Mapas de calor<br /> </a>
+    }
+    else
+    {
+    <a href="../../InformacionGerencial/MapaCalor" class="btn btn-default">Mapas  de calor</a>
+    }
+    @if (Model.OpcionMenu == 1)
+    {
+        <a style="background-color:#ff5722;color:white;" class="btn btn-default"> Estidísticas </a>
+    }
+    else
+    {
+        <a class="btn btn-default"> Estidísticas </a>
+    }
+
+
+    @if (Model.OpcionMenu == 2)
+    {
+        <a style="background-color:#ff5722;color:white;" class="btn btn-default">Reportes</a>
+
+    }
+    else
+    {
+        <a class="btn btn-default">Reportes</a>
+    }
+
+    @*@if (Model.OpcionMenu == 3)
+        {
+            <a href="../../Supervisor/Compromisos"  style="background-color:#ff5722;color:white;" class="btn btn-default">Compromisos</a>
+
+        }
+        else
+        {
+            <a href="../../Supervisor/Compromisos" class="btn btn-default">Compromisos </a>
+
+        }*@
+
+
+    @*@if (Model.OpcionMenu == 4)
+    {
+    <a style="background-color:#3276b1;color:white;" class="btn btn-default">Hist&oacutericos</a>
+    }
+    else
+    {
+    <a class="btn btn-default">Hist&oacutericos</a>
+    }*@
+
+
+</div>
