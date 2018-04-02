@@ -215,7 +215,8 @@
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\CalendariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
-    <Compile Include="Controllers\InformesGerencialesController.cs" />
+    <Compile Include="Controllers\CompromisosController.cs" />
+    <Compile Include="Controllers\InformacionGerencial.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -1326,7 +1327,6 @@
     <Content Include="Views\Account\IngresarContrasena.cshtml" />
     <Content Include="Views\Supervisor\_PartialView.cshtml" />
     <Content Include="Views\Supervisor\Edit.cshtml" />
-    <Content Include="Views\InformesGerenciales\Index.cshtml" />
     <Content Include="Views\Vendedores\_PartialView.cshtml" />
     <Content Include="Views\Vendedores\CrearVendedor.cshtml" />
     <Content Include="Views\Vendedores\MapaIndex.cshtml" />
@@ -1334,6 +1334,9 @@
     <Content Include="Views\Supervisor\MapaCalor.cshtml" />
     <Content Include="Views\Supervisor\Compromisos.cshtml" />
     <Content Include="Views\Vendedores\CalendarioIndex.cshtml" />
+    <Content Include="Views\InformacionGerencial\MapaCalor.cshtml" />
+    <Content Include="Views\Compromisos\Index.cshtml" />
+    <Content Include="Views\InformacionGerencial\_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

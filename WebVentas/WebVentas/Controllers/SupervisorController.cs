@@ -86,7 +86,7 @@ namespace WebVentas.Controllers
 
     #endregion
 
-    #region Compromiso
+        #region Compromiso
     public async Task<ActionResult> Compromisos()
         {
             //bUSCA LA EMPRESA
