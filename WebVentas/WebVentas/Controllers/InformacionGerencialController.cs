@@ -13,7 +13,7 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
-    public class InformacionGerencial : Controller
+    public class InformacionGerencialController : Controller
     {
         // GET: InformesGerenciales
         //public ActionResult Index()

@@ -27,10 +27,13 @@
                         <a href="@Url.Action("Index", "Supervisor")" title="Supervisores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Supervisores</span></a>
                     </li>
                     <li class="@Html.RouteIf("InformacionGerencial", "active")">
-                        <a href="@Url.Action("Index", "InformacionGerencial")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Informaci&oacute;n gerencial</span></a>
+                        <a href="@Url.Action("MapaCalor", "InformacionGerencial")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Informaci&oacute;n gerencial</span></a>
                     </li>
                     <li class="@Html.RouteIf("Compromisos", "active")">
                         <a href="@Url.Action("Index", "Compromisos")" title="Compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                    </li>
+                    <li class="@Html.RouteIf("Clientes", "active")">
+                        <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
                     </li>
                 </ul>
             </li>

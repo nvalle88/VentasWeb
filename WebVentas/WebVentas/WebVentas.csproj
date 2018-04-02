@@ -216,7 +216,7 @@
     <Compile Include="Controllers\CalendariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\CompromisosController.cs" />
-    <Compile Include="Controllers\InformacionGerencial.cs" />
+    <Compile Include="Controllers\InformacionGerencialController.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
