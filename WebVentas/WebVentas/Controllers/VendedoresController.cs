@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using VentaServicios.Utils;
 using WebVentas.Models;
 using WebVentas.ObjectModel;
+using WebVentas.ObjectRequest;
 using WebVentas.Services;
 using WebVentas.Utils;
 
@@ -145,7 +146,13 @@ namespace WebVentas.Controllers
                 vendedor = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(vendedor,
                     new Uri(WebApp.BaseAddress),
                     "api/Vendedores/ListarClientesPorVendedor");
-                
+
+                var estadisticoVendedorRequest = await ApiServicio.ObtenerElementoAsync1<EstadisticoVendedorRequest>(vendedor,
+                    new Uri(WebApp.BaseAddress),
+                    "api/Agendas/VerEstadisticosVendedor");
+
+                vendedor.estadisticoVendedorRequest = estadisticoVendedorRequest;
+
 
                 InicializarMensaje("");
                 return View(vendedor);

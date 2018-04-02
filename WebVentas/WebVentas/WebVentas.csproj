@@ -292,11 +292,13 @@
     <Compile Include="Models\Visita.cs" />
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
+    <Compile Include="ObjectModel\EstadisticoVendedorRequest.cs" />
     <Compile Include="ObjectModel\EventoRequest.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\RutaRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
     <Compile Include="ObjectModel\TipoClienteRequest.cs" />
+    <Compile Include="ObjectModel\TipoCompromisoRequest.cs" />
     <Compile Include="ObjectModel\UbicacionPersonaRequest.cs" />
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
