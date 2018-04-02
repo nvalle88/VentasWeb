@@ -71,7 +71,7 @@ namespace WebVentas
 
             if (!roleManager.RoleExists("GerenteGeneral"))
             {
-                roleManager.Create(new IdentityRole("GerenteComercial"));
+                roleManager.Create(new IdentityRole("GerenteGeneral"));
             }
 
         }

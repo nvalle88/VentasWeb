@@ -652,6 +652,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\Logo.png" />
     <Content Include="Imagenes\marcador_Mapa.png" />
     <Content Include="Imagenes\pushpin cliente-01.png" />
     <Content Include="Imagenes\pushpin vacio.png" />
