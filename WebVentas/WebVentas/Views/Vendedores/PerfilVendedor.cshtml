@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 
-    int calificacion = 5;
+    int calificacion = Convert.ToInt32(Model.estadisticoVendedorRequest.CalificacionPromedio);
 }
 
 <style>
@@ -82,6 +82,7 @@
 
                             </article>
                         </div>
+
                         <div class="container">
 
                             <div class="row">
@@ -113,66 +114,17 @@
                                                 if (i < calificacion)
                                                 {
                                                     <img class="et-estrellas-sin-relleno" src="~/Imagenes/star_selected.png" />
-                                                    
+
                                                 }
+
+
                                              }
                                         </div>
-
-                                        <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
-
-                                            <!-- Widget ID (each widget will need unique ID)-->
-                                            <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
-                                                <!-- widget options:
-                                                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                                                    data-widget-colorbutton="false"
-                                                    data-widget-editbutton="false"
-                                                    data-widget-togglebutton="false"
-                                                    data-widget-deletebutton="false"
-                                                    data-widget-fullscreenbutton="false"
-                                                    data-widget-custombutton="false"
-                                                    data-widget-collapsed="true"
-                                                    data-widget-sortable="false"
-
-                                                    -->
-                                                <header>
-                                                    <!--
-                                                    <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-                                                    -->
-                                                    <h2>Tipo de compromiso</h2>
-
-                                                </header>
-
-                                                <!-- widget div-->
-                                                <div>
-
-                                                    <!-- widget edit box -->
-                                                    <div class="jarviswidget-editbox">
-                                                        <!-- This area used as dropdown edit box -->
-
-                                                    </div>
-                                                    <!-- end widget edit box -->
-                                                    <!-- widget content -->
-                                                    <div class="widget-body no-padding">
-
-                                                        <div id="pie-chart" class="chart"></div>
-
-                                                    </div>
-                                                    <!-- end widget content -->
-
-                                                </div>
-                                                <!-- end widget div -->
-
-                                            </div>
-                                            <!-- end widget -->
-
-                                        </article>
-
 
                                     </div>
 
                                 </div>
-                                
+
                                 <div class="col col-lg-5">
 
                                     <div class="row">
@@ -206,6 +158,114 @@
                                     </div>
 
                                 </div>
+
+
+                            </div>
+
+                            <div class="row">
+
+
+                                <article class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
+
+                                    <!-- Widget ID (each widget will need unique ID)-->
+                                    <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                                        <!-- widget options:
+                                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                                        data-widget-colorbutton="false"
+                                        data-widget-editbutton="false"
+                                        data-widget-togglebutton="false"
+                                        data-widget-deletebutton="false"
+                                        data-widget-fullscreenbutton="false"
+                                        data-widget-custombutton="false"
+                                        data-widget-collapsed="true"
+                                        data-widget-sortable="false"
+
+                                        -->
+                                        <header>
+                                            <!--
+                                            <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                                            -->
+                                            <h2>Tipos de compromiso</h2>
+
+                                        </header>
+
+                                        <!-- widget div-->
+                                        <div>
+
+                                            <!-- widget edit box -->
+                                            <div class="jarviswidget-editbox">
+                                                <!-- This area used as dropdown edit box -->
+
+                                            </div>
+                                            <!-- end widget edit box -->
+                                            <!-- widget content -->
+                                            <div class="widget-body no-padding">
+
+                                                <div id="pie-chart" class="chart"></div>
+
+                                            </div>
+                                            <!-- end widget content -->
+
+                                        </div>
+                                        <!-- end widget div -->
+
+                                    </div>
+                                    <!-- end widget -->
+
+                                </article>
+
+
+                                <article class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
+
+                                    <!-- Widget ID (each widget will need unique ID)-->
+                                    <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                                        <!-- widget options:
+                                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                                        data-widget-colorbutton="false"
+                                        data-widget-editbutton="false"
+                                        data-widget-togglebutton="false"
+                                        data-widget-deletebutton="false"
+                                        data-widget-fullscreenbutton="false"
+                                        data-widget-custombutton="false"
+                                        data-widget-collapsed="true"
+                                        data-widget-sortable="false"
+
+                                        -->
+                                        <header>
+                                            <!--
+                                            <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                                            -->
+                                            <h2>Compromisos cumplidos / incumplidos</h2>
+
+                                        </header>
+
+                                        <!-- widget div-->
+                                        <div>
+
+                                            <!-- widget edit box -->
+                                            <div class="jarviswidget-editbox">
+                                                <!-- This area used as dropdown edit box -->
+
+                                            </div>
+                                            <!-- end widget edit box -->
+                                            <!-- widget content -->
+                                            <div class="widget-body no-padding">
+
+                                                <div id="pie-chart2" class="chart"></div>
+
+                                            </div>
+                                            <!-- end widget content -->
+
+                                        </div>
+                                        <!-- end widget div -->
+
+                                    </div>
+                                    <!-- end widget -->
+
+                                </article>
+
                             </div>
                         </div>
 
@@ -315,24 +375,31 @@
     <script src="~/Scripts/datatables/init.js"></script>
 
     <script>
-        /* pie chart */
 
         if ($('#pie-chart').length) {
 
             var data_pie = [];
-            var series = Math.floor(Math.random() * 10) + 1;
-            for (var i = 0; i < series; i++) {
-                data_pie[i] = {
-                    label: "Series" + (i + 1),
-                    data: Math.floor(Math.random() * 100) + 1
-                }
+
+            @{
+                var series = Model.estadisticoVendedorRequest.ListaTipoCompromiso.Count;
+            }
+
+
+            @for (var i = 0; i < series; i++) {
+                <text>
+                    data_pie[@i] = {
+                        label: '@(Model.estadisticoVendedorRequest.ListaTipoCompromiso.ElementAt(i).Descripcion )',
+                        data: @(Model.estadisticoVendedorRequest.ListaTipoCompromiso.ElementAt(i).CantidadCompromiso )
+                    }
+                </text>
+
             }
 
             $.plot($("#pie-chart"), data_pie, {
                 series: {
                     pie: {
                         show: true,
-                        innerRadius: 0.2,
+                        innerRadius: 0.4,
                         radius: 0.7,
                         label: {
                             show: false,
@@ -363,7 +430,68 @@
 
         }
 
-        /* end pie chart */
+
+
+        if ($('#pie-chart2').length) {
+
+            var data_pie = [];
+
+            @{
+                var series2 = 1;
+            }
+
+
+            @for (var i = 0; i < series2; i++) {
+                <text>
+                    data_pie[@i] = {
+                        label: 'Cumplidos',
+                        data: @(Model.estadisticoVendedorRequest.CompromisosCumplidos )
+                    }
+                </text>
+
+                <text>
+                    data_pie[@i+1] = {
+                        label: 'Incumplidos',
+                        data: @(Model.estadisticoVendedorRequest.CompromisosIncumplidos )
+                    }
+                </text>
+
+            }
+
+            $.plot($("#pie-chart2"), data_pie, {
+                series: {
+                    pie: {
+                        show: true,
+                        innerRadius: 0.4,
+                        radius: 0.7,
+                        label: {
+                            show: false,
+                            radius: 2/3,// 2/3 = 0.6666
+                            formatter: function (label, series) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            threshold: 0.1
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    noColumns: 1, // number of colums in legend table
+                    labelFormatter: null, // fn: string -> string
+                    labelBoxBorderColor: "#000", // border color for the little label boxes
+                    container: null, // container (as jQuery object) to put legend in, null means default on top of graph
+                    position: "ne", // position of default legend container within plot
+                    margin: [5, 10], // distance from grid edge to default legend container within plot
+                    backgroundColor: "#efefef", // null means auto-detect
+                    backgroundOpacity: 1 // set to 0 to avoid background
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+            });
+
+        }
 
     </script>
 }

@@ -1,5 +1,10 @@
 ﻿@model WebVentas.ObjectModel.SupervisorRequest
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+<script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+<script src="~/Scripts/libs/waitMe/waitMe.js"></script>
 
 
 @{
@@ -11,7 +16,7 @@
 
     <p></p>
 
-    <a href="../../Supervisor/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <a href="../../Supervisor/Index" id="regresar" type="bt" title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
 
     <p></p>
 
@@ -85,7 +90,7 @@
                                                 <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
 
                                                 <label class="input">
-                                                    <input name="Identificacion" value="@Model.Identificacion" class="form-control" />
+                                                    <input name="Identificacion" value="@Model.Identificacion" class="form-control" pattern="[0-9,a-z ]+" required />
                                                     @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                                                 </label>
                                             </section>
@@ -94,7 +99,7 @@
                                                 <label>@Html.DisplayNameFor(model => model.Nombres)</label>
 
                                                 <label class="input">
-                                                    <input name="Nombres" value="@Model.Nombres" class="form-control" />
+                                                    <input name="Nombres" value="@Model.Nombres" class="form-control" pattern="[a-z A-Z]+" required />
                                                     @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
 
                                                 </label>
@@ -111,7 +116,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Apellidos" value="@Model.Apellidos" class="form-control" />
+                                                    <input name="Apellidos" value="@Model.Apellidos" class="form-control" pattern="[a-z A-Z]+" required />
 
                                                     @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
 
@@ -125,7 +130,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" />
+                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" pattern="[a-z A-Z]+" required />
 
                                                     @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
 
@@ -141,7 +146,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Telefono" type="number" value="@Model.Telefono" class="form-control"  />
+                                                    <input name="Telefono" type="number" value="@Model.Telefono" class="form-control" pattern="[0-9 ]+" required />
 
                                                     @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
 
@@ -155,7 +160,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Correo" value="@Model.Correo" class="form-control" />
+                                                    <input name="Correo" value="@Model.Correo" class="form-control" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" required />
 
                                                     @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
 
@@ -193,7 +198,7 @@
                                                                             </td>
 
                                                                             <td>
-                                                                                @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor,idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
+                                                                                @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor, idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
 
                                                                             </td>
 
@@ -291,141 +296,162 @@
 
         $(document).ready(function () {
 
-            var $checkoutForm = $('#checkout-form').validate({
 
-                // Rules for form validation
-
-                rules: {
-
-                    Nombres: {
-
-                        required: true
-
-                    },
-
-                    Apellidos: {
-
-                        required: true
-
-                    },
-
-                    Correo: {
-
-                        required: true,
-
-                        email: true
-
-                    },
-
-                    Direccion: {
-
-                        required: true
-
-                    },
-
-                    Identificacion: {
-
-                        required: true,
-
-                        digits: true
-
-                    },
-
-                    Telefono: {
-
-                        required: true
-
-                    },
-
-                },
-
-
-
-                // Messages for form validation
-
-                messages: {
-
-                    Nombres: {
-
-                        required: ""
-
-                    },
-
-                    Apellidos: {
-
-                        required: ""
-
-                    },
-
-                    Correo: {
-
-                        required: "",
-
-                        email: "Formato de correo INVÁLIDO"
-
-                    },
-
-                    Direccion: {
-
-                        required: ""
-
-                    },
-
-                    Identificacion: {
-
-                        required: ""
-
-                    },
-
-                },
-
-
-
-                // Do not change code below
-
-                errorPlacement: function (error, element) {
-
-                    error.insertAfter(element.parent());
-
-                }
-
-            });
-
-
-            $("#regresar1").click(function () {
-
-                $('#content').waitMe({
-
-                    effect: 'ios',
-
-                    text: '',
-
-                    bg: 'rgba(255, 255, 255, 0.1)',
-
-                    color: '#118df9'
-
-                });
-
-            });
 
             $("#regresar").click(function () {
-
                 $('#content').waitMe({
-
-                    effect: 'ios',
-
+                    effect: 'bounce',
                     text: '',
-
                     bg: 'rgba(255, 255, 255, 0.1)',
-
-                    color: '#118df9'
-
+                    color: '#ff5722'
                 });
-
             });
+
 
         })
 
     </script>
+    @*<script type="text/javascript">
+
+            // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+            $(document).ready(function () {
+
+                var $checkoutForm = $('#checkout-form').validate({
+
+                    // Rules for form validation
+
+                    rules: {
+
+                        Nombres: {
+
+                            required: true
+
+                        },
+
+                        Apellidos: {
+
+                            required: true
+
+                        },
+
+                        Correo: {
+
+                            required: true,
+
+                            email: true
+
+                        },
+
+                        Direccion: {
+
+                            required: true
+
+                        },
+
+                        Identificacion: {
+
+                            required: true,
+
+                            digits: true
+
+                        },
+
+                        Telefono: {
+
+                            required: true
+
+                        },
+
+                    },
+
+
+
+                    // Messages for form validation
+
+                    messages: {
+
+                        Nombres: {
+
+                            required: ""
+
+                        },
+
+                        Apellidos: {
+
+                            required: ""
+
+                        },
+
+                        Correo: {
+
+                            required: "",
+
+                            email: "Formato de correo INVÁLIDO"
+
+                        },
+
+                        Direccion: {
+
+                            required: ""
+
+                        },
+
+                        Identificacion: {
+
+                            required: ""
+
+                        },
+
+                    },
+
+
+
+                    // Do not change code below
+
+                    errorPlacement: function (error, element) {
+
+                        error.insertAfter(element.parent());
+
+                    }
+
+                });
+
+
+                $("#regresar1").click(function () {
+
+                    $('#content').waitMe({
+
+                        effect: 'ios',
+
+                        text: '',
+
+                        bg: 'rgba(255, 255, 255, 0.1)',
+
+                        color: '#118df9'
+
+                    });
+
+                });
+
+                $("#regresar").click(function () {
+
+                    $('#content').waitMe({
+
+                        effect: 'ios',
+
+                        text: '',
+
+                        bg: 'rgba(255, 255, 255, 0.1)',
+
+                        color: '#118df9'
+
+                    });
+
+                });
+
+            })
+
+        </script>*@
 
 }

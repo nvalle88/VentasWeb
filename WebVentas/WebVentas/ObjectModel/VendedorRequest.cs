@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WebVentas.ObjectRequest;
 
 namespace WebVentas.ObjectModel
 {
@@ -53,8 +54,14 @@ namespace WebVentas.ObjectModel
         public string Telefono { get; set; }
 
         public int? idEmpresa { get; set; }
-        
-        public List<ClienteRequest> ListaClientes { get; set; }
 
+
+        // Estadisticos
+        public int? Calificacion { get; set; }
+
+
+        public List<ClienteRequest> ListaClientes { get; set; }
+        
+        public EstadisticoVendedorRequest estadisticoVendedorRequest { get; set; }
     }
 }
