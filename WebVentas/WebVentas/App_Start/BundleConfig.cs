@@ -9,7 +9,6 @@ namespace WebVentas
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/content/smartadmin").IncludeDirectory("~/content/css", "*.min.css"));
-
             bundles.Add(new ScriptBundle("~/scripts/smartadmin").Include(
                 "~/scripts/app.config.js",
                 "~/scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js",

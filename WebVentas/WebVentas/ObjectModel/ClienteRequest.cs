@@ -18,7 +18,7 @@ namespace WebVentas.ObjectModel
         [DisplayName("Foto")]
         public string Foto { get; set; }
 
-        [DisplayName("Identificación")]
+        [DisplayName("Identificación/RUC")]
         public string Identificacion { get; set; }
 
         [DisplayName("Celular")]
