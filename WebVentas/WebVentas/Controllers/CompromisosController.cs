@@ -152,5 +152,36 @@ namespace WebVentas.Controllers
         }
 
         #endregion
+        #region BuscarVendedorCliente
+        public async Task<JsonResult> ClienteVendor(string idVendedor)
+        {
+
+            var userWithClaims = (ClaimsPrincipal)User;
+            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+            var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
+            var user = new SupervisorRequest
+            {
+                IdVendedor = Convert.ToUInt16(idVendedor),
+                IdEmpresa = empresaActual.IdEmpresa
+
+            };
+            try
+            {
+                var respusta = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(user, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarClientesPorVendedor");
+                //var a = respusta.ListaClientes.ToString();
+                var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
+                return Json(listaSalida);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+
+            }
+
+
+        }
+        #endregion
     }
 }

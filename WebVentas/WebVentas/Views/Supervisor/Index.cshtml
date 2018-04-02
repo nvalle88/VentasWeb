@@ -6,6 +6,10 @@
 }
 
 <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+<script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+<script src="~/Scripts/libs/waitMe/waitMe.js"></script>
 <!-- MAIN CONTENT -->
 
 <div id="content">
@@ -28,7 +32,7 @@
 
     </div>
     <p>
-        <a href="../Supervisor/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+        <a href="../Supervisor/Create" id="nuevo" type="bt" title="Nuevo" class="btn btn-default butoon">
             <i class="glyphicon glyphicon-plus"></i>
         </a>
     </p>
@@ -125,5 +129,26 @@
 <!-- END MAIN CONTENT -->
 
 @section pagespecific{
-<script src="~/Scripts/datatables/init.js"></script>
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+
+
+            $("#nuevo").click(function () {
+                $('#content').waitMe({
+                    effect: 'bounce',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+
+        })
+
+    </script>
+    <script src="~/Scripts/datatables/init.js"></script>
+
 }
