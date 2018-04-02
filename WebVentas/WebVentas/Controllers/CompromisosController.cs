@@ -63,7 +63,7 @@ namespace WebVentas.Controllers
             supervisorRequest.IdUsuario = idUsuarioActual;
             supervisorRequest.IdEmpresa = idEmpresaInt;
 
-            if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+            if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
             {
                 Response response = await ApiServicio.InsertarAsync(supervisorRequest,
                                                              new Uri(WebApp.BaseAddress),
