@@ -1,6 +1,6 @@
 ﻿@model WebVentas.ObjectModel.ClienteRequest
 @using WebVentas.ObjectModel
-@{ var modelo = new SupervisorRequest { OpcionMenu = 2 }; }
+@{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
 @{ Html.RenderPartial("_PartialView", modelo);}
 @{
     ViewBag.Title = "MapaCalor";
@@ -212,7 +212,7 @@
             //    data: {}//,
             //    //success: function (data) {
             //        //arreglo = data;
-            //    //}, 
+            //    //},
             //    //error: function (ex) {
             //        //alert('Failed to retrieve data.' + ex);
             //    //}
@@ -242,7 +242,7 @@
                     //            Lat: arreglo[i].Latitud,
                     //            Lon: arreglo[i].Longitud,
                     //        }
-                        
+
                     //    var marker = new google.maps.Marker({
                     //        position: pos,
                     //        map: map,

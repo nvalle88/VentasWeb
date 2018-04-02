@@ -1,9 +1,5 @@
-﻿@*@model List<WebVentas.ObjectModel.SupervisorRequest>*@
+﻿@model WebVentas.ObjectModel.SupervisorRequest
 
-@model WebVentas.ObjectModel.SupervisorRequest
-@using WebVentas.ObjectModel
-@{ var modelo = new SupervisorRequest { OpcionMenu = 3 }; }
-@{ Html.RenderPartial("_PartialView", modelo);}
 @{
     ViewBag.Title = "Compromisos";
 }
@@ -176,5 +172,7 @@
         }
     </script>
 }
+
+
 
 

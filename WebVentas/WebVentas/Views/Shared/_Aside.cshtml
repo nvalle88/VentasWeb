@@ -13,44 +13,59 @@
     -->
     <nav>
         <!-- NOTE: Notice the gaps after each icon usage <i></i>..
-        Please note that these links work a bit different than
-        traditional href="" links. See documentation for details.
-        -->
-
+    Please note that these links work a bit different than
+    traditional href="" links. See documentation for details.
+    -->
+        @if (User.IsInRole("GerenteGeneral"))
+    {
         <ul>
+
+            <li class=" @Html.RouteIf("Index", "active" )">
+                <a href="#"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Administraci&oacute;n</span></a>
+                <ul>
+                    <li class="@Html.RouteIf("Supervisor", "active")">
+                        <a href="@Url.Action("Index", "Supervisor")" title="Supervisores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Supervisores</span></a>
+                    </li>
+                    <li class="@Html.RouteIf("InformacionGerencial", "active")">
+                        <a href="@Url.Action("MapaCalor", "InformacionGerencial")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Informaci&oacute;n gerencial</span></a>
+                    </li>
+                    <li class="@Html.RouteIf("Compromisos", "active")">
+                        <a href="@Url.Action("Index", "Compromisos")" title="Compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                    </li>
+                    <li class="@Html.RouteIf("Clientes", "active")">
+                        <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+}
+
+        @if (User.IsInRole("Supervisor"))
+    {
+        <ul>
+
+           
+
             <li class="@Html.RouteIf("Index", "super")">
-                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Supervisor</span></a>
+                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Administraci&oacute;n</span></a>
                 <ul>
                     <li class="@Html.RouteIf("Index", "super")">
-                        <a href="@Url.Action("Index", "Supervisor")" title="Dashboard"><span class="menu-item-parent">Supervisor</span></a>
+                        <a href="@Url.Action("Index", "Supervisor")" title="Dashboard"><span class="menu-item-parent">Supervisores</span></a>
                     </li>
-                    </ul>
+                </ul>
             </li>
             <li class="@Html.RouteIf("index", "active")">
-                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Consultas</span></a>
                 <ul>
                     <li class="@Html.RouteIf("index", "active")">
-                        <a href="@Url.Action("index", "home")" title="Dashboard"><span class="menu-item-parent">Analytics Dashboard</span></a>
+                        <a href="@Url.Action("index", "home")" title="Dashboard"><span class="menu-item-parent">Informaci&oacute;n gerencial</span></a>
                     </li>
                     <li class="@Html.RouteIf("social", "active")">
-                        <a href="@Url.Action("social", "home")" title="Dashboard"><span class="menu-item-parent">Social Wall</span></a>
+                        <a href="@Url.Action("social", "home")" title="Dashboard"><span class="menu-item-parent">Compromisos</span></a>
                     </li>
                 </ul>
             </li>
-            <li class="top-menu-invisible @Html.RouteIf(" intel", "active" )">
-                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">SmartAdmin Intel</span></a>
-                <ul>
-                    <li class="@Html.RouteIf("applayout", "active")">
-                        <a href="@Url.Action("applayout", "intel")" title="Dashboard"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">App Layouts</span></a>
-                    </li>
-                    <li class="@Html.RouteIf("skins", "active")">
-                        <a href="@Url.Action("skins", "intel")" title="Dashboard"><i class="fa fa-lg fa-fw fa-picture-o"></i> <span class="menu-item-parent">Prebuilt Skins</span></a>
-                    </li>
-                    <li class="@Html.RouteIf("settings", "active")">
-                        <a href="@Url.Action("settings", "intel")" title="Dashboard"><i class="fa fa-cube"></i> <span class="menu-item-parent">App Settings</span></a>
-                    </li>
-                </ul>
-            </li>
+
             <li class="@Html.RouteIf("inbox", "active")">
                 <a href="@Url.Action("inbox", "home")"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Outlook</span><span class="badge pull-right inbox-badge margin-right-13">14</span></a>
             </li>
@@ -458,6 +473,9 @@
             </li>
 
         </ul>
+}
+
+
     </nav>
     <span class="minifyme" data-action="minifyMenu">
         <i class="fa fa-arrow-circle-left hit"></i>

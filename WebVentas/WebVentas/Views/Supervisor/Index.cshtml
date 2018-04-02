@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<WebVentas.ObjectModel.SupervisorRequest>
-@using WebVentas.ObjectModel
-<link href="~/css/tabla/table.css" rel="stylesheet" />
-@{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
-@{ Html.RenderPartial("_PartialView", modelo);}
+
 
 @{
     ViewBag.Title = "Index";
 }
 
 <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+<script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+<script src="~/Scripts/libs/waitMe/waitMe.js"></script>
 <!-- MAIN CONTENT -->
 
 <div id="content">
@@ -31,7 +32,7 @@
 
     </div>
     <p>
-        <a href="../Supervisor/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
+        <a href="../Supervisor/Create" id="nuevo" type="bt" title="Nuevo" class="btn btn-default butoon">
             <i class="glyphicon glyphicon-plus"></i>
         </a>
     </p>
@@ -44,7 +45,7 @@
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -58,7 +59,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header  style="background-color:white">
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Supervisor</h2>
                     </header>
@@ -128,5 +129,26 @@
 <!-- END MAIN CONTENT -->
 
 @section pagespecific{
-<script src="~/Scripts/datatables/init.js"></script>
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+
+
+            $("#nuevo").click(function () {
+                $('#content').waitMe({
+                    effect: 'bounce',
+                    text: '',
+                    bg: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ff5722'
+                });
+            });
+
+        })
+
+    </script>
+    <script src="~/Scripts/datatables/init.js"></script>
+
 }
