@@ -295,6 +295,7 @@
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
     <Compile Include="ObjectModel\EstadisticosClienteRequest.cs" />
+    <Compile Include="ObjectModel\EstadisticoSupervisorRequest.cs" />
     <Compile Include="ObjectModel\EstadisticoVendedorRequest.cs" />
     <Compile Include="ObjectModel\MapaCalorRequest.cs" />
     <Compile Include="ObjectModel\EventoRequest.cs" />
@@ -1340,6 +1341,7 @@
     <Content Include="Views\InformacionGerencial\_PartialView.cshtml" />
     <Content Include="Views\Clientes\PerfilCliente.cshtml" />
     <Content Include="Views\Vendedores\_MenuView.cshtml" />
+    <Content Include="Views\InformacionGerencial\Estadisticas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
