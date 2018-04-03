@@ -1,86 +1,71 @@
 ﻿    <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
 <aside id="left-panel">
-
-    <!-- User info -->
     @{ Html.RenderPartial("_CurrentUser"); }
-    <!-- end user info -->
-    <!-- NAVIGATION : This navigation is also responsive
-
-    To make this navigation dynamic please make sure to link the node
-    (the reference to the nav > ul) after page load. Or the navigation
-    will not initialize.
-    -->
     <nav>
-        <!-- NOTE: Notice the gaps after each icon usage <i></i>..
-    Please note that these links work a bit different than
-    traditional href="" links. See documentation for details.
-    -->
         @if (User.IsInRole("GerenteGeneral"))
-    {
-        <ul>
+        {
+            <ul>
 
-            <li class=" @Html.RouteIf("Index", "active" )">
-                <a href="#" title="Administrar clientes y supervisores"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Administraci&oacute;n</span></a>
+                <li class=" @Html.RouteIf("Index", "active")">
+                    <a href="#" title="Administrar clientes y supervisores"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Administraci&oacute;n</span></a>
+                    <ul>
+                        <li class="@Html.RouteIf("Supervisor", "active")">
+                            <a href="@Url.Action("Index", "Supervisor")" title="Supervisores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Supervisores</span></a>
+                        </li>
+                        <li class="@Html.RouteIf("Clientes", "active")">
+                            <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class=" @Html.RouteIf("", "active")">
+                    <a href="#" title="Colsultar informes gerenciales y compromisos con los clientes"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
+                    <ul>
+                        <li class="@Html.RouteIf("InformacionGerencial", "active")">
+                            <a href="@Url.Action("MapaCalor", "InformacionGerencial")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Informaci&oacute;n gerencial</span></a>
+                        </li>
+                        <li class="@Html.RouteIf("Compromisos", "active")">
+                            <a href="@Url.Action("Index", "Compromisos")" title="Compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        }
+        else
+        {
+            if (User.IsInRole("Supervisor"))
+            {
                 <ul>
-                    <li class="@Html.RouteIf("Supervisor", "active")">
-                        <a href="@Url.Action("Index", "Supervisor")" title="Supervisores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Supervisores</span></a>
+                    <li class=" @Html.RouteIf("Index", "active" )">
+                        <a href="#" title="Administrar clientes y supervisores"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Administraci&oacute;n</span></a>
+                        <ul>
+                            <li class="@Html.RouteIf("Vendedores", "active")">
+                                <a href="@Url.Action("VendedorIndex", "Vendedores")" title="Vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
+                            </li>
+                            <li class="@Html.RouteIf("Clientes", "active")">
+                                <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="@Html.RouteIf("Clientes", "active")">
-                        <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
+
+                    <li class=" @Html.RouteIf("", "active" )">
+                        <a href="#" title="Colsultar informes gerenciales y compromisos con los clientes"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
+                        <ul>
+                            <li class="@Html.RouteIf("Compromisos", "active")">
+                                <a href="@Url.Action("Index", "Compromisos")" title="Clientes"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                            </li>
+                            <li class="@Html.RouteIf("Reportes", "active")">
+                                <a href="@Url.Action("MapaCalor", "Reportes")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Reportes</span></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </li>
-
-            <li class=" @Html.RouteIf("", "active" )">
-                <a href="#" title="Colsultar informes gerenciales y compromisos con los clientes"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
-                <ul>
-                    <li class="@Html.RouteIf("InformacionGerencial", "active")">
-                        <a href="@Url.Action("MapaCalor", "InformacionGerencial")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Informaci&oacute;n gerencial</span></a>
-                    </li>
-                    <li class="@Html.RouteIf("Compromisos", "active")">
-                        <a href="@Url.Action("Index", "Compromisos")" title="Compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
-                    </li>
-
-                </ul>
-            </li>
-        </ul>
-}
-
-        @if (User.IsInRole("Supervisor"))
-    {
-        <ul>
-            <li class=" @Html.RouteIf("Index", "active" )">
-                <a href="#" title="Administrar clientes y supervisores"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Administraci&oacute;n</span></a>
-                <ul>
-                    <li class="@Html.RouteIf("Vendedores", "active")">
-                        <a href="@Url.Action("VendedorIndex", "Vendedores")" title="Vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
-                    </li>
-                    <li class="@Html.RouteIf("Clientes", "active")">
-                        <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class=" @Html.RouteIf("", "active" )">
-                <a href="#" title="Colsultar informes gerenciales y compromisos con los clientes"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
-                <ul>
-                    <li class="@Html.RouteIf("Compromisos", "active")">
-                        <a href="@Url.Action("Index", "Compromisos")" title="Clientes"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
-                    </li>
-                    <li class="@Html.RouteIf("Reportes", "active")">
-                        <a href="@Url.Action("MapaCalor", "Reportes")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Reportes</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-}
-
-
+            }
+        }
     </nav>
     <span class="minifyme" data-action="minifyMenu">
         <i class="fa fa-arrow-circle-left hit"></i>
     </span>
-
 </aside>
-<!-- END NAVIGATION -->
