@@ -212,8 +212,10 @@ namespace WebVentas.Controllers
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-                clienteRequest.Latitud = Convert.ToDouble(Latitud);
-                clienteRequest.Longitud = Convert.ToDouble(Longitud);
+                var lat = Latitud.Replace(".", ",");
+                var lon = Longitud.Replace(".", ",");
+                clienteRequest.Latitud = Convert.ToDouble(lat);
+                clienteRequest.Longitud = Convert.ToDouble(lon);
 
                 var cliente = new ClienteRequest
                 {
@@ -326,8 +328,11 @@ namespace WebVentas.Controllers
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-                clienteRequest.Latitud = Convert.ToDouble(Latitud);
-                clienteRequest.Longitud = Convert.ToDouble(Longitud);
+                var lat = Latitud.Replace(".", ",");
+                var lon = Longitud.Replace(".", ",");
+
+                clienteRequest.Latitud = Convert.ToDouble(lat);
+                clienteRequest.Longitud = Convert.ToDouble(lon);
 
                 var cliente = new ClienteRequest
                 {

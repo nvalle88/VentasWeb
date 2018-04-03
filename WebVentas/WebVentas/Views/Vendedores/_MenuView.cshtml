@@ -5,15 +5,32 @@
 <div class="btn-group btn-group-justified">
 
 
-    <a href="../../Vendedores/vendedorIndex" class="btn btn-default" id="1">Vendedores<br /> </a>
-    <a href="../../Vendedores/CalendarioIndex" class="btn btn-default" id="2">Agenda<br /> </a>
-    <a href="../../Vendedores/vendedorIndex" class="btn btn-default" id="3">Ubicación<br /> </a>
+    <a href="../../Vendedores/vendedorIndex" class="btn btn-default" id="1" onclick="esperar()">Vendedores<br /> </a>
+    <a href="../../Vendedores/CalendarioIndex" class="btn btn-default" id="2" onclick="esperar()">Agenda<br /> </a>
+    <a href="../../Vendedores/vendedorIndex" class="btn btn-default" id="3" onclick="esperar()">Ubicación<br /> </a>
 
     <script>
 
         document.getElementById("@(Model.NumeroMenu)").classList.add('butoon');
 
+    </script>
 
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+    <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+    <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
+
+    <script>
+
+
+        function esperar() {
+            $('#content').waitMe({
+                effect: 'bounce',
+                text: '',
+                bg: 'rgba(255, 255, 255, 0.1)',
+                color: '#ff5722'
+            });
+        }
     </script>
 
 </div>
