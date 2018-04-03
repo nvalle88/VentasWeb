@@ -567,13 +567,15 @@ namespace WebVentas.Controllers
         {
             InicializarMensaje(mensaje);
 
+            var menu = 2;
+
             var lista = new List<VendedorRequest>();
             VendedorRequest vendedorRequest = new VendedorRequest();
             SupervisorRequest supervisorRequest = new SupervisorRequest();
             int idEmpresaInt = 0;
 
             var listaEventos = new List<EventoRequest>();
-
+            
 
             try
             {
@@ -588,6 +590,8 @@ namespace WebVentas.Controllers
             {
 
                 InicializarMensaje(Mensaje.ErrorIdEmpresa);
+                listaEventos.Add(new EventoRequest { NumeroMenu = menu});
+                
                 return View(listaEventos);
             }
 
@@ -623,12 +627,14 @@ namespace WebVentas.Controllers
 
                 ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
 
+                listaEventos.FirstOrDefault().NumeroMenu = menu;
 
                 return View(listaEventos);
             }
             catch (Exception ex)
             {
                 InicializarMensaje(Mensaje.Excepcion);
+                listaEventos.Add(new EventoRequest { NumeroMenu = menu });
                 return View(listaEventos);
             }
         }

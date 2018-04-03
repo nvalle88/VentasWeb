@@ -8,6 +8,9 @@ namespace WebVentas.ObjectModel
 {
     public class EventoRequest
     {
+        // Menú
+        public int NumeroMenu { get; set; }
+
         // Campos de la tabla agenda
         public int idAgenda { get; set; }
 
