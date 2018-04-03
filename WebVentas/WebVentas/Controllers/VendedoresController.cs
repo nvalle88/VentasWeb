@@ -5,6 +5,7 @@ using SmartAdminMvc;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,16 +14,15 @@ using System.Web.Mvc;
 using VentaServicios.Utils;
 using WebVentas.Models;
 using WebVentas.ObjectModel;
+using WebVentas.ObjectRequest;
 using WebVentas.Services;
 using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
-    
+    [Authorize(Roles = "Supervisor,GerenteGeneral")]
     public class VendedoresController : Controller
     {
-
-        
         private void InicializarMensaje(string mensaje)
 
         {
@@ -41,7 +41,7 @@ namespace WebVentas.Controllers
             List<VendedorRequest> lista = new List<VendedorRequest>();
             VendedorRequest vendedorRequest = new VendedorRequest();
             SupervisorRequest supervisorRequest = new SupervisorRequest();
-
+            
             int idEmpresaInt = 0;
 
             Response response = new Response();
@@ -101,12 +101,16 @@ namespace WebVentas.Controllers
                 }
 
 
+
+                lista.FirstOrDefault().NumeroMenu = 1;
                 return View(lista);
             }
             catch(Exception ex)
             {
                 InicializarMensaje(Mensaje.Excepcion);
+                lista.FirstOrDefault().NumeroMenu = 1;
                 return View(lista);
+
             }
         }
 
@@ -145,7 +149,17 @@ namespace WebVentas.Controllers
                 vendedor = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(vendedor,
                     new Uri(WebApp.BaseAddress),
                     "api/Vendedores/ListarClientesPorVendedor");
-                
+
+                var estadisticoVendedorRequest = await ApiServicio.ObtenerElementoAsync1<EstadisticoVendedorRequest>(vendedor,
+                    new Uri(WebApp.BaseAddress),
+                    "api/Agendas/VerEstadisticosVendedor");
+
+                vendedor.estadisticoVendedorRequest = estadisticoVendedorRequest;
+
+
+                var foto = string.IsNullOrEmpty(vendedor.Foto) != true ? vendedor.Foto.Replace("~", WebApp.BaseAddress) : "";
+                vendedor.Foto = foto;
+
 
                 InicializarMensaje("");
                 return View(vendedor);
@@ -170,7 +184,7 @@ namespace WebVentas.Controllers
         
 
         [HttpPost]
-        public async Task<ActionResult> CrearVendedor(VendedorRequest vendedorRequest)
+        public async Task<ActionResult> CrearVendedor(HttpPostedFileBase fileUpload, VendedorRequest vendedorRequest)
         {
             InicializarMensaje("");
 
@@ -233,7 +247,7 @@ namespace WebVentas.Controllers
                     guardar = true;
                 }
 
-                if (userManager.IsInRole(idUsuarioActual, "GerenteComercial"))
+                else if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
                 {
                     guardar = true;
 
@@ -270,10 +284,16 @@ namespace WebVentas.Controllers
 
                 if (result != null)
                 {
+
                     vendedorRequest.IdUsuario = user.Id;
 
+                    var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    var InstanciaUsuario = await userManager2.FindByIdAsync(vendedorRequest.IdUsuario);
+
                     
-                    userManager.AddToRole(vendedorRequest.IdUsuario, "Vendedor");
+
+                    
+                    userManager.AddToRole(InstanciaUsuario.Id, "Vendedor");
 
                     
 
@@ -282,12 +302,43 @@ namespace WebVentas.Controllers
                                                                  "api/Vendedores/InsertarVendedor");
 
                     
-
+                    
                     if (response.IsSuccess)
                     {
 
-                        return RedirectToAction("VendedorIndex", new { mensaje = response.Message});
+                        if (fileUpload != null)
+                        {
+                            var idVendedor = response.Resultado;
+
+                            
+                            var fichero = readFileContents(fileUpload);
+                            var foto = new ArchivoRequest { Id = Convert.ToString(idVendedor), Array = fichero, Tipo = 3 };
+
+
+                            var fotoRequest = await ApiServicio.InsertarAsync<Response>(foto, new Uri(WebApp.BaseAddress)
+                                                                            , "Api/Archivos/Insertar");
+
+                            if (fotoRequest.IsSuccess)
+                            {
+
+                                user.Foto = fotoRequest.Resultado.ToString();
+
+                                db.Entry(user).State = EntityState.Modified;
+                                await db.SaveChangesAsync();
+
+                                return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
+
+                            }
+                            else
+                            {
+
+                                return RedirectToAction("VendedorIndex", new { mensaje = Mensaje.Error });
+                            }
+                            
+                        }
+                        
                     }
+                    
                 }
 
 
@@ -296,7 +347,7 @@ namespace WebVentas.Controllers
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = response.Message;
+                ViewData["Error"] = Mensaje.Error;
                 return View(vendedorRequest);
             }
 
@@ -333,7 +384,11 @@ namespace WebVentas.Controllers
                 vendedor = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(vendedor,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/Vendedores/ListarClientesPorVendedor");
-                
+
+
+                var foto = string.IsNullOrEmpty(vendedor.Foto) != true ? vendedor.Foto.Replace("~", WebApp.BaseAddress) : "";
+                vendedor.Foto = foto;
+
                 InicializarMensaje("");
                 return View(vendedor);
             }
@@ -346,7 +401,7 @@ namespace WebVentas.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> EditarVendedor(VendedorRequest vendedorRequest)
+        public async Task<ActionResult> EditarVendedor(HttpPostedFileBase fileUpload, VendedorRequest vendedorRequest)
         {
             InicializarMensaje(Mensaje.GuardadoSatisfactorio);
             int idEmpresaInt = 0;
@@ -414,11 +469,48 @@ namespace WebVentas.Controllers
 
                     if (response.IsSuccess)
                     {
-                        transaction.Commit();
 
-                        return RedirectToAction("VendedorIndex", new { mensaje = response.Message});
+                        if (fileUpload != null)
+                        {
+                            var idVendedor = response.Resultado;
+
+
+                            var fichero = readFileContents(fileUpload);
+                            var foto = new ArchivoRequest { Id = Convert.ToString(vendedorRequest.IdVendedor), Array = fichero, Tipo = 3 };
+
+
+                            var fotoRequest = await ApiServicio.InsertarAsync<Response>(foto, new Uri(WebApp.BaseAddress)
+                                                                            , "Api/Archivos/Insertar");
+
+                            if (fotoRequest.IsSuccess)
+                            {
+
+                                InstanciaUsuario.Foto = fotoRequest.Resultado.ToString();
+
+                                db.Entry(InstanciaUsuario).State = EntityState.Modified;
+                                await db.SaveChangesAsync();
+
+                                transaction.Commit();
+
+                                return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
+
+                            }
+                            else
+                            {
+                                transaction.Rollback();
+                                return RedirectToAction("VendedorIndex", new { mensaje = Mensaje.Error });
+                            }
+
+                        }
+                        else
+                        {
+                            transaction.Commit();
+
+                            return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
+
+                        }
+
                     }
-
 
                     transaction.Rollback();
 
@@ -815,6 +907,28 @@ namespace WebVentas.Controllers
             }
 
         }
+
+
+
+        private byte[] readFileContents(HttpPostedFileBase file)
+        {
+            Stream fileStream = file.InputStream;
+            var mStreamer = new MemoryStream();
+            mStreamer.SetLength(fileStream.Length);
+            fileStream.Read(mStreamer.GetBuffer(), 0, (int)fileStream.Length);
+            mStreamer.Seek(0, SeekOrigin.Begin);
+            byte[] fileBytes = mStreamer.GetBuffer();
+
+            //////using (MemoryStream ms = new MemoryStream())
+            //////{
+            ////// file.InputStream.CopyTo(ms);
+            ////// fileBytes = ms.GetBuffer();
+            //////}
+
+            return fileBytes;
+        }
+
+
 
     }
 }

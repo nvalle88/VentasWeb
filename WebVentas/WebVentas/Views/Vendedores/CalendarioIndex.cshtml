@@ -1,5 +1,8 @@
 @model List<WebVentas.ObjectModel.EventoRequest>
 
+
+@{ Html.RenderPartial("_MenuView", Model.FirstOrDefault());}
+
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -8,7 +11,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
 
             <form id="buscar" method="post" novalidate="novalidate">
-                <section class="col col-lg-5 no-padding" >
+                <section class="col col-lg-5 no-padding">
 
                     <div class="col col-lg-4" style="padding-top:7px;text-align:center;">Vendores</div>
 
@@ -20,7 +23,7 @@
 
 
                 <section class="col col-lg-1">
-                    
+
                     <button type="submit" id="buscar" href="/Vendedores/CalendarioIndex" class="btn btn-primary">
                         <i class="fa fa-search fa-lg"></i>
                     </button>
@@ -30,12 +33,12 @@
 
         </div>
     </div>
-    
+
     <br />
 
     <div class="row">
 
-        
+
         <div class="col-sm-12 col-md-12 col-lg-12">
 
             <!-- new widget -->
@@ -278,7 +281,7 @@
                                 end: new Date(@( yearF ), @( mesF ), @( diaF ),@( horaF ) ,@( minutoF )),
 
                                 description: '@(Model.ElementAt(i).Notas)',
-                                
+
 
                         </text>
 
@@ -394,5 +397,5 @@
 
     </script>
 
-    
+
 }
