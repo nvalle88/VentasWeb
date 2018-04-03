@@ -1338,6 +1338,7 @@
     <Content Include="Views\Compromisos\Index.cshtml" />
     <Content Include="Views\InformacionGerencial\_PartialView.cshtml" />
     <Content Include="Views\Clientes\PerfilCliente.cshtml" />
+    <Content Include="Views\Vendedores\_MenuView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
