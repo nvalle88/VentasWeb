@@ -38,8 +38,8 @@ namespace WebVentas.ObjectModel
         public List<VendedorRequest> ListaVendedoresAsignados { get; set; }
         public List<VendedorRequest> ListaVendedoresSinAsignar { get; set; }
         public List<CompromisoRequest> Listarcompromiso { get; set; }
-        public DateTime? FechaInicio { get; set; }
-        public DateTime? FechaFin { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
         public EstadisticoSupervisorRequest estadisticoSupervisorRequest { get; set; }
 
     }

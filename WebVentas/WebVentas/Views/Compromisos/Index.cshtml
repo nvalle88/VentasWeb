@@ -14,7 +14,8 @@
                         <section class="col col-lg-5">
                             <label>Vendedor</label>
                             <label class="input">
-                                @Html.DropDownList("IdVendedor", null, htmlAttributes: new { @class = "form-control" })
+                                @*@Html.DropDownList("IdVendedor", new SelectList(Model.ListaVendedores),"-- Select Status --" , htmlAttributes: new { @class = "form-control" })*@
+                                @Html.DropDownList("IdVendedor", new SelectList(Model.ListaVendedores, "IdVendedor", "NombreApellido"), "Seleccione", htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
                             </label>
                         </section>
@@ -29,19 +30,19 @@
                         <section class="col col-lg-5">
                             <label>Fecha Inicio</label>
                             <label class="input">
-                                <input name="FechaInicio" placeholder="@DateTime.Now.ToShortDateString()" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                <input name="FechaInicio" value="@Model.FechaInicio.ToShortDateString()" placeholder="@DateTime.Now.ToShortDateString()" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
                             </label>
                         </section>
                         <section class="col col-lg-5">
                             <label>Fecha Fin</label>
                             <label class="input">
-                                <input name="FechaFin" placeholder="@DateTime.Now.ToShortDateString()" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                <input name="FechaFin" value="@Model.FechaFin.ToShortDateString()" placeholder="@DateTime.Now.ToShortDateString()" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
                             </label>
                         </section>
                         <section class="col col-lg-2">
                             <label></label>
                             <label class="input">
-                                <button style="butoon" type="submit" id="buscar" class="btn btn-primary">
+                                <button style="right:100px; width:50px;" type="submit" id="buscar" class="btn btn-default butoon">
                                     <i class="fa fa-search fa-lg"></i>
                                 </button>
                             </label>
@@ -131,7 +132,7 @@
 
     <script type="text/javascript">
 
-            cargaAll();
+          // cargaAll();
         // Cliente por Vendedor
 
          $("#IdVendedor").change(cargaAll);
@@ -139,7 +140,7 @@
         function cargaAll() {
         //mostrarLoadingPanel("content", "Cargando...")
 
-        $("#cliente").empty();
+       $("#cliente").empty();
 
         $.ajax({
         type: 'POST',

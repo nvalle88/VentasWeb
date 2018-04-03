@@ -78,7 +78,7 @@ namespace WebVentas.Controllers
                                                               , "api/Vendedores/ListarVendedoresGerente");
                     //var objeto = JsonConvert.DeserializeObject<SupervisorRequest>(lista.ListaVendedores.ToString());
                     ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "NombreApellido");
-                    var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, Listarcompromiso = new List<CompromisoRequest>() };
+                    var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, ListaVendedores = lista.ListaVendedores, Listarcompromiso = new List<CompromisoRequest>() };
 
                     return View(vista1);
 
@@ -91,7 +91,36 @@ namespace WebVentas.Controllers
                     return View();
                 }
 
-                ;
+                
+            }
+            if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+            {
+                Response response = await ApiServicio.InsertarAsync(supervisorRequest,
+                                                              new Uri(WebApp.BaseAddress),
+                                                              "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                supervisorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
+                var userWithClaims = (ClaimsPrincipal)User;
+                try
+                {
+                    var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarVendedoresSupervisor");
+                    //var objeto = JsonConvert.DeserializeObject<SupervisorRequest>(lista.ListaVendedores.ToString());
+                    ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "NombreApellido");
+                    
+                    //var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, Listarcompromiso = new List<CompromisoRequest>() };
+                    var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, ListaVendedores = lista.ListaVendedores, Listarcompromiso = new List<CompromisoRequest>() };
+                    return View(vista1);
+
+                }
+                catch (Exception ex)
+                {
+
+                    ex.ToString();
+
+                    return View();
+                }
             }
             var vista = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, Listarcompromiso = new List<CompromisoRequest>() };
             return View(vista);
@@ -140,12 +169,14 @@ namespace WebVentas.Controllers
                 var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vista/ListarVisitas");
                 supervisorRequest.Listarcompromiso = lista.Listarcompromiso;
-
+                
                 var listavendedor = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresGerente");
                 ViewBag.IdVendedor = new SelectList(listavendedor.ListaVendedores, "IdVendedor", "NombreApellido");
-
+                
                 supervisorRequest.ListaVendedores = listavendedor.ListaVendedores;
+                supervisorRequest.FechaInicio = supervisorRequest.FechaInicio;
+                supervisorRequest.FechaFin = supervisorRequest.FechaFin;
                 return View(supervisorRequest);
             }
             if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
@@ -161,13 +192,21 @@ namespace WebVentas.Controllers
                 supervisorRequest.Listarcompromiso = lista.Listarcompromiso;
 
                 var listavendedor = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
-                                                              , "api/Vendedores/ListarVendedoresPorSupervisor");
+                                                              , "api/Vendedores/ListarVendedoresSupervisor");
                 ViewBag.IdVendedor = new SelectList(listavendedor.ListaVendedores, "IdVendedor", "NombreApellido");
+                supervisorRequest.IdCliente = supervisorRequest.IdCliente;
+                var listaClientes = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarClientesPorVendedor");
+
+                ViewBag.cliente = new SelectList(listaClientes.ListaClientes, "IdCliente", "Nombre");
 
                 supervisorRequest.ListaVendedores = listavendedor.ListaVendedores;
+                supervisorRequest.FechaInicio = supervisorRequest.FechaInicio;
+                supervisorRequest.FechaFin = supervisorRequest.FechaFin;
                 return View(supervisorRequest);
             }
-            return View();
+            var vista = new SupervisorRequest { FechaInicio = supervisorRequest.FechaInicio, FechaFin = supervisorRequest.FechaFin};
+            return View(vista);
 
         }
 
