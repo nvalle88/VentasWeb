@@ -15,7 +15,7 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
-    [Authorize( Roles ="Supervisor,GerenteGeneral")]
+    [Authorize(Roles = "Supervisor,GerenteGeneral")]
     public class ClientesController : Controller
     {
 
@@ -121,8 +121,8 @@ namespace WebVentas.Controllers
             var listaVendedores = await ApiServicio.Listar<VendedorRequest>(empresaActual, new Uri(WebApp.BaseAddress)
                                                                , "api/Vendedores/ListarVendedores");
 
-            ViewBag.IdTipoCliente = new SelectList(listaTipoCliente, "IdTipoCliente", "Tipo",clienteRequest.IdTipoCliente);
-            ViewBag.IdVendedor = new SelectList(listaVendedores, "IdVendedor", "Nombres",clienteRequest.IdVendedor);
+            ViewBag.IdTipoCliente = new SelectList(listaTipoCliente, "IdTipoCliente", "Tipo", clienteRequest.IdTipoCliente);
+            ViewBag.IdVendedor = new SelectList(listaVendedores, "IdVendedor", "Nombres", clienteRequest.IdVendedor);
         }
 
 
@@ -147,7 +147,7 @@ namespace WebVentas.Controllers
             };
             var respuesta = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
                                                                  , "api/Clientes/ObtenerCliente");
-            
+
             var clienteRequest = JsonConvert.DeserializeObject<ClienteRequest>(respuesta.Resultado.ToString());
 
             var foto = string.IsNullOrEmpty(clienteRequest.Foto) != true ? clienteRequest.Foto.Replace("~", WebApp.BaseAddress) : "";
@@ -177,12 +177,12 @@ namespace WebVentas.Controllers
         {
             var firma = string.IsNullOrEmpty(cliente.Firma) != true ? cliente.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
             return firma;
-           
+
         }
 
         public async Task<ActionResult> Edit(int id)
         {
-           
+
 
 
             var clienteRequests = new ClienteRequest { IdCliente = id };
@@ -342,7 +342,6 @@ namespace WebVentas.Controllers
 
                 var respuesta = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
                                                                       , "api/Clientes/ExisteClientePorEmpresa");
-
 
                 if (respuesta == null)
                 {
