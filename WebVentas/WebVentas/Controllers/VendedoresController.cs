@@ -220,138 +220,156 @@ namespace WebVentas.Controllers
                 return View(vendedorRequest);
             }
 
+
+            ApplicationDbContext db = new ApplicationDbContext();
             Response response = new Response();
 
+           
             try
-            {
-
-                ApplicationDbContext db = new ApplicationDbContext();
-                
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                
-                
-                var idUsuarioActual = User.Identity.GetUserId();
-
-                supervisorRequest.IdUsuario = idUsuarioActual;
-                supervisorRequest.IdEmpresa = idEmpresaInt;
-
-                if ( userManager.IsInRole(idUsuarioActual  , "Supervisor") )
                 {
-                    response = await ApiServicio.InsertarAsync(supervisorRequest,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/Vendedores/obtenerSupervisorPorIdUsuario");
+                    
+                    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
-                    supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
-                    vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
 
-                    guardar = true;
+                    var idUsuarioActual = User.Identity.GetUserId();
+
+                    supervisorRequest.IdUsuario = idUsuarioActual;
+                    supervisorRequest.IdEmpresa = idEmpresaInt;
+
+                    if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+                    {
+                        response = await ApiServicio.InsertarAsync(supervisorRequest,
+                                                                     new Uri(WebApp.BaseAddress),
+                                                                     "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                        supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                        vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
+
+                        guardar = true;
+                    }
+
+                    else if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
+                    {
+                        guardar = true;
+
+                    }
+
+
+                    if (guardar == false)
+                    {
+                        InicializarMensaje("No tiene permisos para agregar un nuevo vendedor");
+                        return View(vendedorRequest);
+                    }
+
+                    var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    var InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
+
+                    if (InstanciaUsuario != null)
+                    {
+                        InicializarMensaje(Mensaje.ExisteCorreo);
+                        return View(vendedorRequest);
+                    }
+
+                    var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/BuscarUsuariosVendedoresPorEmpresaEIdentificacion");
+
+                    if (ExisteUsuario.Count>0)
+                    {
+                        InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
+                        return View(vendedorRequest);
+                    }
+
+                    var user = new ApplicationUser
+                    {
+                        UserName = vendedorRequest.Correo,
+                        Email = vendedorRequest.Correo,
+                        Identificacion = vendedorRequest.Identificacion,
+
+                        Nombres = vendedorRequest.Nombres,
+                        Apellidos = vendedorRequest.Apellidos,
+                        Direccion = vendedorRequest.Direccion,
+                        Telefono = vendedorRequest.Telefono,
+
+                        Estado = 1,
+
+                        IdEmpresa = idEmpresaInt
+                    };
+
+
+
+                    var result = await userManager.CreateAsync(user, "A123345.1a");
+                    db.SaveChanges();
+
+                    if (result != null)
+                    {
+
+                        InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
+
+                        vendedorRequest.IdUsuario = InstanciaUsuario.Id;
+
+
+                        userManager.AddToRole(InstanciaUsuario.Id, "Vendedor");
+
+
+
+                        response = await ApiServicio.InsertarAsync(vendedorRequest,
+                                                                     new Uri(WebApp.BaseAddress),
+                                                                     "api/Vendedores/InsertarVendedor");
+
+
+
+                        if (response.IsSuccess)
+                        {
+
+                            if (fileUpload != null)
+                            {
+                                var idVendedor = response.Resultado;
+
+
+                                var fichero = readFileContents(fileUpload);
+                                var foto = new ArchivoRequest { Id = Convert.ToString(idVendedor), Array = fichero, Tipo = 3 };
+
+
+                                var fotoRequest = await ApiServicio.InsertarAsync<Response>(foto, new Uri(WebApp.BaseAddress)
+                                                                                , "Api/Archivos/Insertar");
+
+                                if (fotoRequest.IsSuccess)
+                                {
+
+                                    user.Foto = fotoRequest.Resultado.ToString();
+
+                                    db.Entry(user).State = EntityState.Modified;
+                                    await db.SaveChangesAsync();
+                                    
+
+                                    return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
+
+                                }
+                                else
+                                {
+                                    
+                                    InicializarMensaje(Mensaje.Error);
+                                    return View(vendedorRequest);
+                                }
+
+                            }
+                            
+                            return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
+                        }
+
+                    }
+                    
+                    InicializarMensaje("No se ha podido crear un usuario");
+                    return View(vendedorRequest);
                 }
-
-                else if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
+                catch (Exception ex)
                 {
-                    guardar = true;
-
-                }
-                
-
-                if (guardar == false)
-                {
-                    InicializarMensaje("No tiene permisos para agregar un nuevo vendedor");
+                    ViewData["Error"] = Mensaje.Error;
                     return View(vendedorRequest);
                 }
 
-
-                var user = new ApplicationUser
-                {
-                    UserName = vendedorRequest.Correo,
-                    Email = vendedorRequest.Correo,
-                    Identificacion = vendedorRequest.Identificacion,
-
-                    Nombres = vendedorRequest.Nombres,
-                    Apellidos = vendedorRequest.Apellidos,
-                    Direccion = vendedorRequest.Direccion,
-                    Telefono = vendedorRequest.Telefono,
-                    
-                    Estado = 1,
-                    
-                    IdEmpresa = idEmpresaInt
-                };
-
-
-
-                var result = await userManager.CreateAsync(user, "A123345.1a");
-                db.SaveChanges();
-
-                if (result != null)
-                {
-
-                    vendedorRequest.IdUsuario = user.Id;
-
-                    var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                    var InstanciaUsuario = await userManager2.FindByIdAsync(vendedorRequest.IdUsuario);
-
-                    
-
-                    
-                    userManager.AddToRole(InstanciaUsuario.Id, "Vendedor");
-
-                    
-
-                    response = await ApiServicio.InsertarAsync(vendedorRequest,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/Vendedores/InsertarVendedor");
-
-                    
-                    
-                    if (response.IsSuccess)
-                    {
-
-                        if (fileUpload != null)
-                        {
-                            var idVendedor = response.Resultado;
-
-                            
-                            var fichero = readFileContents(fileUpload);
-                            var foto = new ArchivoRequest { Id = Convert.ToString(idVendedor), Array = fichero, Tipo = 3 };
-
-
-                            var fotoRequest = await ApiServicio.InsertarAsync<Response>(foto, new Uri(WebApp.BaseAddress)
-                                                                            , "Api/Archivos/Insertar");
-
-                            if (fotoRequest.IsSuccess)
-                            {
-
-                                user.Foto = fotoRequest.Resultado.ToString();
-
-                                db.Entry(user).State = EntityState.Modified;
-                                await db.SaveChangesAsync();
-
-                                return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
-
-                            }
-                            else
-                            {
-
-                                return RedirectToAction("VendedorIndex", new { mensaje = Mensaje.Error });
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                }
-
-
-                InicializarMensaje("No se ha podido crear un usuario");
-                return View(vendedorRequest);
-            }
-            catch (Exception ex)
-            {
-                ViewData["Error"] = Mensaje.Error;
-                return View(vendedorRequest);
-            }
-
-            
+           
         }
 
 
@@ -439,11 +457,36 @@ namespace WebVentas.Controllers
 
                 try
                 {
+                    var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    var InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
 
-                   
+                    if (InstanciaUsuario != null && InstanciaUsuario.Id != vendedorRequest.IdUsuario)
+                    {
+                        InicializarMensaje(Mensaje.ExisteCorreo);
+                        return View(vendedorRequest);
+                    }
+                    
+                    var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/BuscarUsuariosVendedoresPorEmpresaEIdentificacion");
+                    
+                    if (ExisteUsuario.Count > 0)
+                    {
+                        for (int i = 0;i< ExisteUsuario.Count;i++)
+                        {
+                            
+                            if (ExisteUsuario.ElementAt(i).IdUsuario != vendedorRequest.IdUsuario)
+                            {
+                                InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
+                                return View(vendedorRequest);
+                            }
+                        }
+                        
+                    }
+
 
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                    var InstanciaUsuario= await userManager.FindByIdAsync(vendedorRequest.IdUsuario);
+                    InstanciaUsuario= await userManager.FindByIdAsync(vendedorRequest.IdUsuario);
 
                     InstanciaUsuario.UserName = vendedorRequest.Correo;
                     InstanciaUsuario.Email = vendedorRequest.Correo;
@@ -625,7 +668,16 @@ namespace WebVentas.Controllers
                 lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresPorSupervisor");
 
+                lista.Add(new VendedorRequest
+                {
+                    IdVendedor = 0,
+                    Nombres = "Seleccione"
+                });
+
+                lista = lista.OrderBy(x => x.IdVendedor).ToList();
+
                 ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+                
 
                 listaEventos.FirstOrDefault().NumeroMenu = menu;
 
@@ -699,6 +751,13 @@ namespace WebVentas.Controllers
 
                 lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresPorSupervisor");
+
+                lista.Add(new VendedorRequest {
+                    IdVendedor = 0,
+                    Nombres = "Seleccione"
+                });
+
+                lista = lista.OrderBy(x => x.IdVendedor).ToList();
 
                 ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
 
