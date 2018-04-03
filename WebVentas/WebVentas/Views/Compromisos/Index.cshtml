@@ -137,12 +137,12 @@
             cargaAll();
         // Cliente por Vendedor
 
-            $("#IdVendedor").change(cargaAll);
+         $("#IdVendedor").change(cargaAll);
 
         function cargaAll() {
         //mostrarLoadingPanel("content", "Cargando...")
 
-        //$("#cliente").empty();
+        $("#cliente").empty();
 
         $.ajax({
         type: 'POST',

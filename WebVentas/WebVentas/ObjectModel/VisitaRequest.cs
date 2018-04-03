@@ -10,6 +10,7 @@ namespace WebVentas.ObjectModel
         public int idVisita { get; set; }
 
         public int? Calificacion { get; set; }
+        public int CantidadClienteTipoCompromiso { get; set; }
 
         public string Firma { get; set; }
         public string Nombre { get; set; }

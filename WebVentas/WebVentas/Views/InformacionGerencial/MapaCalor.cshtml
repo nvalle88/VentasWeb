@@ -1,6 +1,6 @@
 ﻿@model WebVentas.ObjectModel.ClienteRequest
 @using WebVentas.ObjectModel
-@{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
+@{ var modelo = new ClienteRequest { OpcionMenu = 0 }; }
 @{ Html.RenderPartial("_PartialView", modelo);}
 @{
     ViewBag.Title = "MapaCalor";
@@ -118,32 +118,39 @@
                                 <div class="widget-body no-padding">
                                     <fieldset>
                                         <div id="floating-panel">
-                                            <label>Tipo CLiente:</label>
-                                            @Html.DropDownList("idTipoCliente", null, htmlAttributes: new { @class = "form-control" })
-                                            @*<input onclick="toggleHeatmap()"
-                                                type="checkbox"
-                                                value="true"
-                                                checked="checked" />*@
-                                            <br />
-                                            <label>Tipo Compromiso:</label>&nbsp;
-                                            @Html.DropDownList("IdTipoCompromiso", null, htmlAttributes: new { @class = "form-control" })
-                                            @*<input onclick="OcultarCompetencia()"
-                                                type="checkbox"
-                                                value="true"
-                                                checked="checked" />*@
-                                            <br />
-                                            <label>Total Compromiso:</label>&nbsp;
-                                            <input onclick="OcultarCompetencia()"
-                                                   type="checkbox"
+                                            <label>Cliente:</label>
+                                            <input id="chk1" onclick="tipocliente()"
                                                    value="true"
+                                                   type="checkbox"
                                                    checked="checked" />
+                                            <label>Todos:</label>
+                                            <input id="chk3" type="checkbox" onclick="ListaTipoCliente()"
+                                                   value="false" />
+                                            <div id="tipo">
+                                                @Html.DropDownList("idTipoCliente", null, htmlAttributes: new { @class = "form-control", })
+                                            </div>
+                                            <br />
+                                            <label>Compromiso:</label>&nbsp;
+                                            <input id="chk2" onclick="compromisos()"
+                                                   value="true"
+                                                   type="checkbox" />
+                                            <label>Todos:</label>
+                                            <input id="chk4" type="checkbox" onclick="ListaCompromiso()"
+                                                   value="false" />
+                                            <div id="compromiso">
+                                                @Html.DropDownList("IdTipoCompromiso", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                            <br />
+                                            @*<label>Total Visitas:</label>&nbsp;
+        <input id="chk3" onclick="CargarVisitas()"
+               value="true"
+               checked="checked"
+               type="checkbox" />*@
                                         </div>
 
 
                                         <div class="row">
                                             <div class="col-sm-12">
-
-
                                                 <div id="map_container"></div>
                                                 <div id="map"></div>
                                             </div>
@@ -165,6 +172,61 @@
 
 @section pagespecific {
     <script>
+        function tipocliente() {
+            if (document.getElementById("chk1").checked == true) {
+                mostrarCombotipo();
+                cargaAll();
+            } else {
+                heatmap.setMap(null);
+                ocultarCombotipo();
+            }
+        }
+        function compromisos() {
+            if (document.getElementById("chk2").checked == true) {
+                mostrarCompromiso();
+                cargavisitaCOmpromiso();
+            } else {
+                heatmap1.setMap(null);
+                ocultarCompromiso();
+                
+            }
+        }
+        function ListaTipoCliente() {
+            if (document.getElementById("chk3").checked == true) {
+                CargaListaTipoCliente();
+            } else {
+                heatmap.setMap(null);
+            }
+        }
+
+        function ListaCompromiso() {
+            if (document.getElementById("chk4").checked == true) {
+                CargatodosCompromiso();
+            } else {
+                heatmap1.setMap(null);
+            }
+        }
+
+        function ocultarCombotipo() {
+            document.getElementById("tipo").style.visibility = "hidden";
+        }
+
+        function mostrarCombotipo() {
+            document.getElementById("tipo").style.visibility = "visible";
+        }
+        function ocultarCompromiso() {
+            document.getElementById("compromiso").style.visibility = "hidden";
+        }
+
+        function mostrarCompromiso() {
+            document.getElementById("compromiso").style.visibility = "visible";
+        }
+
+
+
+
+        cargaAll();
+        //CargarVisitas();
         var arreglo = [];
 
         markers = [];
@@ -177,52 +239,43 @@
         ClienteBanRed = [];
 
         var map;
-        var heatmap;
+        var heatmap = null;
+        var heatmap1 = null;
+        var heatmap2 = null;
+        var heatmapData = [];
         function initMap() {
 
-            //var iconCompetencia =
-            //    {
-            //        url: "../Content/images/BanRed.png", // url
-            //        size: new google.maps.Size(48, 48),
-            //        scaledSize: new google.maps.Size(48, 48), // scaled size
-            //        origin: new google.maps.Point(0, 0), // origin
-            //        anchor: new google.maps.Point(24, 48) // anchor
-            //    };
-
-            var iconCPN =
-                {
-                    //con el icono
-                    url: "../Content/img/demo/hero.png", // url
-                    size: new google.maps.Size(48, 48),
-                    scaledSize: new google.maps.Size(48, 48), // scaled size
-                    origin: new google.maps.Point(0, 0), // origin
-                    anchor: new google.maps.Point(24, 48) // anchor
-                };
 
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 10,
                 center: { lat: -0.173689784, lng: -78.49555141 },
                 mapTypeId: 'satellite'
             });
-            //Mapa Calor
-            //$.ajax({
-            //    type: 'POST',
-            //    url: '../Supervisor/MapaCalor',
-            //    dataType: 'json',
-            //    data: {}//,
-            //    //success: function (data) {
-            //        //arreglo = data;
-            //    //},
-            //    //error: function (ex) {
-            //        //alert('Failed to retrieve data.' + ex);
-            //    //}
-            //});
 
+        }
+        //combos mostrar
+        // combo tipo
+        if (document.getElementById("chk1").checked == true) {
+            mostrarCombotipo();
+        } else {
+            
+            ocultarCombotipo();
+        }
+        // combo compromiso
+        if (document.getElementById("chk2").checked == true) {
+            mostrarCompromiso();
+        } else {
+            ocultarCompromiso();
         }
 
         //Cargar TIpo CLiente
         $("#idTipoCliente").change(cargaAll);
         function cargaAll() {
+            heatmapData = [];
+            if (heatmap!=null) {
+                heatmap.setMap(null);
+            }
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("PuntosTipoCliente")',
@@ -233,25 +286,7 @@
 
                 }, complete: function (data) {
 
-                    //for (var i = 0; i < arreglo.length; i++) {
-
-                    //    var marker;
-                    //    var pos = { lat: arreglo[i].Latitud, lng: arreglo[i].Longitud };
-                    //    var InformacionCliente =
-                    //        {
-                    //            Lat: arreglo[i].Latitud,
-                    //            Lon: arreglo[i].Longitud,
-                    //        }
-
-                    //    var marker = new google.maps.Marker({
-                    //        position: pos,
-                    //        map: map,
-                    //        title: InformacionCliente.Latitud,
-                    //        icon: iconCPN,
-                    //    });
-                    var heatmapData = [];
                     for (var i = 0; i < arreglo.length; i++) {
-
                         heatmapData.push(new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud))
 
                     }
@@ -262,51 +297,184 @@
                         maxIntensity: 4,
                         dissipating: true
                     });
+
                     heatmap.setMap(map);
-
-                        //marker.addListener('click', function () {
-                        //    infowindow.open(map, marker);
-                        //});
-                       // ClienteCPN.push(marker);
-                        //markersClientes[i].marker.setPosition(new google.maps.LatLng(InformacionCliente.Lat, InformacionCliente.Lon));
-
-
-                        //var contentString = '<div id="content">' +
-                        //    '<div id="siteNotice">' +
-                        //    '</div>' +
-                        //    '<h4 id="firstHeading" class="firstHeading"><b>Cajero</b></h4>' +
-                        //    '<img src="../Content/images/cajero.jpg" />' + '<legend></legend>' +
-                        //    '<div id="bodyContent">' +
-                        //    '<p><b>C&oacute;digo:&nbsp&nbsp</b>' + InformacionCliente.Codigo + '.</p>' +
-                        //    '<p><b>Direcci&oacute;n:&nbsp&nbsp</b>' + InformacionCliente.Direccion + '.</p>' +
-                        //    '<p><b>Tipo:&nbsp&nbsp</b>' + InformacionCliente.Tipo + '.</p>' +
-                        //    '<p><b>Modelo:&nbsp&nbsp</b>' + InformacionCliente.Modelo + '.</p>' +
-                        //    '<p><b>TrxPropia:&nbsp&nbsp</b>' + InformacionCliente.TrxPropia + '.</p>' +
-                        //    '<p><b>TrxBanred:&nbsp&nbsp</b>' + InformacionCliente.TrxBanred + '.</p>' +
-
-                        //    '</div>' +
-                        //    '</div>';
-                        //var infowindow = new google.maps.InfoWindow();
-
-                        //google.maps.event.addListener(marker, "click", (function (marker, contentString, infowindow) {
-                            // !!! PROBLEM HERE
-                           // return function (evt) {
-
-                                //infowindow.setContent(contentString);
-                        //        infowindow.open(map, marker);
-                        //    }
-                        //})(marker, contentString, infowindow));
-                        //markersClientes[i].marker.setListener('click', function () {
-                        //    infowindow.open(map, markersClientes[i].marker);
-                        //});
-
-                    //}
                 },
 
                 error: function (ex) {
                     alert('Failed to retrieve data.' + ex);
                 }
             });
+
+        }
+
+        //Cargar Lista tIpo CLiente
+        
+        function CargaListaTipoCliente() {
+            heatmapData = [];
+            if (heatmap!=null) {
+                heatmap.setMap(null);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarTipoCliente")',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+
+                    for (var i = 0; i < arreglo.length; i++) {
+                        heatmapData.push(new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud))
+
+                    }
+
+                    heatmap = new google.maps.visualization.HeatmapLayer({
+                        data: heatmapData,
+                        radius: 20,
+                        maxIntensity: 4,
+                        dissipating: true
+                    });
+
+                    heatmap.setMap(map);
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
+        }
+
+
+        //Cargar TIpo Compromiso
+        $("#IdTipoCompromiso").change(cargavisitaCOmpromiso);
+        function cargavisitaCOmpromiso() {
+            heatmapData = [];
+            if (heatmap1!=null) {
+                heatmap1.setMap(null);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PuntosVisitaporCompromiso")',
+                dataType: 'json',
+                data: { idTipoCompromiso: $("#IdTipoCompromiso").val() },
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+
+                    
+                    for (var i = 0; i < arreglo.length; i++) {
+                        var mipunto = { location: new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud), weight: arreglo[i].CantidadClienteTipoCompromiso }
+                        heatmapData.push(mipunto)
+
+                    }
+
+                    heatmap1 = new google.maps.visualization.HeatmapLayer({
+                        data: heatmapData,
+                        radius: 20,
+                        maxIntensity: 4,
+                        dissipating: true
+                    });
+
+                    heatmap1.setMap(map);
+                    changeGradient();
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+        }
+        //Cargar todos los Compromiso
+        
+        function CargatodosCompromiso() {
+            heatmapData = [];
+            if (heatmap1!=null) {
+                heatmap1.setMap(null);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListadeCompromiso")',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    arreglo = data;
+
+                }, complete: function (data) {
+
+                    
+                    for (var i = 0; i < arreglo.length; i++) {
+                        var mipunto = { location: new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud), weight: arreglo[i].CantidadClienteTipoCompromiso }
+                        heatmapData.push(mipunto)
+
+                    }
+
+                    heatmap1 = new google.maps.visualization.HeatmapLayer({
+                        data: heatmapData,
+                        radius: 20,
+                        maxIntensity: 4,
+                        dissipating: true
+                    });
+
+                    heatmap1.setMap(map);
+                    changeGradient();
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+        }
+
+        //Cargar Visitas
+        //$("#visitas").checked(CargarVisitas);
+        function CargarVisitas() {
+            if (document.getElementById("chk3").checked == true) {
+                heatmapData = [];
+                if (heatmap2 != null) {
+                    heatmap2.setMap(null);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("PuntosVisita")',
+                    dataType: 'json',
+                    data: {},
+                    success: function (data) {
+                        arreglo = data;
+
+                    }, complete: function (data) {
+
+
+                        for (var i = 0; i < arreglo.length; i++) {
+
+                            heatmapData.push(new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud))
+
+                        }
+
+                        heatmap2 = new google.maps.visualization.HeatmapLayer({
+                            data: heatmapData,
+                            radius: 20,
+                            maxIntensity: 4,
+                            dissipating: true
+                        });
+
+                        heatmap2.setMap(map);
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+            }
+            else
+            {
+                heatmap2.setMap(null);
+            }
         }
 
 
@@ -347,6 +515,25 @@
             }
         }
 
+        //function changeGradient() {
+        //    var gradient = [
+        //        'rgba(0, 255, 255, 0)',
+        //        'rgba(0, 255, 255, 1)',
+        //        'rgba(0, 191, 255, 1)',
+        //        'rgba(0, 127, 255, 1)',
+        //        'rgba(0, 63, 255, 1)',
+        //        'rgba(0, 0, 255, 1)',
+        //        'rgba(0, 0, 223, 1)',
+        //        'rgba(0, 0, 191, 1)',
+        //        'rgba(0, 0, 159, 1)',
+        //        'rgba(0, 0, 127, 1)',
+        //        'rgba(63, 0, 91, 1)',
+        //        'rgba(127, 0, 63, 1)',
+        //        'rgba(191, 0, 31, 1)',
+        //        'rgba(255, 0, 0, 1)'
+        //    ]
+        //    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+        //}
         function changeGradient() {
             var gradient = [
                 'rgba(0, 255, 255, 0)',
@@ -364,7 +551,7 @@
                 'rgba(191, 0, 31, 1)',
                 'rgba(255, 0, 0, 1)'
             ]
-            heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+            heatmap1.set('gradient', heatmap1.get('gradient') ? null : gradient);
         }
 
         function changeRadius() {
@@ -374,39 +561,6 @@
         function changeOpacity() {
             heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
         }
-
-        function OcultarCompetencia() {
-            if (esVisibleCompetencia == false) {
-                setMapOnAllCompetencia(map);
-                esVisibleCompetencia = true;
-
-            } else { setMapOnAllCompetencia(null); }
-
-        }
-
-        function OcultarCPN() {
-            if (esVisibleCPN == false) {
-                setMapOnAllCPN(map);
-                esVisibleCPN = true;
-
-            } else { setMapOnAllCPN(null); }
-
-        }
-
-        function setMapOnAllCompetencia(map) {
-            for (var i = 0; i < ClienteBanRed.length; i++) {
-                ClienteBanRed[i].setMap(map);
-            }
-            esVisibleCompetencia = false;
-        }
-
-        function setMapOnAllCPN(map) {
-            for (var i = 0; i < ClienteCPN.length; i++) {
-                ClienteCPN[i].setMap(map);
-            }
-            esVisibleCPN = false;
-        }
-
 
 
         var esVisibleCompetencia = true;
