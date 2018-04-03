@@ -1,4 +1,4 @@
-@model  WebVentas.ObjectModel.ClienteRequest
+@model  WebVentas.ObjectModel.SupervisorRequest
 <link href = "~/Content/css/Personalizado.css" rel = "stylesheet" />
 <div class="btn-group btn-group-justified">
 
@@ -12,11 +12,11 @@
     }
     @if (Model.OpcionMenu == 1)
     {
-        <a style="background-color:#ff5722;color:white;" class="btn btn-default"> Estidísticas </a>
+        <a href="../../InformacionGerencial/Estadisticas"  style="background-color:#ff5722;color:white;" class="btn btn-default"> Estadísticas </a>
     }
     else
     {
-        <a class="btn btn-default"> Estidísticas </a>
+        <a href="../../InformacionGerencial/Estadisticas" class="btn btn-default"> Estadísticas </a>
     }
 
 

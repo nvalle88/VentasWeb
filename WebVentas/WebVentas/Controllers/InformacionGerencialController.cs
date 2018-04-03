@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using VentaServicios.Utils;
 using WebVentas.ObjectModel;
+using WebVentas.ObjectRequest;
 using WebVentas.Services;
 using WebVentas.Utils;
 
@@ -167,6 +168,52 @@ namespace WebVentas.Controllers
 
 
         }
+        #endregion
+
+        #region Estaditicas
+
+        public async Task<ActionResult> Estadisticas()
+        {
+            try
+            {
+                InicializarMensaje("");
+                SupervisorRequest supervisor= new SupervisorRequest();
+                var estadisticoVendedorRequest = await ApiServicio.ObtenerElementoAsync1<EstadisticoSupervisorRequest>(supervisor,
+                    new Uri(WebApp.BaseAddress),
+                    "api/Compromiso/VerEstadisticos");
+                supervisor.estadisticoSupervisorRequest = estadisticoVendedorRequest;
+                return View(supervisor);
+            }
+            catch
+            {
+                InicializarMensaje(Mensaje.Excepcion);
+                return View();
+            }
+        }
+
+        //public async Task<JsonResult> PuntosTipoCliente(int idTipoCliente)
+        //{
+        //    try
+        //    {
+        //        MapaCalorRequest mapacalor = new MapaCalorRequest();
+
+        //        mapacalor.IdTipoCLiente = idTipoCliente;
+        //        var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+        //                                                  , "api/MapaCalor/ListarClientesPorTipoCliente");
+        //        //var a = respusta.ListaClientes.ToString();
+        //        var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
+        //        return Json(listaSalida);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(false);
+
+        //    }
+
+
+        //}
+
         #endregion
     }
 }
