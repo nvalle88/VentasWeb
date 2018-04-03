@@ -625,7 +625,16 @@ namespace WebVentas.Controllers
                 lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresPorSupervisor");
 
+                lista.Add(new VendedorRequest
+                {
+                    IdVendedor = 0,
+                    Nombres = "Seleccione"
+                });
+
+                lista = lista.OrderBy(x => x.IdVendedor).ToList();
+
                 ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+                
 
                 listaEventos.FirstOrDefault().NumeroMenu = menu;
 
@@ -699,6 +708,13 @@ namespace WebVentas.Controllers
 
                 lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresPorSupervisor");
+
+                lista.Add(new VendedorRequest {
+                    IdVendedor = 0,
+                    Nombres = "Seleccione"
+                });
+
+                lista = lista.OrderBy(x => x.IdVendedor).ToList();
 
                 ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
 

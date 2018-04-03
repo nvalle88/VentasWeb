@@ -1,10 +1,18 @@
 @model List<WebVentas.ObjectModel.VendedorRequest>
-
+@using WebVentas.ObjectModel
 @{
     ViewData["Title"] = "Index";
 }
 
-@{ Html.RenderPartial("_MenuView", Model.FirstOrDefault());}
+
+
+@{
+
+    var vr = new VendedorRequest();
+    vr.NumeroMenu = 1;
+}
+
+@{ Html.RenderPartial("_MenuView", vr);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -121,7 +129,7 @@
 
                                             <td>
 
-                                                @Html.ActionLink("Perfil", "PerfilVendedor", new { idVendedor = item.IdVendedor }, new {onclick = "esperar()"}) |
+                                                @Html.ActionLink("Perfil", "PerfilVendedor", new { idVendedor = item.IdVendedor }, new { onclick = "esperar()" }) |
                                                 @Html.ActionLink("Editar", "EditarVendedor", new { id = item.IdVendedor }, new { onclick = "esperar()" }) |
                                                 @Html.ActionLink("Eliminar", "DeshabilitarVendedor", new { idUsuario = item.IdUsuario }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
@@ -155,9 +163,9 @@
     <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
 
     <script>
-        
 
-        function esperar(){
+
+        function esperar() {
             $('#content').waitMe({
                 effect: 'bounce',
                 text: '',
