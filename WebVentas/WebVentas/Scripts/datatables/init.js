@@ -158,4 +158,6 @@
 
     /* END TABLETOOLS */
 
+    alert("all ok");
+
 })

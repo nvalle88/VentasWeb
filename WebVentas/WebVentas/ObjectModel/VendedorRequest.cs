@@ -10,6 +10,10 @@ namespace WebVentas.ObjectModel
     public class VendedorRequest
     {
 
+        // Menú
+        public int NumeroMenu { get; set; }
+
+
         // Campos de la tabla vendedor
         public int IdVendedor { get; set; }
 

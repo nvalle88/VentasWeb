@@ -129,7 +129,7 @@ namespace WebVentas.Controllers
             supervisorRequest1.IdUsuario = idUsuarioActual;
             supervisorRequest1.IdEmpresa = idEmpresaInt;
 
-            if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+            if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
             {
                 Response response = await ApiServicio.InsertarAsync(supervisorRequest1,
                                                              new Uri(WebApp.BaseAddress),
@@ -143,6 +143,25 @@ namespace WebVentas.Controllers
 
                 var listavendedor = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresGerente");
+                ViewBag.IdVendedor = new SelectList(listavendedor.ListaVendedores, "IdVendedor", "NombreApellido");
+
+                supervisorRequest.ListaVendedores = listavendedor.ListaVendedores;
+                return View(supervisorRequest);
+            }
+            if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+            {
+                Response response = await ApiServicio.InsertarAsync(supervisorRequest1,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                supervisorRequest1 = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                supervisorRequest.IdSupervisor = supervisorRequest1.IdSupervisor;
+                var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vista/ListarVisitas");
+                supervisorRequest.Listarcompromiso = lista.Listarcompromiso;
+
+                var listavendedor = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarVendedoresPorSupervisor");
                 ViewBag.IdVendedor = new SelectList(listavendedor.ListaVendedores, "IdVendedor", "NombreApellido");
 
                 supervisorRequest.ListaVendedores = listavendedor.ListaVendedores;

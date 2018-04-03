@@ -6,28 +6,37 @@
     int calificacion = Convert.ToInt32(Model.estadisticoVendedorRequest.CalificacionPromedio);
 }
 
+@{
+
+    Model.NumeroMenu = 1;
+
+}
+
+
+@{ Html.RenderPartial("_MenuView", Model);}
+
 <style>
-    .et-label{
-        color:black;
+    .et-label {
+        color: black;
     }
 
     .et-data {
         color: blue;
     }
-    .et-calificacion {
-        border-radius:5px;
-        background-color:gray;
-        text-align:center;
-        color:white;
 
+    .et-calificacion {
+        border-radius: 5px;
+        background-color: #ff5722;
+        text-align: center;
+        color: white;
     }
 
     .et-estrellas-sin-relleno {
+        border-radius: 5px;
         height: 23px;
         width: 23px;
+        background-color: transparent;
     }
-
-
 </style>
 
 <!-- MAIN CONTENT -->
@@ -64,7 +73,7 @@
     </div>
 
     <p></p>
-    
+
     <section id="DatosPersonales" class="">
 
         <!-- START ROW -->
@@ -73,7 +82,7 @@
             <article class="col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-                    
+
                     <div class="widget-body">
 
                         <div class="row">
@@ -86,81 +95,100 @@
                         <div class="container">
 
                             <div class="row">
-                                <div class="col col-lg-5">
+                                <div class="col col-lg-3">
+
 
                                     <div class="row">
-                                        <div class="col col-lg-4">
-                                        </div>
-                                        <div class="col col-lg-4 et-calificacion">
-                                            Calificación
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col col-lg-4">
-                                        </div>
-                                        <div class="col col-lg-4">
+                                        <div class="col col-lg-1">
                                             &nbsp;
                                         </div>
+
+                                        <div class="col col-lg-10 et-calificacion">
+                                            Calificación
+                                        </div>
+
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-lg-4">
-                                        </div>
-                                        <div class="col col-lg-4">
 
-                                            @for (int i = 0; i <= 5; i++)
+                                        <div class="col col-lg-12">
+                                            &nbsp;
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col col-lg-3">
+                                        </div>
+                                        <div class="col col-lg-6 no-padding">
+
+                                            @for (int i = 0; i < 5; i++)
                                             {
                                                 if (i < calificacion)
                                                 {
                                                     <img class="et-estrellas-sin-relleno" src="~/Imagenes/star_selected.png" />
 
                                                 }
-
-
-                                             }
+                                                else
+                                                {
+                                                    <img class="et-estrellas-sin-relleno" src="~/Imagenes/star_outline.png" />
+                                                }
+                                            }
                                         </div>
 
                                     </div>
 
                                 </div>
 
-                                <div class="col col-lg-5">
+                                <div class="col col-lg-2 no-padding">
+                                    <img src="@Model.Foto" class="col col-lg-12" style="height:180px;width:100%;border-color:black;border-width:3px;" />
+                                </div>
+
+                                <div class="col col-lg-1 no-padding">
+                                    &nbsp;
+                                </div>
+
+
+
+                                <div class="col col-lg-4">
 
                                     <div class="row">
-                                        <div class="col col-lg-5 et-label">@Html.DisplayNameFor(model => model.Nombres):</div>
-                                        <div class="col col-lg-5 et-data">@Html.DisplayFor(model => model.Nombres)</div>
+                                        <div class="col col-lg-4 et-label">@Html.DisplayNameFor(model => model.Nombres):</div>
+                                        <div class="col col-lg-6 et-data">@Html.DisplayFor(model => model.Nombres)</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-lg-5 et-label">@Html.DisplayNameFor(model => model.Apellidos):</div>
-                                        <div class="col col-lg-5 et-data">@Html.DisplayFor(model => model.Apellidos)</div>
+                                        <div class="col col-lg-4 et-label">@Html.DisplayNameFor(model => model.Apellidos):</div>
+                                        <div class="col col-lg-6 et-data">@Html.DisplayFor(model => model.Apellidos)</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-lg-5 et-label">@Html.DisplayNameFor(model => model.Identificacion):</div>
-                                        <div class="col col-lg-5 et-data">@Html.DisplayFor(model => model.Identificacion)</div>
+                                        <div class="col col-lg-4 et-label">@Html.DisplayNameFor(model => model.Identificacion):</div>
+                                        <div class="col col-lg-6 et-data">@Html.DisplayFor(model => model.Identificacion)</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-lg-5 et-label">@Html.DisplayNameFor(model => model.Telefono):</div>
-                                        <div class="col col-lg-5 et-data">@Html.DisplayFor(model => model.Telefono)</div>
+                                        <div class="col col-lg-4 et-label">@Html.DisplayNameFor(model => model.Telefono):</div>
+                                        <div class="col col-lg-6 et-data">@Html.DisplayFor(model => model.Telefono)</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-lg-5 et-label">@Html.DisplayNameFor(model => model.Direccion):</div>
-                                        <div class="col col-lg-5 et-data">@Html.DisplayFor(model => model.Direccion)</div>
+                                        <div class="col col-lg-4 et-label">@Html.DisplayNameFor(model => model.Direccion):</div>
+                                        <div class="col col-lg-6 et-data">@Html.DisplayFor(model => model.Direccion)</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-lg-5 et-label">@Html.DisplayNameFor(model => model.Correo):</div>
-                                        <div class="col col-lg-5 et-data">@Html.DisplayFor(model => model.Correo)</div>
+                                        <div class="col col-lg-4 et-label">@Html.DisplayNameFor(model => model.Correo):</div>
+                                        <div class="col col-lg-6 et-data">@Html.DisplayFor(model => model.Correo)</div>
                                     </div>
 
                                 </div>
 
 
                             </div>
+
+                            <div class="row">&nbsp;</div>
 
                             <div class="row">
 
@@ -287,7 +315,7 @@
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                <div class="jarviswidget personalizado-table" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -380,10 +408,15 @@
 
             var data_pie = [];
 
-            @{
-                var series = Model.estadisticoVendedorRequest.ListaTipoCompromiso.Count;
-            }
 
+            @{
+                var series = 0;
+
+                if (Model.estadisticoVendedorRequest.ListaTipoCompromiso != null)
+                {
+                    series = Model.estadisticoVendedorRequest.ListaTipoCompromiso.Count;
+                }
+            }
 
             @for (var i = 0; i < series; i++) {
                 <text>
@@ -402,10 +435,10 @@
                         innerRadius: 0.4,
                         radius: 0.7,
                         label: {
-                            show: false,
-                            radius: 2/3,// 2/3 = 0.6666
+                            show: true,
+                            radius: 0.55,// 2/3 = 0.6666
                             formatter: function (label, series) {
-                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">'+ '<br/>' + Math.round(series.percent) + '%</div>';
                             },
                             threshold: 0.1
                         }
@@ -434,7 +467,7 @@
 
         if ($('#pie-chart2').length) {
 
-            var data_pie = [];
+            var data_pie2 = [];
 
             @{
                 var series2 = 1;
@@ -443,14 +476,14 @@
 
             @for (var i = 0; i < series2; i++) {
                 <text>
-                    data_pie[@i] = {
+                    data_pie2[@i] = {
                         label: 'Cumplidos',
                         data: @(Model.estadisticoVendedorRequest.CompromisosCumplidos )
                     }
                 </text>
 
                 <text>
-                    data_pie[@i+1] = {
+                    data_pie2[@i+1] = {
                         label: 'Incumplidos',
                         data: @(Model.estadisticoVendedorRequest.CompromisosIncumplidos )
                     }
@@ -458,17 +491,17 @@
 
             }
 
-            $.plot($("#pie-chart2"), data_pie, {
+            $.plot($("#pie-chart2"), data_pie2, {
                 series: {
                     pie: {
                         show: true,
                         innerRadius: 0.4,
                         radius: 0.7,
                         label: {
-                            show: false,
-                            radius: 2/3,// 2/3 = 0.6666
-                            formatter: function (label, series) {
-                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                            show: true,
+                            radius: 0.55,// 2/3 = 0.6666
+                            formatter: function (label, series2) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;"><br/>' + Math.round(series2.percent) + '%</div>';
                             },
                             threshold: 0.1
                         }
@@ -492,6 +525,7 @@
             });
 
         }
+
 
     </script>
 }

@@ -83,7 +83,90 @@ namespace WebVentas.Controllers
 
 
         }
+        public async Task<JsonResult> ListarTipoCliente()
+        {
+            try
+            {
+                MapaCalorRequest mapacalor = new MapaCalorRequest();
+                var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+                                                          , "api/MapaCalor/ListarTipoCliente");
+                //var a = respusta.ListaClientes.ToString();
+                var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaClientes).ToString());
+                return Json(listaSalida);
 
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+
+            }
+
+
+        }
+
+        public async Task<JsonResult> PuntosVisitaporCompromiso(int idTipoCompromiso)
+        {
+            try
+            {
+                MapaCalorRequest mapacalor = new MapaCalorRequest();
+
+                mapacalor.IdTipoCompromiso = idTipoCompromiso;
+                var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+                                                          , "api/MapaCalor/ListarVisitasPorTipoCompromiso");
+                //var a = respusta.ListaClientes.ToString();
+                var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaVisitaCompromiso).ToString());
+                return Json(listaSalida);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+
+            }
+
+
+        }
+        public async Task<JsonResult> ListadeCompromiso()
+        {
+            try
+            {
+                MapaCalorRequest mapacalor = new MapaCalorRequest();
+                var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+                                                          , "api/MapaCalor/ListarCompromisos");
+                //var a = respusta.ListaClientes.ToString();
+                var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaVisitaCompromiso).ToString());
+                return Json(listaSalida);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+
+            }
+
+
+        }
+
+        public async Task<JsonResult> PuntosVisita()
+        {
+            try
+            {
+                MapaCalorRequest mapacalor = new MapaCalorRequest();
+                var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
+                                                          , "api/MapaCalor/ListarVisitas");
+                //var a = respusta.ListaClientes.ToString();
+                var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaVisita).ToString());
+                return Json(listaSalida);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+
+            }
+
+
+        }
         #endregion
     }
 }
