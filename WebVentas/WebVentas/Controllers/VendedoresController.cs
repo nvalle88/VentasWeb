@@ -20,11 +20,9 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
-    
+    [Authorize(Roles = "Supervisor,GerenteGeneral")]
     public class VendedoresController : Controller
     {
-
-        
         private void InicializarMensaje(string mensaje)
 
         {

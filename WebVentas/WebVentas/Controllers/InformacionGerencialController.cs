@@ -13,6 +13,7 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
+    [Authorize(Roles = "GerenteGeneral")]
     public class InformacionGerencialController : Controller
     {
         // GET: InformesGerenciales

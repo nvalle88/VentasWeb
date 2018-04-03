@@ -58,7 +58,10 @@ namespace WebVentas.ObjectModel
 
         public string Direccion { get; set; }
 
-        public int Estado { get; set; } 
+        public int Estado { get; set; }
+
+
+        public EstadisticosClienteRequest EstadisticosClienteRequest { get; set; }
 
     }
 }

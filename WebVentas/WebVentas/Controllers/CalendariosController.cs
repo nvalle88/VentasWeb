@@ -18,11 +18,9 @@ using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
-    
+    [Authorize(Roles = "Supervisor")]
     public class CalendariosController : Controller
     {
-
-        
         private void InicializarMensaje(string mensaje)
 
         {
