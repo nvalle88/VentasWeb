@@ -36,6 +36,7 @@
         #txtBuscador:focus {
             border-color: #4d90fe;
         }
+
     #map_container {
         position: relative;
     }
@@ -153,7 +154,35 @@
 
     <div class="row">
         <legend>&nbsp;&nbsp;&nbsp;&nbsp;<b>Estadísticas</b></legend>
+            <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+                <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                    <header>
+                        <h2>Tipos de compromiso</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <div id="pie-chart" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
 
+            <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+                <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                    <header>
+                        <h2>Compromisos cumplidos / incumplidos</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <div id="pie-chart2" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
     </div>
 
 </div>
@@ -270,7 +299,7 @@
                 mapa.fitBounds(bounds);
             });
         }
-            
+
         function initMap() {
             var iconCPN =
                 {
@@ -347,6 +376,125 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
     </script>
 
+    <script>
 
+        if ($('#pie-chart').length) {
+
+            var data_pie = [];
+
+            @{
+                var series = Model.EstadisticosClienteRequest.ListaTipoCompromiso.Count;
+            }
+
+
+            @for (var i = 0; i < series; i++) {
+                <text>
+                    data_pie[@i] = {
+                        label: '@(Model.EstadisticosClienteRequest.ListaTipoCompromiso.ElementAt(i).Descripcion )',
+                        data: @(Model.EstadisticosClienteRequest.ListaTipoCompromiso.ElementAt(i).CantidadCompromiso )
+                    }
+                </text>
+
+            }
+
+            $.plot($("#pie-chart"), data_pie, {
+                series: {
+                    pie: {
+                        show: true,
+                        innerRadius: 0.3,
+                        radius: 1,
+                        label: {
+                            show: true,
+                            radius: 0.6,// 2/3 = 0.6666
+                            formatter: function (label, series) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;"><br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            threshold: 0.1
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    noColumns: 1, // number of colums in legend table
+                    labelFormatter: null, // fn: string -> string
+                    labelBoxBorderColor: "#000", // border color for the little label boxes
+                    container: null, // container (as jQuery object) to put legend in, null means default on top of graph
+                    position: "ne", // position of default legend container within plot
+                    margin: [5, 10], // distance from grid edge to default legend container within plot
+                    backgroundColor: "#efefef", // null means auto-detect
+                    backgroundOpacity: 1 // set to 0 to avoid background
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+            });
+
+        }
+
+
+
+        if ($('#pie-chart2').length) {
+
+            var data_pie = [];
+
+            @{
+                var series2 = 1;
+            }
+
+
+            @for (var i = 0; i < series2; i++) {
+                <text>
+                    data_pie[@i] = {
+                        label: 'Cumplidos',
+                        data: @(Model.EstadisticosClienteRequest.CompromisosCumplidos )
+                    }
+                </text>
+
+                <text>
+                    data_pie[@i+1] = {
+                        label: 'Incumplidos',
+                        data: @(Model.EstadisticosClienteRequest.CompromisosIncumplidos )
+                    }
+                </text>
+
+            }
+
+            $.plot($("#pie-chart2"), data_pie, {
+                series: {
+                    pie: {
+                        show: true,
+                        innerRadius: 0.3,
+                        radius: 1,
+                        label: {
+                            show: true,
+                            radius: 0.6,// 2/3 = 0.6666
+                            formatter: function (label, series) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;"><br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            threshold: 0.1
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    noColumns: 1, // number of colums in legend table
+                    labelFormatter: null, // fn: string -> string
+                    labelBoxBorderColor: "#000", // border color for the little label boxes
+                    container: null, // container (as jQuery object) to put legend in, null means default on top of graph
+                    position: "ne", // position of default legend container within plot
+                    margin: [5, 10], // distance from grid edge to default legend container within plot
+                    backgroundColor: "#efefef", // null means auto-detect
+                    backgroundOpacity: 1 // set to 0 to avoid background
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+            });
+
+        }
+
+    </script>
 
 }

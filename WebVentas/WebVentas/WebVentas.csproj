@@ -294,6 +294,7 @@
     <Compile Include="ObjectModel\ArchivoRequest.cs" />
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
+    <Compile Include="ObjectModel\EstadisticosClienteRequest.cs" />
     <Compile Include="ObjectModel\EstadisticoVendedorRequest.cs" />
     <Compile Include="ObjectModel\MapaCalorRequest.cs" />
     <Compile Include="ObjectModel\EventoRequest.cs" />

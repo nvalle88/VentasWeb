@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebVentas.ObjectModel;
+using WebVentas.ObjectRequest;
 using WebVentas.Services;
 using WebVentas.Utils;
 
@@ -146,13 +147,21 @@ namespace WebVentas.Controllers
             };
             var respuesta = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
                                                                  , "api/Clientes/ObtenerCliente");
-
+            
             var clienteRequest = JsonConvert.DeserializeObject<ClienteRequest>(respuesta.Resultado.ToString());
 
             var foto = string.IsNullOrEmpty(clienteRequest.Foto) != true ? clienteRequest.Foto.Replace("~", WebApp.BaseAddress) : "";
             clienteRequest.Foto = foto;
             var firma = string.IsNullOrEmpty(clienteRequest.Firma) != true ? clienteRequest.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
             clienteRequest.Firma = firma;
+
+            var estadisticoVendedorRequest = await ApiServicio.ObtenerElementoAsync1<EstadisticosClienteRequest>(clienteRequest,
+                 new Uri(WebApp.BaseAddress),
+                 "api/Clientes/VerEstadisticosCliente");
+
+
+            clienteRequest.EstadisticosClienteRequest = estadisticoVendedorRequest;
+
             return View(clienteRequest);
 
         }
