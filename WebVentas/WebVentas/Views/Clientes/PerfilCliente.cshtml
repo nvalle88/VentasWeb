@@ -2,9 +2,11 @@
 @using WebVentas.Utils
 
 @{
-    ViewData["Title"] = "Index";
+                /**/
 
-    int calificacion = 5;
+                ViewData["Title"] = "Index";
+
+                int calificacion = 5;
 }
 @Html.HiddenFor(model => model.Latitud)
 @Html.HiddenFor(model => model.Longitud)
@@ -154,35 +156,35 @@
 
     <div class="row">
         <legend>&nbsp;&nbsp;&nbsp;&nbsp;<b>Estadísticas</b></legend>
-            <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
-                <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
-                    <header>
-                        <h2>Tipos de compromiso</h2>
-                    </header>
-                    <div>
-                        <div class="jarviswidget-editbox">
-                        </div>
-                        <div class="widget-body no-padding">
-                            <div id="pie-chart" class="chart"></div>
-                        </div>
+        <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+            <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                <header>
+                    <h2>Tipos de compromiso</h2>
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div id="pie-chart" class="chart"></div>
                     </div>
                 </div>
-            </article>
+            </div>
+        </article>
 
-            <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
-                <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
-                    <header>
-                        <h2>Compromisos cumplidos / incumplidos</h2>
-                    </header>
-                    <div>
-                        <div class="jarviswidget-editbox">
-                        </div>
-                        <div class="widget-body no-padding">
-                            <div id="pie-chart2" class="chart"></div>
-                        </div>
+        <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+            <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                <header>
+                    <h2>Compromisos cumplidos / incumplidos</h2>
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div id="pie-chart2" class="chart"></div>
                     </div>
                 </div>
-            </article>
+            </div>
+        </article>
     </div>
 
 </div>
@@ -402,7 +404,7 @@
                     pie: {
                         show: true,
                         innerRadius: 0.4,
-                        radius: 07,
+                        radius: 0.7,
                         label: {
                             show: true,
                             radius: 0.55,// 2/3 = 0.6666
