@@ -287,6 +287,7 @@
                 }, complete: function (data) {
 
                     for (var i = 0; i < arreglo.length; i++) {
+                        
                         heatmapData.push(new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud))
 
                     }
@@ -368,7 +369,8 @@
 
                     
                     for (var i = 0; i < arreglo.length; i++) {
-                        var mipunto = { location: new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud), weight: arreglo[i].CantidadClienteTipoCompromiso }
+                        var a = arreglo[i].CantidadClienteTipoCompromiso / arreglo[i].valorCalculado
+                        var mipunto = { location: new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud), weight: a }
                         heatmapData.push(mipunto)
 
                     }
@@ -408,7 +410,8 @@
 
                     
                     for (var i = 0; i < arreglo.length; i++) {
-                        var mipunto = { location: new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud), weight: arreglo[i].CantidadClienteTipoCompromiso }
+                        var b = arreglo[i].CantidadClienteTipoCompromiso / arreglo[i].valorCalculado
+                        var mipunto = { location: new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud), weight: b }
                         heatmapData.push(mipunto)
 
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using WebVentas.ObjectRequest;
@@ -20,9 +21,9 @@ namespace WebVentas.ObjectModel
         public string Correo { get; set; }
         public string cliente { get; set; }
 
-
+        [DisplayName("Dirección")]
         public string Direccion { get; set; }
-
+        [DisplayName("Identificación")]
         public string Identificacion { get; set; }
 
         public string Nombres { get; set; }

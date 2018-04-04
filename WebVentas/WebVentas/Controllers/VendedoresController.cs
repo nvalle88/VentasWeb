@@ -299,8 +299,9 @@ namespace WebVentas.Controllers
 
 
 
-                    var result = await userManager.CreateAsync(user, "A123345.1a");
-                    db.SaveChanges();
+                //var result = await userManager.CreateAsync(user, "A123345.1a");
+                var result = await userManager.CreateAsync(user, vendedorRequest.Identificacion);
+                db.SaveChanges();
 
                     if (result != null)
                     {
