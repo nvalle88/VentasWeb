@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -785,12 +786,16 @@ namespace WebVentas.Controllers
          */
 
 
-        public async Task<ActionResult> MapaIndex(string mensaje)
+        public async Task<ActionResult> MapaIndex(int? id, string mensaje)
         {
-
             InicializarMensaje(mensaje);
+            if (id!=null)
+            {
+                var vendedor = new VendedorRequest { IdVendedor = Convert.ToInt32(id) };
+                return View(vendedor);
+            }
 
-            return View();
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
         }
 
