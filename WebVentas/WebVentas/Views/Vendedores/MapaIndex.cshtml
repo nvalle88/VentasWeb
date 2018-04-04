@@ -1,8 +1,14 @@
+@model  WebVentas.ObjectModel.VendedorRequest
 
 
 @{
     ViewData["Title"] = "Index";
 }
+
+
+
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
 
 <style>
 
@@ -18,7 +24,6 @@
     }
 
     .controlsButton {
-        
         border: 1px solid transparent;
         border-radius: 5px;
         box-sizing: border-box;
@@ -123,8 +128,8 @@
                         <div class="widget-body no-padding">
 
                             <div id="map_container"></div>
-                            
-                                <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
+
+                            <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
 
                             <div id="map"></div>
 
@@ -147,12 +152,12 @@
 @section pagespecific{
 
     <script src="~/Scripts/datatables/init.js"></script>
-    
+
     <script>
 
-        
+
         function initMap() {
-            
+
             // Variables de dibujo
             var map;
             var posicionActual;
@@ -164,20 +169,20 @@
 
             var marcadoresVendedor = [];
             var imagenIconoVendedor = "../Imagenes/pushpin vendedor-01.png";
-            
+
             var marcadoresCliente = [];
             var imagenIconoCliente = "../Imagenes/pushpin cliente-01.png";
 
             // Variables de datos
             var vendedoresLista = new Array();
-            var clientesLista = new Array(); 
+            var clientesLista = new Array();
 
             var polilinea = [];
 
 
             posicionActual = { lat: -0.199273058641198, lng: -78.49731476024294 };
-            
-            
+
+
 
             // ****************************************************************************** Añadir un grupo - vendedores -
 
@@ -194,7 +199,7 @@
                     arreglo = data;
 
                 }, complete: function (data) {
-                    
+
                     for (var i = 0; i < arreglo.length; i++) {
 
                         if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
@@ -209,10 +214,10 @@
                             DibujarVendedores(map);
                         }
 
-                        
+
                     }
 
-                    
+
                 },
 
                 error: function (ex) {
@@ -225,13 +230,13 @@
             var iconoVendedor =
                 {
                     url: imagenIconoVendedor,
-                    
+
                     size: new google.maps.Size(48, 48),
                     scaledSize: new google.maps.Size(48, 48), // scaled size
                     origin: new google.maps.Point(0, 0), // origin
                     anchor: new google.maps.Point(24, 48) // anchor
-                    
-                    
+
+
                 };
 
             var iconoPosicionVendedor =
@@ -249,31 +254,31 @@
 
             function AddToVendedorList(nombre, latitud, longitud, idVendedor, texto) {
 
-                var vendedor = { nombre: nombre, latitud: latitud, longitud: longitud, idVendedor: idVendedor ,texto : texto};
+                var vendedor = { nombre: nombre, latitud: latitud, longitud: longitud, idVendedor: idVendedor, texto: texto };
 
                 vendedoresLista.push(vendedor);
             }
-            
+
 
             function DibujarVendedores(mapa) {
 
                 for (var i = 0; i < vendedoresLista.length; i++) {
 
-                    var posicion = { lat: vendedoresLista[i]["latitud"], lng: vendedoresLista[i]["longitud"] }; 
+                    var posicion = { lat: vendedoresLista[i]["latitud"], lng: vendedoresLista[i]["longitud"] };
 
                     AddMarketVendedorTimer(mapa, posicion, i * tiempoAnimacion, vendedoresLista[i]["nombre"], vendedoresLista[i]["idVendedor"], vendedoresLista[i]["texto"]);
-                    
-                    
+
+
                 }
 
-                
+
             }
 
-            function AddMarketVendedorTimer(mapa, posicion, timer, titulo, idVendedor,texto) {
+            function AddMarketVendedorTimer(mapa, posicion, timer, titulo, idVendedor, texto) {
 
                 var icono = iconoVendedor;
 
-                if ( texto.trim().length > 0 ) {
+                if (texto.trim().length > 0) {
                     icono = iconoPosicionVendedor;
                 }
 
@@ -284,7 +289,7 @@
                         title: titulo,
                         position: posicion,
                         animation: google.maps.Animation.DROP,
-                        label: { text: texto, color: "#645F9F", fontSize: "20px"}
+                        label: { text: texto, color: "#645F9F", fontSize: "20px" }
                     });
 
                     newMarker.addListener('click', function () {
@@ -293,16 +298,16 @@
                         } else {
                             DibujarRutas(idVendedor);
                         }
-                        
+
                     });
 
                     marcadoresVendedor.push(newMarker);
 
                 }, timer);
-                
+
 
             }
-            
+
             /**************************************************************************/
 
 
@@ -380,8 +385,8 @@
             function AddMarketClienteTimer(mapa, posicion, timer, titulo) {
 
                 setTimeout(function () {
-                    
-                    
+
+
                     marcadoresCliente.push(new google.maps.Marker({
                         map: mapa,
                         icon: iconoCliente,
@@ -389,7 +394,7 @@
                         position: posicion,
                         animation: google.maps.Animation.DROP
                     }));
-                    
+
                 }, timer);
 
 
@@ -409,17 +414,17 @@
                     type: 'POST',
                     url: '../Vendedores/ListaRutas',
                     dataType: 'json',
-                    data: { IdVendedor : idVendedor },
+                    data: { IdVendedor: idVendedor },
                     success: function (data) {
                         arreglo = data;
 
                     }, complete: function (data) {
-                        
+
                         // Borrar los marcadores de clientes
                         marcadoresCliente.forEach(function (marker) {
                             marker.setMap(null);
                         });
-                        
+
                         // Borrar los marcadores de vendedores
                         marcadoresVendedor.forEach(function (marker) {
                             marker.setMap(null);
@@ -430,11 +435,11 @@
                         for (var i = 0; i < arreglo.length; i++) {
 
                             if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
-                                
+
                                 var coordenada = { lat: arreglo[i].Latitud, lng: arreglo[i].Longitud };
 
                                 if (arreglo[i].IdLogRutaVendedor == 0) {
-                                    
+
 
                                     AddToVendedorList(
                                         i,
@@ -446,16 +451,16 @@
 
                                     numeradorVisita++;
                                 }
-                                
+
 
                                 DibujarVendedores(map);
-                                
+
                                 polilinea.push(coordenada);
                             }
 
 
                         }
-                        
+
 
                         // Crear ruta
                         var ruta = new google.maps.Polyline({
@@ -482,10 +487,10 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                
-                
+
+
             }
-            
+
 
 
             // Función para dibujar el mapa con todos los componentes
@@ -499,33 +504,33 @@
                     center: posicionActual,
                     mapTypeId: 'roadmap'
                 });
-                
+
                 AddEventoClick(map);
 
 
                 // Elementos del mapa
                 AddBuscador("txtBuscador", map);
-                
-                
+
+
                 DibujarVendedores(map);
                 DibujarClientes(map);
 
-                
+
             }
 
-    
+
 
             function AddEventoClick(mapa) {
-                
+
                 mapa.addListener('click', function (e) {
 
                     //alert("latitud: " + e.latLng.lat() + " longitud: " + e.latLng.lng());
-                    
+
                     //Ir(e.latLng,map);
                 });
 
             }
-            
+
 
 
             // Función para hacer funcionar el buscador
@@ -595,19 +600,19 @@
                 });
             }
 
-            
+
             DibujarMapa("map");
 
         }
 
-        
 
-        
+
+
 
 
     </script>
 
-   
+
 
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
