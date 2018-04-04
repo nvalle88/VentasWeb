@@ -4,30 +4,30 @@
 
     @if (Model.OpcionMenu == 0)
     {
-    <a href="../../InformacionGerencial/MapaCalor" style="background-color:#ff5722;color:white;" class="btn btn-default">Mapas de calor<br /> </a>
+    <a href="../../InformacionGerencial/MapaCalor" style="background-color:#ff5722;color:white;" class="btn btn-default"><i class="fa fa-lg fa-map-marker"></i><br />Mapas de calor  </a>
     }
     else
     {
-    <a href="../../InformacionGerencial/MapaCalor" class="btn btn-default">Mapas  de calor</a>
+    <a href="../../InformacionGerencial/MapaCalor" class="btn btn-default"><i class="fa fa-lg fa-map-marker"></i><br />Mapas de calor </a>
     }
     @if (Model.OpcionMenu == 1)
     {
-        <a href="../../InformacionGerencial/Estadisticas"  style="background-color:#ff5722;color:white;" class="btn btn-default"> Estadísticas </a>
+    <a href="../../InformacionGerencial/Estadisticas" style="background-color:#ff5722;color:white;" class="btn btn-default"> <i class="fa fa-lg fa-bar-chart-o"></i><br />Estadísticas</a>
     }
     else
     {
-        <a href="../../InformacionGerencial/Estadisticas" class="btn btn-default"> Estadísticas </a>
+    <a href="../../InformacionGerencial/Estadisticas" class="btn btn-default"> <i class="fa fa-lg fa-bar-chart-o"></i><br />Estadísticas</a>
     }
 
 
     @if (Model.OpcionMenu == 2)
     {
-        <a style="background-color:#ff5722;color:white;" class="btn btn-default">Reportes</a>
+    <a style="background-color:#ff5722;color:white;" class="btn btn-default"><i class="fa fa-lg fa-file-text-o"></i><br />Reportes</a>
 
     }
     else
     {
-        <a class="btn btn-default">Reportes</a>
+    <a class="btn btn-default"><i class="fa fa-lg fa-file-text-o"></i><br />Reportes</a>
     }
 
     @*@if (Model.OpcionMenu == 3)

@@ -11,6 +11,7 @@ namespace WebVentas.ObjectModel
         public int IdCliente { get; set; }
 
         public int CantidadClienteTipoCompromiso { get; set; }
+        public int valorCalculado { get; set; }
         public int OpcionMenu { get; set; }
 
         public int? IdEmpresa { get; set; }

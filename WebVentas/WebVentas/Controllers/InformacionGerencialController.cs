@@ -115,7 +115,9 @@ namespace WebVentas.Controllers
                 var respusta = await ApiServicio.ObtenerElementoAsync1<MapaCalorRequest>(mapacalor, new Uri(WebApp.BaseAddress)
                                                           , "api/MapaCalor/ListarVisitasPorTipoCompromiso");
                 //var a = respusta.ListaClientes.ToString();
+               
                 var listaSalida = JsonConvert.DeserializeObject<List<ClienteRequest>>(JsonConvert.SerializeObject(respusta.ListaVisitaCompromiso).ToString());
+                
                 return Json(listaSalida);
 
             }

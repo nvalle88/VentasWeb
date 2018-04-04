@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -42,10 +43,10 @@ namespace WebVentas.ObjectModel
         
         public string Correo { get; set; }
 
-       
+        [DisplayName("Dirección")]
         public string Direccion { get; set; }
 
-        
+        [DisplayName("Identificación")]
         public string Identificacion { get; set; }
 
         
@@ -61,6 +62,7 @@ namespace WebVentas.ObjectModel
 
 
         // Estadisticos
+        [DisplayName("Calificación")]
         public int? Calificacion { get; set; }
 
 
