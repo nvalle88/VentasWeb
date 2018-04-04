@@ -28,6 +28,28 @@
                         <li class="@Html.RouteIf("Compromisos", "active")">
                             <a href="@Url.Action("Index", "Compromisos")" title="Compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
                         </li>
+                        <li class=" @Html.RouteIf("", "active" )">
+                            <a href="#" title="Colsultar informes gerenciales y compromisos con los clientes"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
+                            <ul>
+                                <li class="@Html.RouteIf("Compromisos", "active")">
+                                    <a href="@Url.Action("Index", "Compromisos")" title="Clientes"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                                </li>
+                                <li class=" @Html.RouteIf("Reportes", "active" )">
+                                    <a href="#" title="Reportes"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Reportes</span></a>
+                                    <ul>
+                                        <li class="@Html.RouteIf("Reportes", "active")">
+                                            <a href="@Url.Action("Clientes", "Reportes")" title="Reporte de clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
+                                        </li>
+                                        <li class="@Html.RouteIf("Reportes", "active")">
+                                            <a href="@Url.Action("Compromisos", "Reportes")" title="Reporte de compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                                        </li>
+                                        <li class="@Html.RouteIf("Reportes", "active")">
+                                            <a href="@Url.Action("Vendedores", "Reportes")" title="Reporte de vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
 
                     </ul>
                 </li>
@@ -56,8 +78,19 @@
                             <li class="@Html.RouteIf("Compromisos", "active")">
                                 <a href="@Url.Action("Index", "Compromisos")" title="Clientes"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
                             </li>
-                            <li class="@Html.RouteIf("Reportes", "active")">
-                                <a href="@Url.Action("MapaCalor", "Reportes")" title="Informaci&oacute;n gerencial"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Reportes</span></a>
+                            <li class=" @Html.RouteIf("", "active" )">
+                                <a href="#" title="Reportes"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Reportes</span></a>
+                                <ul>
+                                    <li class="@Html.RouteIf("ReporteClientes", "active")">
+                                        <a href="@Url.Action("ReporteClientes", "Reportes")" title="Reporte de clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
+                                    </li>
+                                    <li class="@Html.RouteIf("ReporteCompromisos", "active")">
+                                        <a href="@Url.Action("ReporteCompromisos", "Reportes")" title="Reporte de compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
+                                    </li>
+                                    <li class="@Html.RouteIf("ReporteVendedores", "active")">
+                                        <a href="@Url.Action("ReporteVendedores", "Reportes")" title="Reporte de vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
