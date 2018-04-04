@@ -1344,7 +1344,7 @@
     <Content Include="Views\Supervisor\Edit.cshtml" />
     <Content Include="Views\Vendedores\_PartialView.cshtml" />
     <Content Include="Views\Vendedores\CrearVendedor.cshtml" />
-    <Content Include="Views\Vendedores\MapaIndex.cshtml" />
+    <Content Include="Views\Vendedores\MapaRuta.cshtml" />
     <Content Include="Views\Vendedores\EditarVendedor.cshtml" />
     <Content Include="Views\Vendedores\CalendarioIndex.cshtml" />
     <Content Include="Views\InformacionGerencial\MapaCalor.cshtml" />
