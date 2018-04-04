@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -36,13 +37,13 @@ namespace WebVentas.Controllers
             ViewData["Error"] = mensaje;
         }
 
-        
+
         public async Task<ActionResult> VendedorIndex(string mensaje)
         {
             List<VendedorRequest> lista = new List<VendedorRequest>();
             VendedorRequest vendedorRequest = new VendedorRequest();
             SupervisorRequest supervisorRequest = new SupervisorRequest();
-            
+
             int idEmpresaInt = 0;
 
             Response response = new Response();
@@ -106,7 +107,7 @@ namespace WebVentas.Controllers
                 lista.FirstOrDefault().NumeroMenu = 1;
                 return View(lista);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 InicializarMensaje(Mensaje.Excepcion);
                 lista.FirstOrDefault().NumeroMenu = 1;
@@ -116,7 +117,7 @@ namespace WebVentas.Controllers
         }
 
 
-        public async Task<ActionResult> PerfilVendedor(string mensaje,int idVendedor)
+        public async Task<ActionResult> PerfilVendedor(string mensaje, int idVendedor)
         {
             SupervisorRequest supervisorRequest = new SupervisorRequest();
             VendedorRequest vendedor = new VendedorRequest();
@@ -139,14 +140,14 @@ namespace WebVentas.Controllers
                 InicializarMensaje(Mensaje.ErrorIdEmpresa);
             }
 
-             
+
 
             InicializarMensaje("PerfilVendedor");
 
             try
             {
 
-                
+
                 vendedor = await ApiServicio.ObtenerElementoAsync1<VendedorRequest>(vendedor,
                     new Uri(WebApp.BaseAddress),
                     "api/Vendedores/ListarClientesPorVendedor");
@@ -182,7 +183,7 @@ namespace WebVentas.Controllers
             return View(vendedorRequest);
         }
 
-        
+
 
         [HttpPost]
         public async Task<ActionResult> CrearVendedor(HttpPostedFileBase fileUpload, VendedorRequest vendedorRequest)
@@ -201,7 +202,7 @@ namespace WebVentas.Controllers
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-                
+
 
                 idEmpresaInt = Convert.ToInt32(idEmpresa);
                 vendedorRequest.idEmpresa = idEmpresaInt;
@@ -225,152 +226,152 @@ namespace WebVentas.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             Response response = new Response();
 
-           
+
             try
+            {
+
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+
+                var idUsuarioActual = User.Identity.GetUserId();
+
+                supervisorRequest.IdUsuario = idUsuarioActual;
+                supervisorRequest.IdEmpresa = idEmpresaInt;
+
+                if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
                 {
-                    
-                    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    response = await ApiServicio.InsertarAsync(supervisorRequest,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/Vendedores/obtenerSupervisorPorIdUsuario");
+
+                    supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                    vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
+
+                    guardar = true;
+                }
+
+                else if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
+                {
+                    guardar = true;
+
+                }
 
 
-                    var idUsuarioActual = User.Identity.GetUserId();
+                if (guardar == false)
+                {
+                    InicializarMensaje("No tiene permisos para agregar un nuevo vendedor");
+                    return View(vendedorRequest);
+                }
 
-                    supervisorRequest.IdUsuario = idUsuarioActual;
-                    supervisorRequest.IdEmpresa = idEmpresaInt;
+                var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
 
-                    if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
+                if (InstanciaUsuario != null)
+                {
+                    InicializarMensaje(Mensaje.ExisteCorreo);
+                    return View(vendedorRequest);
+                }
+
+                var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
+                                                         new Uri(WebApp.BaseAddress),
+                                                         "api/Vendedores/BuscarUsuariosVendedoresPorEmpresaEIdentificacion");
+
+                if (ExisteUsuario.Count > 0)
+                {
+                    InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
+                    return View(vendedorRequest);
+                }
+
+                var user = new ApplicationUser
+                {
+                    UserName = vendedorRequest.Correo,
+                    Email = vendedorRequest.Correo,
+                    Identificacion = vendedorRequest.Identificacion,
+
+                    Nombres = vendedorRequest.Nombres,
+                    Apellidos = vendedorRequest.Apellidos,
+                    Direccion = vendedorRequest.Direccion,
+                    Telefono = vendedorRequest.Telefono,
+
+                    Estado = 1,
+
+                    IdEmpresa = idEmpresaInt
+                };
+
+
+
+                var result = await userManager.CreateAsync(user, "A123345.1a");
+                db.SaveChanges();
+
+                if (result != null)
+                {
+
+                    InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
+
+                    vendedorRequest.IdUsuario = InstanciaUsuario.Id;
+
+
+                    userManager.AddToRole(InstanciaUsuario.Id, "Vendedor");
+
+
+
+                    response = await ApiServicio.InsertarAsync(vendedorRequest,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/Vendedores/InsertarVendedor");
+
+
+
+                    if (response.IsSuccess)
                     {
-                        response = await ApiServicio.InsertarAsync(supervisorRequest,
-                                                                     new Uri(WebApp.BaseAddress),
-                                                                     "api/Vendedores/obtenerSupervisorPorIdUsuario");
 
-                        supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
-                        vendedorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
-
-                        guardar = true;
-                    }
-
-                    else if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
-                    {
-                        guardar = true;
-
-                    }
-
-
-                    if (guardar == false)
-                    {
-                        InicializarMensaje("No tiene permisos para agregar un nuevo vendedor");
-                        return View(vendedorRequest);
-                    }
-
-                    var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                    var InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
-
-                    if (InstanciaUsuario != null)
-                    {
-                        InicializarMensaje(Mensaje.ExisteCorreo);
-                        return View(vendedorRequest);
-                    }
-
-                    var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/Vendedores/BuscarUsuariosVendedoresPorEmpresaEIdentificacion");
-
-                    if (ExisteUsuario.Count>0)
-                    {
-                        InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
-                        return View(vendedorRequest);
-                    }
-
-                    var user = new ApplicationUser
-                    {
-                        UserName = vendedorRequest.Correo,
-                        Email = vendedorRequest.Correo,
-                        Identificacion = vendedorRequest.Identificacion,
-
-                        Nombres = vendedorRequest.Nombres,
-                        Apellidos = vendedorRequest.Apellidos,
-                        Direccion = vendedorRequest.Direccion,
-                        Telefono = vendedorRequest.Telefono,
-
-                        Estado = 1,
-
-                        IdEmpresa = idEmpresaInt
-                    };
-
-
-
-                    var result = await userManager.CreateAsync(user, "A123345.1a");
-                    db.SaveChanges();
-
-                    if (result != null)
-                    {
-
-                        InstanciaUsuario = await userManager2.FindByEmailAsync(vendedorRequest.Correo);
-
-                        vendedorRequest.IdUsuario = InstanciaUsuario.Id;
-
-
-                        userManager.AddToRole(InstanciaUsuario.Id, "Vendedor");
-
-
-
-                        response = await ApiServicio.InsertarAsync(vendedorRequest,
-                                                                     new Uri(WebApp.BaseAddress),
-                                                                     "api/Vendedores/InsertarVendedor");
-
-
-
-                        if (response.IsSuccess)
+                        if (fileUpload != null)
                         {
+                            var idVendedor = response.Resultado;
 
-                            if (fileUpload != null)
+
+                            var fichero = readFileContents(fileUpload);
+                            var foto = new ArchivoRequest { Id = Convert.ToString(idVendedor), Array = fichero, Tipo = 3 };
+
+
+                            var fotoRequest = await ApiServicio.InsertarAsync<Response>(foto, new Uri(WebApp.BaseAddress)
+                                                                            , "Api/Archivos/Insertar");
+
+                            if (fotoRequest.IsSuccess)
                             {
-                                var idVendedor = response.Resultado;
+
+                                user.Foto = fotoRequest.Resultado.ToString();
+
+                                db.Entry(user).State = EntityState.Modified;
+                                await db.SaveChangesAsync();
 
 
-                                var fichero = readFileContents(fileUpload);
-                                var foto = new ArchivoRequest { Id = Convert.ToString(idVendedor), Array = fichero, Tipo = 3 };
-
-
-                                var fotoRequest = await ApiServicio.InsertarAsync<Response>(foto, new Uri(WebApp.BaseAddress)
-                                                                                , "Api/Archivos/Insertar");
-
-                                if (fotoRequest.IsSuccess)
-                                {
-
-                                    user.Foto = fotoRequest.Resultado.ToString();
-
-                                    db.Entry(user).State = EntityState.Modified;
-                                    await db.SaveChangesAsync();
-                                    
-
-                                    return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
-
-                                }
-                                else
-                                {
-                                    
-                                    InicializarMensaje(Mensaje.Error);
-                                    return View(vendedorRequest);
-                                }
+                                return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
 
                             }
-                            
-                            return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
+                            else
+                            {
+
+                                InicializarMensaje(Mensaje.Error);
+                                return View(vendedorRequest);
+                            }
+
                         }
 
+                        return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
                     }
-                    
-                    InicializarMensaje("No se ha podido crear un usuario");
-                    return View(vendedorRequest);
-                }
-                catch (Exception ex)
-                {
-                    ViewData["Error"] = Mensaje.Error;
-                    return View(vendedorRequest);
+
                 }
 
-           
+                InicializarMensaje("No se ha podido crear un usuario");
+                return View(vendedorRequest);
+            }
+            catch (Exception ex)
+            {
+                ViewData["Error"] = Mensaje.Error;
+                return View(vendedorRequest);
+            }
+
+
         }
 
 
@@ -395,7 +396,7 @@ namespace WebVentas.Controllers
 
 
 
-            InicializarMensaje("") ;
+            InicializarMensaje("");
 
             try
             {
@@ -466,28 +467,28 @@ namespace WebVentas.Controllers
                         InicializarMensaje(Mensaje.ExisteCorreo);
                         return View(vendedorRequest);
                     }
-                    
+
                     var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/Vendedores/BuscarUsuariosVendedoresPorEmpresaEIdentificacion");
-                    
+
                     if (ExisteUsuario.Count > 0)
                     {
-                        for (int i = 0;i< ExisteUsuario.Count;i++)
+                        for (int i = 0; i < ExisteUsuario.Count; i++)
                         {
-                            
+
                             if (ExisteUsuario.ElementAt(i).IdUsuario != vendedorRequest.IdUsuario)
                             {
                                 InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
                                 return View(vendedorRequest);
                             }
                         }
-                        
+
                     }
 
 
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                    InstanciaUsuario= await userManager.FindByIdAsync(vendedorRequest.IdUsuario);
+                    InstanciaUsuario = await userManager.FindByIdAsync(vendedorRequest.IdUsuario);
 
                     InstanciaUsuario.UserName = vendedorRequest.Correo;
                     InstanciaUsuario.Email = vendedorRequest.Correo;
@@ -500,11 +501,11 @@ namespace WebVentas.Controllers
                     InstanciaUsuario.Estado = 1;
                     InstanciaUsuario.IdEmpresa = idEmpresaInt;
 
-                    
+
                     db.Entry(InstanciaUsuario).State = EntityState.Modified;
                     await db.SaveChangesAsync();
-                    
-                    
+
+
 
                     response = await ApiServicio.InsertarAsync(vendedorRequest,
                                                                  new Uri(WebApp.BaseAddress),
@@ -579,16 +580,16 @@ namespace WebVentas.Controllers
         {
 
             ApplicationDbContext db = new ApplicationDbContext();
-            
+
             using (var transaction = db.Database.BeginTransaction())
             {
 
                 try
                 {
-                    
+
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                     var InstanciaUsuario = await userManager.FindByIdAsync(idUsuario);
-                    
+
                     InstanciaUsuario.Estado = 0;
 
 
@@ -619,7 +620,7 @@ namespace WebVentas.Controllers
             int idEmpresaInt = 0;
 
             var listaEventos = new List<EventoRequest>();
-            
+
 
             try
             {
@@ -634,8 +635,8 @@ namespace WebVentas.Controllers
             {
 
                 InicializarMensaje(Mensaje.ErrorIdEmpresa);
-                listaEventos.Add(new EventoRequest { NumeroMenu = menu});
-                
+                listaEventos.Add(new EventoRequest { NumeroMenu = menu });
+
                 return View(listaEventos);
             }
 
@@ -678,7 +679,7 @@ namespace WebVentas.Controllers
                 lista = lista.OrderBy(x => x.IdVendedor).ToList();
 
                 ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
-                
+
 
                 listaEventos.FirstOrDefault().NumeroMenu = menu;
 
@@ -788,10 +789,34 @@ namespace WebVentas.Controllers
         public async Task<ActionResult> MapaIndex(int? id, string mensaje)
         {
             InicializarMensaje(mensaje);
-            if (id!=null)
+            if (id != null)
             {
                 var vendedor = new VendedorRequest { IdVendedor = Convert.ToInt32(id) };
                 return View(vendedor);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+        }
+
+        public async Task<ActionResult> VerVendedoresTiempoReal(int? id, string mensaje)
+        {
+            InicializarMensaje(mensaje);
+            if (id != null)
+            {
+                var vendedor = new VendedorRequest { IdVendedor = Convert.ToInt32(id) };
+
+                var vendedorRequest = await ApiServicio.ObtenerElementoAsync1<Response>(vendedor, new Uri(WebApp.BaseAddress)
+                                                             , "api/Vendedores/ObtenerVendedor");
+                if (vendedorRequest.IsSuccess)
+                {
+                    var vistaVendedor = JsonConvert.DeserializeObject<VendedorRequest>(vendedorRequest.Resultado.ToString());
+                    var foto = string.IsNullOrEmpty(vistaVendedor.Foto) != true ? vistaVendedor.Foto.Replace("~", WebApp.BaseAddress) : "";
+                    vistaVendedor.Foto = foto;
+                    return View(vistaVendedor);
+                }
+                
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
