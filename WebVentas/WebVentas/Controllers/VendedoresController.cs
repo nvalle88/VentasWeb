@@ -786,12 +786,12 @@ namespace WebVentas.Controllers
          */
 
 
-        public async Task<ActionResult> MapaIndex(int? id, string mensaje)
+        public async Task<ActionResult> MapaRuta(int? idVendedor, string mensaje)
         {
             InicializarMensaje(mensaje);
-            if (id != null)
+            if (idVendedor!=null)
             {
-                var vendedor = new VendedorRequest { IdVendedor = Convert.ToInt32(id) };
+                var vendedor = new VendedorRequest { IdVendedor = Convert.ToInt32(idVendedor) };
                 return View(vendedor);
             }
 
@@ -957,11 +957,13 @@ namespace WebVentas.Controllers
 
 
 
-        public async Task<JsonResult> ListaRutas(int IdVendedor)
+        public async Task<JsonResult> ListaRutas(int IdVendedor,DateTime fecha)
         {
             var lista = new List<RutaRequest>();
 
             VendedorRequest vendedorRequest = new VendedorRequest();
+            vendedorRequest.FechaRuta = fecha;
+
 
             int idEmpresaInt = 0;
 

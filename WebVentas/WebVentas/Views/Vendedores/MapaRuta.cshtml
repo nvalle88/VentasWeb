@@ -1,14 +1,8 @@
 @model  WebVentas.ObjectModel.VendedorRequest
 
-
 @{
     ViewData["Title"] = "Index";
 }
-
-
-
-<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
-<script src="~/signalr/hubs"></script>
 
 <style>
 
@@ -23,6 +17,21 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
+    .controlFecha {
+        margin-top: 10px;
+        margin-left:10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+
+        height: 32px;
+        
+        outline: none;
+        
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
     .controlsButton {
         border: 1px solid transparent;
         border-radius: 5px;
@@ -34,7 +43,7 @@
     }
 
     #map {
-        height: 400px;
+        height: 600px;
         width: 100%;
     }
 
@@ -83,11 +92,6 @@
 
     <p></p>
 
-    <a href="../Vendedores/Create" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
-        <i class="glyphicon glyphicon-plus"></i>
-    </a>
-
-    <p> </p>
 
 
     <p></p>
@@ -99,7 +103,7 @@
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                <div class="jarviswidget  personalizado-table" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -115,7 +119,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Principal</h2>
+                        <h2>Rutas</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -129,6 +133,7 @@
 
                             <div id="map_container"></div>
 
+                            <input id="txtFecha" type="date" class="controlFecha" onchange="">
                             <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
 
                             <div id="map"></div>
@@ -161,10 +166,20 @@
             // Variables de dibujo
             var map;
             var posicionActual;
-            var iconoLugar = "../Imagenes/marcador_Mapa.png";
+            var iconoLugar = " ";
             var tiempoAnimacion = 1200;
             var markers = [];
             var imageniconoPosicion = "../Imagenes/pushpin vacio.png";
+
+            // Crear ruta
+            var ruta = new google.maps.Polyline({
+                path: polilinea,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+
 
 
             var marcadoresVendedor = [];
@@ -190,7 +205,8 @@
             //AddToVendedorList("j2", -0.20054644784609212, -78.21604034618044);
             //AddToVendedorList("j2", -0.30054644784609212, -78.21604034618044);
 
-            $.ajax({
+            function CargarVendedores() {
+                $.ajax({
                 type: 'POST',
                 url: '../Vendedores/ListaVendedores',
                 dataType: 'json',
@@ -224,7 +240,7 @@
                     alert('Failed to retrieve data.' + ex);
                 }
             });
-
+            }
 
 
             var iconoVendedor =
@@ -292,6 +308,7 @@
                         label: { text: texto, color: "#645F9F", fontSize: "20px" }
                     });
 
+                    /*
                     newMarker.addListener('click', function () {
                         if (idVendedor == 0) {
                             location.reload(true);
@@ -300,7 +317,7 @@
                         }
 
                     });
-
+                    */
                     marcadoresVendedor.push(newMarker);
 
                 }, timer);
@@ -318,36 +335,37 @@
             //AddToClientList("j2", -0.20054644784609212, -78.31604034618044);
             //AddToClientList("j2", -0.30054644784609212, -78.31604034618044);
 
-            $.ajax({
-                type: 'POST',
-                url: '../Vendedores/ListaClientes',
-                dataType: 'json',
-                data: {},
-                success: function (data) {
-                    arreglo = data;
+            function cargarClientes() {
+                $.ajax({
+                    type: 'POST',
+                    url: '../Vendedores/ListaClientes',
+                    dataType: 'json',
+                    data: {},
+                    success: function (data) {
+                        arreglo = data;
 
-                }, complete: function (data) {
+                    }, complete: function (data) {
 
-                    for (var i = 0; i < arreglo.length; i++) {
+                        for (var i = 0; i < arreglo.length; i++) {
 
-                        if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
-                            AddToClientList(arreglo[i].Nombre + " " + arreglo[i].Apellido, arreglo[i].Latitud, arreglo[i].Longitud);
+                            if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
+                                AddToClientList(arreglo[i].Nombre + " " + arreglo[i].Apellido, arreglo[i].Latitud, arreglo[i].Longitud);
 
 
-                            DibujarClientes(map);
+                                DibujarClientes(map);
+                            }
+
+
                         }
 
 
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
                     }
-
-
-                },
-
-                error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
-                }
-            });
-
+                });
+            }
 
             var iconoCliente =
                 {
@@ -407,14 +425,20 @@
 
             // Función para Crear rutas
             function DibujarRutas(idVendedor) {
-
+                
                 var numeradorVisita = 1;
+
+                var fechaBuscar = document.getElementById("txtFecha").value;
+
+                //Borrar polilinea y ruta
+                polilinea = [];
+
 
                 $.ajax({
                     type: 'POST',
                     url: '../Vendedores/ListaRutas',
                     dataType: 'json',
-                    data: { IdVendedor: idVendedor },
+                    data: { IdVendedor: idVendedor, fecha : fechaBuscar},
                     success: function (data) {
                         arreglo = data;
 
@@ -430,6 +454,8 @@
                             marker.setMap(null);
                         });
                         vendedoresLista = [];
+                        
+                        
 
 
                         for (var i = 0; i < arreglo.length; i++) {
@@ -460,25 +486,27 @@
 
 
                         }
+                        
+
+                        ruta.setPath(polilinea);
 
 
-                        // Crear ruta
-                        var ruta = new google.maps.Polyline({
-                            path: polilinea,
-                            geodesic: true,
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 1.0,
-                            strokeWeight: 2
-                        });
+                        if (arreglo.length > 0) {
+                            
+                            //Dibujar la ruta en el mapa
+                            ruta.setMap(map);
+                           
 
-                        //Dibujar la ruta en el mapa
-                        ruta.setMap(map);
+                            map.panTo(polilinea[0]);
 
+                            //alert("Ruta creada exitosamente");
 
+                        } else {
 
-                        map.panTo(polilinea[0]);
+                           // alert("No existe una ruta registrada este día");
+                        }
 
-                        alert("Ruta Creada, vuelva a presionar el ícono para volver al mapa");
+                        
 
 
                     },
@@ -487,7 +515,7 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-
+                
 
             }
 
@@ -512,10 +540,8 @@
                 AddBuscador("txtBuscador", map);
 
 
-                DibujarVendedores(map);
-                DibujarClientes(map);
-
-
+                setFechaActual();
+                addFechaAlMapa();
             }
 
 
@@ -603,11 +629,45 @@
 
             DibujarMapa("map");
 
+
+            ////////*********************************
+
+
+            function addFechaAlMapa() {
+
+                var controlDiv = document.createElement('DIV');
+                controlDiv.id = "controls";
+
+                var onChange = function () {
+
+                    DibujarRutas(@Model.IdVendedor);
+                };
+
+                controlDiv.appendChild(document.getElementById("txtFecha"));
+                google.maps.event.addDomListener(controlDiv, 'change', onChange);
+
+
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
+            }
+
+
+            
+        
+
+            
         }
 
+        function setFechaActual() {
 
+            if (document.getElementById("txtFecha").valueAsDate == null) {
 
+                document.getElementById("txtFecha").valueAsDate = new Date();
+                
+            }
+            
+        }
 
+        setFechaActual();
 
 
     </script>

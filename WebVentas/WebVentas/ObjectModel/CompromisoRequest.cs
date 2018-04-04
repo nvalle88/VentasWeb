@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,7 @@ namespace WebVentas.ObjectModel
                ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
         //public string tipocompromiso { get; set; }
-
+        [DisplayName("Dirección")]
         public string Descripcion { get; set; }
 
         

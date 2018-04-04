@@ -11,6 +11,7 @@ namespace WebVentas.ObjectModel
 
         public int? Calificacion { get; set; }
         public int CantidadClienteTipoCompromiso { get; set; }
+        public int valorCalculado { get; set; }
 
         public string Firma { get; set; }
         public string Nombre { get; set; }
