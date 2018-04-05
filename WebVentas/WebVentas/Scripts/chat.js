@@ -32,9 +32,6 @@
         //this is the function that's run when the "messageReceived" function is called from the server
         chat.client.messageReceived = function (livePositionRequest) {
 
-
-           
-
             if (vendedor == livePositionRequest.AgenteId) {
                 var pos = { lat: livePositionRequest.Lat, lng: livePositionRequest.Lon };
                 marker = new google.maps.Marker({
