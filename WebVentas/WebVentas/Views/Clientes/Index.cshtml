@@ -82,19 +82,19 @@
                                             </td>
                                             @if (item.Estado == 0)
                                             {
-                                            <td>
-                                                @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" }) |
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
-                                                @Html.ActionLink("Activar", "Activar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "activar" })
-                                            </td>
+                                                <td>
+                                                    @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" }) |
+                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
+                                                    @Html.ActionLink("Activar", "Activar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "activar" })
+                                                </td>
                                             }
                                             @if (item.Estado == 1)
                                             {
-                                            <td>
-                                                @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" }) |
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
-                                                @Html.ActionLink("Desactivar", "Desactivar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "desactivar" })
-                                            </td>
+                                                <td>
+                                                    @Html.ActionLink("Perfil", "PerfilCliente", new { id = item.IdCliente }, new { @class = "perfil" }) |
+                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdCliente }, new { @class = "editar" }) |
+                                                    @Html.ActionLink("Desactivar", "Desactivar", new { id = item.IdCliente, idEstado = item.Estado }, new { @class = "desactivar" })
+                                                </td>
                                             }
                                         </tr>
                                     }
@@ -123,9 +123,8 @@
 </div>
 
 @section pagespecific {
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/libs/Tablas/tablaCss.css">
+    <script type="text/javascript" charset="utf8" src="~/Scripts/libs/Tablas/scriptTabla.js"></script>
     <script src="~/Scripts/tabla/init.js"></script>
 
     <script type="text/javascript">
