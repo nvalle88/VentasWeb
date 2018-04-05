@@ -10,6 +10,14 @@
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 <script src="~/signalr/hubs"></script>
 <script src="~/Scripts/chat.js"></script>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
 <style>
     #map_container {
@@ -46,7 +54,7 @@
     <p></p>
     <div class="row">
         <div class="col-sm-12">
-
+            @Html.HiddenFor(model => model.IdVendedor);
             <div class="row">
                 <br />
                 <div class="col-xs-12 col-sm-1 col-md-1 col-lg-3">
@@ -119,50 +127,12 @@
     </div>
 </div>
 
-
-
-
 <script>
     var map;
-
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: -0.225219, lng: -78.5248 },
-            zoom: 15
-        });
-        // Try HTML5 geolocation.
-        geoLocation(map);
-    }
-
-    function geoLocation(map) {
-        var infoWindow = new google.maps.InfoWindow({ map: map });
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-
-                infoWindow.setPosition(pos);
-                infoWindow.setContent('Posición actual');
-                map.setCenter(pos);
-            }, function () {
-                handleLocationError(true, infoWindow, map.getCenter());
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
-    }
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-    }
-
+    var vendedor = $("#IdVendedor").val();
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&callback=initMap"
-        async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA"
+        async defer>
+</script>
 

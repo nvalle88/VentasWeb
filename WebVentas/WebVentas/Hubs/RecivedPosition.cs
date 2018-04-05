@@ -8,7 +8,9 @@ namespace WebVentas.Server.Hubs
     {
         public void SendPosition(LivePositionRequest livePositionRequest)
         {
+
             livePositionRequest.fecha = DateTime.Now.ToLocalTime();
+
             Clients.All.MessageReceived(livePositionRequest);
         }
     }
