@@ -26,9 +26,7 @@ namespace WebVentas.Controllers
     public class VendedoresController : Controller
     {
         private void InicializarMensaje(string mensaje)
-
         {
-
             if (mensaje == null)
             {
                 mensaje = "";
