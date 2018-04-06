@@ -107,8 +107,8 @@ namespace WebVentas.Controllers
             }
             catch (Exception ex)
             {
-                InicializarMensaje(Mensaje.Excepcion);
-                lista.FirstOrDefault().NumeroMenu = 1;
+                //InicializarMensaje(Mensaje.Excepcion);
+                //lista.FirstOrDefault().NumeroMenu = 1;
                 return View(lista);
 
             }
