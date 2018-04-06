@@ -81,24 +81,24 @@ namespace WebVentas.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> IngresarContrasena(RecuperarContrasenaRequest recuperarContrasenaRequest)
-        {
-
-            if (recuperarContrasenaRequest.Contrasena != recuperarContrasenaRequest.ConfirmarContrasena)
+            public async Task<ActionResult> IngresarContrasena(RecuperarContrasenaRequest recuperarContrasenaRequest)
             {
-                ModelState.AddModelError("", "La contraseña y la confirmación no coinciden...");
-            }
-                var user = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
-                await UserManager.RemovePasswordAsync(user.Id);
-               var pass= await UserManager.AddPasswordAsync(user.Id,recuperarContrasenaRequest.ConfirmarContrasena);
-            if (!pass.Succeeded)
-            {
-                ModelState.AddModelError("", "La contraseña no cumple con el formato establecido ...");
-                return View(recuperarContrasenaRequest);
-            }
 
-          return  RedirectToAction("Login");
-        }
+                if (recuperarContrasenaRequest.Contrasena != recuperarContrasenaRequest.ConfirmarContrasena)
+                {
+                    ModelState.AddModelError("", "La contraseña y la confirmación no coinciden...");
+                }
+                    var user = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
+                    await UserManager.RemovePasswordAsync(user.Id);
+                   var pass= await UserManager.AddPasswordAsync(user.Id,recuperarContrasenaRequest.ConfirmarContrasena);
+                if (!pass.Succeeded)
+                {
+                    ModelState.AddModelError("", "La contraseña no cumple con el formato establecido ...");
+                    return View(recuperarContrasenaRequest);
+                }
+
+              return  RedirectToAction("Login");
+            }
 
         [AllowAnonymous]
         public ActionResult IntroducirCodigo(string Email)
