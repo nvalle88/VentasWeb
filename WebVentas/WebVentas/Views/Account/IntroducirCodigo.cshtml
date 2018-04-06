@@ -24,7 +24,9 @@
                         <form action="@Url.Action("IntroducirCodigo", "account")" method="POST" id="login-form" class="smart-form client-form">
                             @Html.HiddenFor(model => model.Email)
                             <header>
-                                <p class="text-center">  <i class="fa fa-user"></i> Verificar código para el usuario <b> @Model.Email</b></p>
+                                @*<p class="text-center"> Verificar código para el usuario <b> @Model.Email</b></p>*@
+                                
+                                <img src="~/Imagenes/Logo.png" />
                             </header>
                             @Html.AntiForgeryToken()
                             @Html.ValidationBootstrap()

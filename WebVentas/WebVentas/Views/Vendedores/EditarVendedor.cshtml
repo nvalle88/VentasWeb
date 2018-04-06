@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "Editar";
 }
+@{
 
+    Model.NumeroMenu = 1;
+
+}
+
+
+@{ Html.RenderPartial("_MenuView", Model);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -52,7 +59,7 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="checkout-form" class="smart-form" method="post">
+                            <form id="checkout-form" class="smart-form" method="post" enctype="multipart/form-data">
 
 
                                 @{ Html.RenderPartial("_PartialView", Model);}
@@ -62,7 +69,7 @@
                                         Guardar
                                     </button>
 
-                                    <a class=" btn btn-default" id="regresar1" href="/Vendedores/VendedorIndex" >Cancelar</a>
+                                    <a class=" btn btn-default" id="regresar1" href="/Vendedores/VendedorIndex" onclick="esperar()">Cancelar</a>
 
                                 </footer>
                             </form>

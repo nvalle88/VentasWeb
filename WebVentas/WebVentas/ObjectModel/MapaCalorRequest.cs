@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebVentas.ObjectRequest;
 
 namespace WebVentas.ObjectModel
 {
@@ -20,5 +21,7 @@ namespace WebVentas.ObjectModel
         public List<ClienteRequest> ListaClientes { get; set; }
         public List<TipoClienteRequest> ListaTipoCliente { get; set; }
         public List<TipoCompromisoRequest> ListaTipoCompromiso { get; set; }
+        public List<VisitaRequest> ListaVisita { get; set; }
+        public List<VisitaRequest> ListaVisitaCompromiso { get; set; }
     }
 }

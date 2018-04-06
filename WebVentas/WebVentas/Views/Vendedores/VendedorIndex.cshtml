@@ -1,17 +1,21 @@
 @model List<WebVentas.ObjectModel.VendedorRequest>
-
+@using WebVentas.ObjectModel
 @{
     ViewData["Title"] = "Index";
 }
 
 
+
+@{
+
+    var vr = new VendedorRequest();
+    vr.NumeroMenu = 1;
+}
+
+@{ Html.RenderPartial("_MenuView", vr);}
+
 <!-- MAIN CONTENT -->
 <div id="content">
-
-
-    <br />
-    &nbsp;
-
     <div class="col col-10">
 
         @if (@ViewData["Error"].ToString() != "")
@@ -33,9 +37,9 @@
     </div>
 
     <p></p>
-    
-    <a href="../Vendedores/CrearVendedor" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default">
-        <i class="glyphicon glyphicon-plus"></i>
+
+    <a href="../Vendedores/CrearVendedor" id="nuevo" type="bt" style="color:#3276B1" title="Nuevo" class="btn btn-default butoon" onclick="esperar()">
+        <i class="glyphicon glyphicon-plus" style="color:white"></i>
     </a>
 
     <p> </p>
@@ -47,7 +51,7 @@
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                <div class="jarviswidget personalizado-table" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -119,9 +123,9 @@
                                             </td>
 
                                             <td>
-                                                
-                                                @Html.ActionLink("Perfil", "PerfilVendedor", new { idVendedor = item.IdVendedor }) |
-                                                @Html.ActionLink("Editar", "EditarVendedor", new { id = item.IdVendedor }) |
+
+                                                @Html.ActionLink("Perfil", "PerfilVendedor", new { idVendedor = item.IdVendedor }, new { onclick = "esperar()" }) |
+                                                @Html.ActionLink("Editar", "EditarVendedor", new { id = item.IdVendedor }, new { onclick = "esperar()" }) |
                                                 @Html.ActionLink("Eliminar", "DeshabilitarVendedor", new { idUsuario = item.IdUsuario }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
@@ -146,5 +150,26 @@
 
 @section pagespecific{
 
-    <script src="~/Scripts/datatables/init.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/libs/Tablas/tablaCss.css">
+    <script type="text/javascript" charset="utf8" src="~/Scripts/libs/Tablas/scriptTabla.js"></script>
+    <script src="~/Scripts/tabla/init.js"></script>
+
+
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+    <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+    <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
+
+    <script>
+
+
+        function esperar() {
+            $('#content').waitMe({
+                effect: 'bounce',
+                text: '',
+                bg: 'rgba(255, 255, 255, 0.1)',
+                color: '#ff5722'
+            });
+        }
+    </script>
 }

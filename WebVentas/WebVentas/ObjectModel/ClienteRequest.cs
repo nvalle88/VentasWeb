@@ -10,6 +10,10 @@ namespace WebVentas.ObjectModel
     {
         public int IdCliente { get; set; }
 
+        public int CantidadClienteTipoCompromiso { get; set; }
+        public int valorCalculado { get; set; }
+        public int OpcionMenu { get; set; }
+
         public int? IdEmpresa { get; set; }
 
         [DisplayName("Razón social")]
@@ -58,7 +62,10 @@ namespace WebVentas.ObjectModel
 
         public string Direccion { get; set; }
 
-        public int Estado { get; set; } 
+        public int Estado { get; set; }
+
+
+        public EstadisticosClienteRequest EstadisticosClienteRequest { get; set; }
 
     }
 }

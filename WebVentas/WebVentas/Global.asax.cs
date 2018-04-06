@@ -52,7 +52,14 @@ namespace WebVentas
             EstadoCliente.Activo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteActivado"]);
             EstadoCliente.Inactivo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteDesactivado"]);
             EstadoCliente.Todos = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ClienteTodos"]);
+            Constantes.ServerReportUrl = System.Configuration.ConfigurationManager.AppSettings["ServerReportUrl"];
 
+            Constantes.ReporteClientesPath = System.Configuration.ConfigurationManager.AppSettings["ReporteClientesPath"];
+            Constantes.ReporteVendedoresPath = System.Configuration.ConfigurationManager.AppSettings["ReporteVendedoresPath"];
+            Constantes.ReporteCompromisosPath = System.Configuration.ConfigurationManager.AppSettings["ReporteCompromisosPath"];
+
+            Constantes.UsuarioReport = System.Configuration.ConfigurationManager.AppSettings["UsuarioReport"];
+            Constantes.Contrasena = System.Configuration.ConfigurationManager.AppSettings["Contrasena"];
         }
 
         private void CreateRoles(ApplicationDbContext db)
@@ -71,7 +78,7 @@ namespace WebVentas
 
             if (!roleManager.RoleExists("GerenteGeneral"))
             {
-                roleManager.Create(new IdentityRole("GerenteComercial"));
+                roleManager.Create(new IdentityRole("GerenteGeneral"));
             }
 
         }

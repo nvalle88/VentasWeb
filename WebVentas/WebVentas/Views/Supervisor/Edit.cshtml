@@ -1,8 +1,11 @@
 ﻿@model WebVentas.ObjectModel.SupervisorRequest
-@using WebVentas.ObjectModel
 <link href="~/css/tabla/table.css" rel="stylesheet" />
-@{ var modelo = new SupervisorRequest { OpcionMenu = 0 }; }
-@{ Html.RenderPartial("_PartialView", modelo);}
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+<script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+<script src="~/Scripts/libs/waitMe/waitMe.js"></script>
+
 
 @{
     ViewBag.Title = "Edit";
@@ -13,36 +16,33 @@
 
     <p></p>
 
-    <a href="../../Supervisor/Index" id="regresar" type="bt" style="color:#3276B1" title="Regresar" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <a href="../../Supervisor/Index" id="regresar" type="bt" title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
 
     <p></p>
 
     <!-- widget grid -->
 
     <section id="widget-grid" class="">
-        @*<div class="col col-10">
-                @if (@ViewData["Error"].ToString() != "")
+        <div class="col col-10">
+            @if (@ViewData["Error"].ToString() != "")
 
-                {
+            {
 
-                    <div class="col-lg-7">
-                        <div class="alert alert-block alert-dismissable">
-                            <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-                            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                            <p>
-                                <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                <div class="col-lg-12">
+                    <div class="alert alert-block alert-dismissable">
+                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                        <p>
+                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
 
-                            </p>
-                        </div>
+                        </p>
                     </div>
-                }
+                </div>
+            }
 
-            </div>*@
+        </div>
 
         <div class="row">
-
-            <!-- NEW COL START -->
-
             <article class="col-sm-12 col-md-12 col-lg-12">
 
                 <!-- Widget ID (each widget will need unique ID)-->
@@ -69,9 +69,9 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
 
-                        <div class="widget-body no-padding">
+                        <div class="widget-body">
 
-                            <form id="checkout-form" method="post" class="smart-form" novalidate="novalidate">
+                            <form id="checkout-form" method="post" class="smart-form">
 
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(model => model.IdSupervisor)
@@ -87,7 +87,7 @@
                                                 <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
 
                                                 <label class="input">
-                                                    <input name="Identificacion" value="@Model.Identificacion" class="form-control" />
+                                                    <input name="Identificacion" value="@Model.Identificacion" class="form-control" pattern="[0-9,a-z ]+" required />
                                                     @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                                                 </label>
                                             </section>
@@ -96,7 +96,7 @@
                                                 <label>@Html.DisplayNameFor(model => model.Nombres)</label>
 
                                                 <label class="input">
-                                                    <input name="Nombres" value="@Model.Nombres" class="form-control" />
+                                                    <input name="Nombres" value="@Model.Nombres" class="form-control" pattern="[a-z A-Z]+" required />
                                                     @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
 
                                                 </label>
@@ -113,7 +113,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Apellidos" value="@Model.Apellidos" class="form-control" />
+                                                    <input name="Apellidos" value="@Model.Apellidos" class="form-control" pattern="[a-z A-Z]+" required />
 
                                                     @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
 
@@ -127,7 +127,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" />
+                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" pattern="[a-z A-Z]+" required />
 
                                                     @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
 
@@ -143,7 +143,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Telefono" type="number" value="@Model.Telefono" class="form-control"  />
+                                                    <input name="Telefono" value="@Model.Telefono" class="form-control" pattern="[0-9 ]+" required />
 
                                                     @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
 
@@ -157,129 +157,151 @@
 
                                                 <label class="input">
 
-                                                    <input name="Correo" value="@Model.Correo" class="form-control" />
+                                                    <input name="Correo" value="@Model.Correo" class="form-control" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" required />
 
                                                     @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
 
                                                 </label>
 
                                             </section>
-                                            <section class="col col-lg-12">
-                                                <!-- widget div-->
-                                                <div>
-                                                    <div class="widget-body no-padding">
-                                                        <legend>Lista de vendedores asignados</legend>
-                                                        <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>
-                                                                        @Html.DisplayNameFor(model => model.Nombres)
-                                                                    </th>
-                                                                    <th>
-                                                                        @Html.DisplayNameFor(model => model.Apellidos)
-                                                                    </th>
-                                                                    <th>Opciones</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @if (Model.ListaVendedoresAsignados != null)
-                                                                {
-                                                                    foreach (var item in Model.ListaVendedoresAsignados)
-                                                                    {
-                                                                        <tr>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.Nombres)
-                                                                            </td>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.Apellidos)
-                                                                            </td>
-
-                                                                            <td>
-                                                                                @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor,idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
-
-                                                                            </td>
-
-                                                                        </tr>
-
-                                                                    }
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </section>
-
-                                            <section class="col col-lg-12">
-                                                <!-- widget div-->
-                                                <div>
-                                                    <div class="widget-body no-padding">
-                                                        <legend>Lista de vendedores por asignar</legend>
-                                                        <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>
-                                                                        @Html.DisplayNameFor(model => model.Nombres)
-                                                                    </th>
-                                                                    <th>
-                                                                        @Html.DisplayNameFor(model => model.Apellidos)
-                                                                    </th>
-                                                                    <th>Opciones</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @if (Model.ListaVendedoresSinAsignar != null)
-                                                                {
-                                                                    foreach (var item in Model.ListaVendedoresSinAsignar)
-                                                                    {
-                                                                        <tr>
-
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.Nombres)
-                                                                            </td>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.Apellidos)
-                                                                            </td>
-
-                                                                            <td>
-
-                                                                                @Html.ActionLink("Asignar", "Asignarvendedor", new { id = item.IdVendedor, idsupervisor = Model.IdSupervisor }, new { onclick = "return confirm('Desea asignar vendedor... ?');" })
-                                                                            </td>
-
-                                                                        </tr>
-                                                                    }
-                                                                }
-
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </section>
                                         </div>
-
-
                                     </article>
                                 </fieldset>
                                 <footer>
-                                    <button type="submit" id="Edit" class="btn btn-primary">
+                                    <button type="submit" id="Edit" class="btn btn-default butoon">
                                         Guardar
                                     </button>
                                     <a class=" btn btn-default" id="regresar1" href="/Supervisor/Index">Cancelar</a>
                                 </footer>
                             </form>
-                        </div>
 
-                        <!-- END ROW -->
+
+
+
+                        </div>
                     </div>
                 </div>
+
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Lista de vendedores asignados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Nombres)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Apellidos)
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.ListaVendedoresAsignados != null)
+                                    {
+                                        foreach (var item in Model.ListaVendedoresAsignados)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                                </td>
+
+                                                <td>
+                                                    @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor, idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
+
+                                                </td>
+
+                                            </tr>
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+
+
+
+
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Lista de vendedores asignados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Nombres)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Apellidos)
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.ListaVendedoresSinAsignar != null)
+                                    {
+                                        foreach (var item in Model.ListaVendedoresSinAsignar)
+                                        {
+                                            <tr>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                                </td>
+
+                                                <td>
+
+                                                    @Html.ActionLink("Asignar", "Asignarvendedor", new { id = item.IdVendedor, idsupervisor = Model.IdSupervisor }, new { onclick = "return confirm('Desea asignar vendedor... ?');" })
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+
+
+
+
             </article>
         </div>
+
+        <!-- END ROW -->
     </section>
-
-    <!-- end widget grid -->
-    <!-- Modal -->
-
 </div>
 
 <!-- END MAIN CONTENT -->
@@ -287,147 +309,30 @@
 
 
 @section pagespecific {
+    <link rel="stylesheet" type="text/css" href="~/Scripts/libs/Tablas/tablaCss.css">
+    <script type="text/javascript" charset="utf8" src="~/Scripts/libs/Tablas/scriptTabla.js"></script>
+    <script src="~/Scripts/tabla/init.js"></script>
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
         $(document).ready(function () {
 
-            var $checkoutForm = $('#checkout-form').validate({
 
-                // Rules for form validation
-
-                rules: {
-
-                    Nombres: {
-
-                        required: true
-
-                    },
-
-                    Apellidos: {
-
-                        required: true
-
-                    },
-
-                    Correo: {
-
-                        required: true,
-
-                        email: true
-
-                    },
-
-                    Direccion: {
-
-                        required: true
-
-                    },
-
-                    Identificacion: {
-
-                        required: true,
-
-                        digits: true
-
-                    },
-
-                    Telefono: {
-
-                        required: true
-
-                    },
-
-                },
-
-
-
-                // Messages for form validation
-
-                messages: {
-
-                    Nombres: {
-
-                        required: ""
-
-                    },
-
-                    Apellidos: {
-
-                        required: ""
-
-                    },
-
-                    Correo: {
-
-                        required: "",
-
-                        email: "Formato de correo INVÁLIDO"
-
-                    },
-
-                    Direccion: {
-
-                        required: ""
-
-                    },
-
-                    Identificacion: {
-
-                        required: ""
-
-                    },
-
-                },
-
-
-
-                // Do not change code below
-
-                errorPlacement: function (error, element) {
-
-                    error.insertAfter(element.parent());
-
-                }
-
-            });
-
-
-            $("#regresar1").click(function () {
-
-                $('#content').waitMe({
-
-                    effect: 'ios',
-
-                    text: '',
-
-                    bg: 'rgba(255, 255, 255, 0.1)',
-
-                    color: '#118df9'
-
-                });
-
-            });
 
             $("#regresar").click(function () {
-
                 $('#content').waitMe({
-
-                    effect: 'ios',
-
+                    effect: 'bounce',
                     text: '',
-
                     bg: 'rgba(255, 255, 255, 0.1)',
-
-                    color: '#118df9'
-
+                    color: '#ff5722'
                 });
-
             });
+
 
         })
 
     </script>
+   
 
 }

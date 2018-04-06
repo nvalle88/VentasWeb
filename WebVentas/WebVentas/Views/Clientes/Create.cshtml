@@ -23,6 +23,7 @@
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         height: 32px;
+        width:80%;
         outline: none;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
@@ -37,35 +38,6 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
-    #floating-panel {
-        position: absolute;
-        top: 5px;
-        left: 30%;
-        z-index: 1;
-        background-color: #fff;
-        padding: 0px;
-        border: inherit 0px solid #999;
-        text-align: left;
-        /*font-family: 'Roboto','sans-serif';*/
-        line-height: 1px;
-        padding-left: 0px;
-        border: 1px solid transparent;
-        border-radius: 5px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 300px;
-        border-color: #4d90fe;
-    }
-
 
     #map {
         height: 0;
@@ -75,7 +47,20 @@
         position: relative;
     }
 
-   
+    #txtBuscador {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 500px;
+    }
+
+        #txtBuscador:focus {
+            border-color: #4d90fe;
+        }
 </style>
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -107,20 +92,18 @@
                     <div class="widget-body no-padding">
 
                         <fieldset>
-                            
-                                <input  id="floating-panel" type="text" placeholder="Buscar...">
-                            
-                                <div class="row">
 
-                                    <div class="col-sm-12">
+                            <div class="row">
 
-                                        <div id="map_container"></div>
+                                <div class="col-sm-12">
 
-                                        <div id="map"></div>
-
-                                    </div>
+                                    <div id="map_container"></div>
+                                    <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
+                                    <div id="map"></div>
 
                                 </div>
+
+                            </div>
 
                         </fieldset>
 
@@ -150,133 +133,133 @@
                             <div>
                                 <div class="widget-body no-padding">
 
-                                    @using (Html.BeginForm("Create", "Clientes", FormMethod.Post, new { id = "frm-adjuntar", @class="smart-form", enctype = "multipart/form-data" }))
+                                    @using (Html.BeginForm("Create", "Clientes", FormMethod.Post, new { id = "frm-adjuntar", @class = "smart-form", enctype = "multipart/form-data" }))
                                     {
-                                @Html.HiddenFor(model => model.Latitud)
-                                @Html.HiddenFor(model => model.Longitud)
-                                <fieldset>
-                                    <article>
-                                        <div class="row">
-                                            <section class="col col-lg-12">
-                                                <label>@Html.DisplayNameFor(model => model.RazonSocial)</label>
-                                                <label class="input">
-                                                    <input maxlength="100" id="RazonSocial" value="@Model.RazonSocial" pattern="[0-9 a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="RazonSocial" class="form-control" required />
-                                                    @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <legend>Datos del cliente</legend>
-                                        <br />
-                                        <div class="row">
-                                            <section class="col col-6">
-                                                <label>Seleccionar logo...</label>
-                                                <div class="input input-file">
-                                                    <input name="fileUpload" type="file" value="Seleccionar logo" onchange="loadFile(event)">
-                                                    <script>
-                                                        var imgByte;
-                                                        var loadFile = function (event) {
-                                                            var output = document.getElementById('output');
-                                                            output.data = URL.createObjectURL(event.target.files[0]);
-                                                            document.getElementById("fotocliente").style.visibility = "visible";
-                                                        };
-
-                                                    </script>
+                                        @Html.HiddenFor(model => model.Latitud)
+                                        @Html.HiddenFor(model => model.Longitud)
+                                        <fieldset>
+                                            <article>
+                                                <div class="row">
+                                                    <section class="col col-lg-12">
+                                                        <label>@Html.DisplayNameFor(model => model.RazonSocial)</label>
+                                                        <label class="input">
+                                                            <input maxlength="100" id="RazonSocial" value="@Model.RazonSocial" pattern="[0-9 a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="RazonSocial" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
                                                 </div>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label>@Html.DisplayNameFor(model => model.Nombre)</label>
-                                                <label class="input">
-                                                    <input maxlength="100" id="Nombre" value="@Model.Nombre" pattern="[0-9,a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="Nombre" class="form-control" required />
-                                                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
+                                                <legend>Datos del cliente</legend>
+                                                <br />
+                                                <div class="row">
+                                                    <section class="col col-6">
+                                                        <label>Seleccionar logo...</label>
+                                                        <div class="input input-file">
+                                                            <input name="fileUpload" type="file" value="Seleccionar logo" onchange="loadFile(event)">
+                                                            <script>
+                                                                var imgByte;
+                                                                var loadFile = function (event) {
+                                                                    var output = document.getElementById('output');
+                                                                    output.data = URL.createObjectURL(event.target.files[0]);
+                                                                    document.getElementById("fotocliente").style.visibility = "visible";
+                                                                };
 
-                                        </div>
-                                        <br />
-                                        <div class="row">
-                                            <section id="fotocliente" class="col col-6"  >
-                                                <section class="col col-lg-12" style="height:150px;">
-                                                    <object id="output" type="" style="align-content" width="100%" height="100%"  ></object>
-                                                </section>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label>@Html.DisplayNameFor(model => model.Apellido)</label>
-                                                <label class="input">
-                                                    <input maxlength="100" id="Apellido" value="@Model.Apellido" pattern="[0-9,a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="Apellido" class="form-control" required />
-                                                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-lg-6">
-                                                <label>@Html.DisplayNameFor(model => model.Direccion)</label>
-                                                <label class="input">
-                                                    <input maxlength="250" id="Direccion" value="@Model.Direccion" pattern="[0-9,a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="Direccion" class="form-control" required />
-                                                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
+                                                            </script>
+                                                        </div>
+                                                    </section>
+                                                    <section class="col col-6">
+                                                        <label>@Html.DisplayNameFor(model => model.Nombre)</label>
+                                                        <label class="input">
+                                                            <input maxlength="100" id="Nombre" value="@Model.Nombre" pattern="[0-9,a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="Nombre" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
 
-                                        <div class="row">
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.Telefono)</label>
-                                                <label class="input">
-                                                    <input name="Telefono" id="Telefono" value="@Model.Telefono" pattern="[0-9]+" data-mask="999999999" class="form-control" required />
-                                                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.TelefonoMovil)</label>
-                                                <label class="input">
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <section id="fotocliente" class="col col-6">
+                                                        <section class="col col-lg-12" style="height:150px;">
+                                                            <object id="output" type="" style="align-content" width="100%" height="100%"></object>
+                                                        </section>
+                                                    </section>
+                                                    <section class="col col-6">
+                                                        <label>@Html.DisplayNameFor(model => model.Apellido)</label>
+                                                        <label class="input">
+                                                            <input maxlength="100" id="Apellido" value="@Model.Apellido" pattern="[0-9,a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="Apellido" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-6">
+                                                        <label>@Html.DisplayNameFor(model => model.Direccion)</label>
+                                                        <label class="input">
+                                                            <input maxlength="250" id="Direccion" value="@Model.Direccion" pattern="[0-9,a-z A-Z ñÑáéíóúÁÉÍÓÚ\s]+" name="Direccion" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
 
-                                                    <input name="TelefonoMovil" id="TelefonoMovil" value="@Model.TelefonoMovil" pattern="[0-9]+" data-mask="9999999999" class="form-control" required/>
-                                                    @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
-                                                <label class="input">
-                                                    <input maxlength="20" id="Identificacion" value="@Model.Identificacion" name="Identificacion" class="form-control" pattern="[0-9, a-z A-Z ]+" required />
-                                                    @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label>@Html.DisplayNameFor(model => model.Email)</label>
-                                                <label class="input">
+                                                <div class="row">
+                                                    <section class="col col-3">
+                                                        <label>@Html.DisplayNameFor(model => model.Telefono)</label>
+                                                        <label class="input">
+                                                            <input name="Telefono" id="Telefono" value="@Model.Telefono" pattern="[0-9]+" data-mask="999999999" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-3">
+                                                        <label>@Html.DisplayNameFor(model => model.TelefonoMovil)</label>
+                                                        <label class="input">
 
-                                                    <input maxlength="100" id="Email" name="Email" value="@Model.Email" type="email" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" class="form-control"  required/>
-                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
+                                                            <input name="TelefonoMovil" id="TelefonoMovil" value="@Model.TelefonoMovil" pattern="[0-9]+" data-mask="9999999999" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-3">
+                                                        <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
+                                                        <label class="input">
+                                                            <input maxlength="20" id="Identificacion" value="@Model.Identificacion" name="Identificacion" class="form-control" pattern="[0-9, a-z A-Z ]+" required />
+                                                            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-3">
+                                                        <label>@Html.DisplayNameFor(model => model.Email)</label>
+                                                        <label class="input">
 
-                                        <div class="row">
-                                            <section class="col col-6">
-                                                <label>@Html.DisplayNameFor(model => model.IdTipoCliente)</label>
-                                                <label class="input">
-                                                    @Html.DropDownList("IdTipoCliente", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.IdTipoCliente, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
+                                                            <input maxlength="100" id="Email" name="Email" value="@Model.Email" type="email" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" class="form-control" required />
+                                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
 
-                                            <section class="col col-6">
-                                                <label>@Html.DisplayNameFor(model => model.IdVendedor)</label>
-                                                <label class="input">
-                                                    @Html.DropDownList("IdVendedor", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
+                                                <div class="row">
+                                                    <section class="col col-6">
+                                                        <label>@Html.DisplayNameFor(model => model.IdTipoCliente)</label>
+                                                        <label class="input">
+                                                            @Html.DropDownList("IdTipoCliente", null, htmlAttributes: new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.IdTipoCliente, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
 
-                                        </div>
-                                        <footer>
-                                            <button type="submit" id="insertarCliente" class="btn btn-primary">
-                                                Guardar
-                                            </button>
-                                            <a class=" btn btn-default" id="regresar1" href="/clientes/index">Cancelar</a>
+                                                    <section class="col col-6">
+                                                        <label>@Html.DisplayNameFor(model => model.IdVendedor)</label>
+                                                        <label class="input">
+                                                            @Html.DropDownList("IdVendedor", null, htmlAttributes: new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
 
-                                        </footer>
-                                    </article>
-                                </fieldset>
-                               
-}
+                                                </div>
+                                                <footer>
+                                                    <button type="submit" id="insertarCliente" class="btn btn-default butoon">
+                                                        Guardar
+                                                    </button>
+                                                    <a class=" btn btn-default" id="regresar1" href="/clientes/index">Cancelar</a>
+
+                                                </footer>
+                                            </article>
+                                        </fieldset>
+
+                                    }
 
 
 
@@ -311,6 +294,9 @@
     <script type="text/javascript">
         var opcion = 0;
         var MyMarker = null;
+        var markers = [];
+        var map;
+        var iconoLugar = "../Imagenes/marcador_Mapa.png";
         $(document).ready(function () {
 
             $("#regresar").click(function () {
@@ -334,7 +320,70 @@
     </script>
 
     <script>
+        function AddBuscador(idBuscador, mapa) {
 
+
+            var txtBuscador = document.getElementById(idBuscador);
+            var buscar = new google.maps.places.SearchBox(txtBuscador);
+
+
+            mapa.controls[google.maps.ControlPosition.TOP_LEFT].push(txtBuscador);
+
+            mapa.addListener('bounds_changed', function () {
+                buscar.setBounds(map.getBounds());
+            });
+
+
+            buscar.addListener('places_changed', function () {
+
+                var places = buscar.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+
+                        url: "",
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(60, 60),
+                        scaledSize: new google.maps.Size(60, 60)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+
+                });
+
+                mapa.fitBounds(bounds);
+            });
+        }
         function geoLocation(map) {
             var infoWindow = new google.maps.InfoWindow({ map: map });
             if (navigator.geolocation) {
@@ -361,20 +410,21 @@
             var lat1 = $("#Latitud").val().replace(",", ".");
             var log = $("#Longitud").val().replace(",", ".");
             var myLatLng = { lat: parseFloat(lat1), lng: parseFloat(log) };
-            var map = new google.maps.Map(document.getElementById('map'), {
+             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 center: { lat: -0.173689784, lng: -78.49555141 },
             });
+            AddBuscador("txtBuscador", map);
 
-            if (lat1 != 0 && log !=0 ) {
+            if (lat1 != 0 && log != 0) {
                 placeMarkerAndPanTo(myLatLng, map);
             }
-           
+
             map.addListener('click', function (e) {
                 placeMarkerAndPanTo(e.latLng, map);
             });
 
-            AddBuscador("floating-panel", map);
+           
 
         }
 
@@ -383,7 +433,7 @@
             var iconCPN =
                 {
                     //con el icono
-                    url: "../Content/img/logo-o.png", // url
+                    url: "../Imagenes/pushpin cliente-01.png", // url
                     size: new google.maps.Size(48, 48),
                     scaledSize: new google.maps.Size(48, 48), // scaled size
                     origin: new google.maps.Point(0, 0), // origin
@@ -414,89 +464,26 @@
         var modelo;
         var cordenadas;
 
-                $(document).ready(function () {
-                    $("#insertarCliente").click(function () {
-                        if (MyMarker == null) {
-                            alert("Click en el mapa para agregar la ubicación del cliente");
-                            $("#content").waitMe("hide");
-                            return false;
-                        }
-                    });
+        $(document).ready(function () {
+            $("#insertarCliente").click(function () {
+                if (MyMarker == null) {
+                    alert("Click en el mapa para agregar la ubicación del cliente");
+                    $("#content").waitMe("hide");
+                    return false;
+                }
+            });
         });
 
 
 
 
-                function AddBuscador(idBuscador, mapa) {
-
-
-                    var txtBuscador = document.getElementById(idBuscador);
-                    var buscar = new google.maps.places.SearchBox(txtBuscador);
-
-
-                    mapa.controls[google.maps.ControlPosition.TOP_LEFT].push(txtBuscador);
-
-                    mapa.addListener('bounds_changed', function () {
-                        buscar.setBounds(map.getBounds());
-                    });
-
-
-                    buscar.addListener('places_changed', function () {
-
-                        var places = buscar.getPlaces();
-
-                        if (places.length == 0) {
-                            return;
-                        }
-
-                        // Clear out the old markers.
-                        markers.forEach(function (marker) {
-                            marker.setMap(null);
-                        });
-                        markers = [];
-
-                        // For each place, get the icon, name and location.
-                        var bounds = new google.maps.LatLngBounds();
-                        places.forEach(function (place) {
-                            if (!place.geometry) {
-                                console.log("Returned place contains no geometry");
-                                return;
-                            }
-                            var icon = {
-
-                                url: iconoLugar,
-                                size: new google.maps.Size(71, 71),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(60, 60),
-                                scaledSize: new google.maps.Size(60, 60)
-                            };
-
-                            // Create a marker for each place.
-                            markers.push(new google.maps.Marker({
-                                map: map,
-                                icon: icon,
-                                title: place.name,
-                                position: place.geometry.location
-                            }));
-
-                            if (place.geometry.viewport) {
-                                // Only geocodes have viewport.
-                                bounds.union(place.geometry.viewport);
-                            } else {
-                                bounds.extend(place.geometry.location);
-                            }
-
-                        });
-
-                        mapa.fitBounds(bounds);
-                    });
-                }
+      
 
     </script>
 
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
-            async defer></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
+    </script>
 
 
 }

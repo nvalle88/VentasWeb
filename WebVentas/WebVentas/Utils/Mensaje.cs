@@ -18,8 +18,8 @@ namespace VentaServicios.Utils
         public static string CorreoSatisfactorio { get { return "Correo enviado satisfactoriamente"; } }
         public static string ErrorCorreo { get { return "No pudo enviarse el correo"; } }
         public static string ErrorIdEmpresa { get { return "Error al obtener la empresa"; } }
-
-
+        public static string ExisteCorreo { get { return "El correo ingresado ya se halla registrado"; } }
+        public static string ExisteIdentificacionUsuario { get { return "Ya existe un usuario con esa identificación"; } }
 
     }
 }

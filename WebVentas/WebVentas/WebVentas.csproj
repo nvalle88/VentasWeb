@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -59,6 +65,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicosoftReportViewerWebForms_v11.1.0.1\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="ReportViewerForMvc, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportViewerForMvc.1.0.1\lib\net45\ReportViewerForMvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -215,7 +227,9 @@
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\CalendariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
-    <Compile Include="Controllers\InformesGerencialesController.cs" />
+    <Compile Include="Controllers\CompromisosController.cs" />
+    <Compile Include="Controllers\InformacionGerencialController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\VendedoresController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -234,6 +248,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\RecivedPosition.cs" />
     <Compile Include="Migrations\201803212226142_InitialCreate.cs" />
     <Compile Include="Migrations\201803212226142_InitialCreate.Designer.cs">
       <DependentUpon>201803212226142_InitialCreate.cs</DependentUpon>
@@ -293,6 +308,9 @@
     <Compile Include="ObjectModel\ArchivoRequest.cs" />
     <Compile Include="ObjectModel\CompromisoRequest.cs" />
     <Compile Include="ObjectModel\EmpresaActual.cs" />
+    <Compile Include="ObjectModel\EstadisticosClienteRequest.cs" />
+    <Compile Include="ObjectModel\EstadisticoSupervisorRequest.cs" />
+    <Compile Include="ObjectModel\EstadisticoVendedorRequest.cs" />
     <Compile Include="ObjectModel\MapaCalorRequest.cs" />
     <Compile Include="ObjectModel\EventoRequest.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
@@ -311,7 +329,9 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\ClientesEstados.cs" />
     <Compile Include="Utils\Constantes.cs" />
+    <Compile Include="Utils\Credenciales.cs" />
     <Compile Include="Utils\EstadoCliente.cs" />
+    <Compile Include="Utils\LivePositionRequest.cs" />
     <Compile Include="Utils\Mensaje.cs" />
     <Compile Include="Utils\Response.cs" />
     <Compile Include="Utils\WebApp.cs" />
@@ -652,12 +672,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\Logo.png" />
     <Content Include="Imagenes\marcador_Mapa.png" />
     <Content Include="Imagenes\pushpin cliente-01.png" />
     <Content Include="Imagenes\pushpin vacio.png" />
     <Content Include="Imagenes\pushpin vendedor-01.png" />
     <Content Include="Imagenes\star_outline.png" />
     <Content Include="Imagenes\star_selected.png" />
+    <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -728,16 +750,35 @@
     <Content Include="Content\sound\voice_alert.ogg" />
     <Content Include="Content\sound\voice_off.ogg" />
     <Content Include="Content\sound\voice_on.ogg" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\ventasDemoWeb - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ventasDemoWeb - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ventasdg - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
-    <Content Include="Scripts\datatables\init.js" />
+    <Content Include="Scripts\chat.js" />
+    <Content Include="Scripts\libs\Tablas\scriptTabla.js" />
+    <Content Include="Scripts\libs\Tablas\tablaCss.css" />
+    <Content Include="Scripts\tabla\init.js" />
     <Content Include="Scripts\demo.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.map" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.11.1.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -751,6 +792,8 @@
     <Content Include="Scripts\libs\waitMe\waitMe.min.css" />
     <Content Include="Scripts\libs\waitMe\waitMe.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\notification\SmartNotification.min.js" />
     <Content Include="Scripts\plugin\bootstrap-duallistbox\jquery.bootstrap-duallistbox.min.js" />
     <Content Include="Scripts\plugin\bootstrap-progressbar\bootstrap-progressbar.min.js" />
@@ -1188,6 +1231,7 @@
     <Content Include="Scripts\plugin\x-editable\x-editable.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.manager.min.js" />
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
@@ -1325,17 +1369,22 @@
     <Content Include="Views\Account\RecuperarContrasena.cshtml" />
     <Content Include="Views\Account\IntroducirCodigo.cshtml" />
     <Content Include="Views\Account\IngresarContrasena.cshtml" />
-    <Content Include="Views\Supervisor\_PartialView.cshtml" />
     <Content Include="Views\Supervisor\Edit.cshtml" />
-    <Content Include="Views\InformesGerenciales\Index.cshtml" />
     <Content Include="Views\Vendedores\_PartialView.cshtml" />
     <Content Include="Views\Vendedores\CrearVendedor.cshtml" />
-    <Content Include="Views\Vendedores\MapaIndex.cshtml" />
+    <Content Include="Views\Vendedores\MapaRuta.cshtml" />
     <Content Include="Views\Vendedores\EditarVendedor.cshtml" />
-    <Content Include="Views\Supervisor\MapaCalor.cshtml" />
-    <Content Include="Views\Supervisor\Compromisos.cshtml" />
     <Content Include="Views\Vendedores\CalendarioIndex.cshtml" />
+    <Content Include="Views\InformacionGerencial\MapaCalor.cshtml" />
+    <Content Include="Views\Compromisos\Index.cshtml" />
+    <Content Include="Views\InformacionGerencial\_PartialView.cshtml" />
     <Content Include="Views\Clientes\PerfilCliente.cshtml" />
+    <Content Include="Views\Vendedores\_MenuView.cshtml" />
+    <Content Include="Views\InformacionGerencial\Estadisticas.cshtml" />
+    <Content Include="Views\Vendedores\VerVendedoresTiempoReal.cshtml" />
+    <Content Include="Views\Reportes\ReporteClientes.cshtml" />
+    <Content Include="Views\Reportes\ReporteCompromisos.cshtml" />
+    <Content Include="Views\Reportes\ReporteVendedores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebVentas.ObjectModel;
+using WebVentas.ObjectRequest;
 using WebVentas.Services;
 using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
+    [Authorize(Roles = "Supervisor,GerenteGeneral")]
     public class ClientesController : Controller
     {
 
@@ -119,8 +121,8 @@ namespace WebVentas.Controllers
             var listaVendedores = await ApiServicio.Listar<VendedorRequest>(empresaActual, new Uri(WebApp.BaseAddress)
                                                                , "api/Vendedores/ListarVendedores");
 
-            ViewBag.IdTipoCliente = new SelectList(listaTipoCliente, "IdTipoCliente", "Tipo",clienteRequest.IdTipoCliente);
-            ViewBag.IdVendedor = new SelectList(listaVendedores, "IdVendedor", "Nombres",clienteRequest.IdVendedor);
+            ViewBag.IdTipoCliente = new SelectList(listaTipoCliente, "IdTipoCliente", "Tipo", clienteRequest.IdTipoCliente);
+            ViewBag.IdVendedor = new SelectList(listaVendedores, "IdVendedor", "Nombres", clienteRequest.IdVendedor);
         }
 
 
@@ -152,6 +154,14 @@ namespace WebVentas.Controllers
             clienteRequest.Foto = foto;
             var firma = string.IsNullOrEmpty(clienteRequest.Firma) != true ? clienteRequest.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
             clienteRequest.Firma = firma;
+
+            var estadisticoVendedorRequest = await ApiServicio.ObtenerElementoAsync1<EstadisticosClienteRequest>(clienteRequest,
+                 new Uri(WebApp.BaseAddress),
+                 "api/Clientes/VerEstadisticosCliente");
+
+
+            clienteRequest.EstadisticosClienteRequest = estadisticoVendedorRequest;
+
             return View(clienteRequest);
 
         }
@@ -167,12 +177,12 @@ namespace WebVentas.Controllers
         {
             var firma = string.IsNullOrEmpty(cliente.Firma) != true ? cliente.Firma.Replace("~", WebApp.BaseAddress) : ""; ;
             return firma;
-           
+
         }
 
         public async Task<ActionResult> Edit(int id)
         {
-           
+
 
 
             var clienteRequests = new ClienteRequest { IdCliente = id };
@@ -202,8 +212,10 @@ namespace WebVentas.Controllers
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-                clienteRequest.Latitud = Convert.ToDouble(Latitud);
-                clienteRequest.Longitud = Convert.ToDouble(Longitud);
+                var lat = Latitud.Replace(".", ",");
+                var lon = Longitud.Replace(".", ",");
+                clienteRequest.Latitud = Convert.ToDouble(lat);
+                clienteRequest.Longitud = Convert.ToDouble(lon);
 
                 var cliente = new ClienteRequest
                 {
@@ -316,8 +328,11 @@ namespace WebVentas.Controllers
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-                clienteRequest.Latitud = Convert.ToDouble(Latitud);
-                clienteRequest.Longitud = Convert.ToDouble(Longitud);
+                var lat = Latitud.Replace(".", ",");
+                var lon = Longitud.Replace(".", ",");
+
+                clienteRequest.Latitud = Convert.ToDouble(lat);
+                clienteRequest.Longitud = Convert.ToDouble(lon);
 
                 var cliente = new ClienteRequest
                 {
@@ -327,7 +342,6 @@ namespace WebVentas.Controllers
 
                 var respuesta = await ApiServicio.ObtenerElementoAsync1<Response>(cliente, new Uri(WebApp.BaseAddress)
                                                                       , "api/Clientes/ExisteClientePorEmpresa");
-
 
                 if (respuesta == null)
                 {

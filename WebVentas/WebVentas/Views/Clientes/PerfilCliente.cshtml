@@ -2,14 +2,42 @@
 @using WebVentas.Utils
 
 @{
-    ViewData["Title"] = "Index";
+                /**/
 
-    int calificacion = 5;
+                ViewData["Title"] = "Index";
+
+                int calificacion = 5;
 }
 @Html.HiddenFor(model => model.Latitud)
 @Html.HiddenFor(model => model.Longitud)
 <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
 <style>
+    .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        width: 30px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #txtBuscador {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+    }
+
+        #txtBuscador:focus {
+            border-color: #4d90fe;
+        }
 
     #map_container {
         position: relative;
@@ -75,6 +103,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div id="map_container"></div>
+                                    <input id="txtBuscador" class="controls" type="text" placeholder="Buscar...">
                                     <div id="map"></div>
                                 </div>
                             </div>
@@ -116,9 +145,9 @@
                     <legend></legend>
                 </section>
                 <section class="col-lg-12">
-                    <img src="@Model.Firma" class="col col-lg-12"/>
+                    <img src="@Model.Firma" class="col col-lg-6" />
                     <p>&nbsp;</p>
-                    <label>&nbsp;&nbsp;&nbsp;&nbsp;<b>Firma</b></label>
+                    <label class="col col-lg-12">&nbsp;&nbsp;&nbsp;&nbsp;<b>Firma</b></label>
                 </section>
 
             </div>
@@ -127,7 +156,35 @@
 
     <div class="row">
         <legend>&nbsp;&nbsp;&nbsp;&nbsp;<b>Estadísticas</b></legend>
+        <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+            <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                <header>
+                    <h2>Tipos de compromiso</h2>
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div id="pie-chart" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
 
+        <article class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+            <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
+                <header>
+                    <h2>Compromisos cumplidos / incumplidos</h2>
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div id="pie-chart2" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
     </div>
 
 </div>
@@ -138,6 +195,9 @@
     <script type="text/javascript">
         var opcion = 0;
         var MyMarker = null;
+
+        var markers = [];
+        var map;
         $(document).ready(function () {
             $("#regresar").click(function () {
                 $('#content').waitMe({
@@ -173,11 +233,80 @@
         var MyMarker = null;
         var marker;
         var iconCPN;
+        var markers = [];
+        var map;
+
+
+        function AddBuscador(idBuscador, mapa) {
+
+
+            var txtBuscador = document.getElementById(idBuscador);
+            var buscar = new google.maps.places.SearchBox(txtBuscador);
+
+
+            mapa.controls[google.maps.ControlPosition.TOP_LEFT].push(txtBuscador);
+
+            mapa.addListener('bounds_changed', function () {
+                buscar.setBounds(map.getBounds());
+            });
+
+
+            buscar.addListener('places_changed', function () {
+
+                var places = buscar.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+
+                        url: "",
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(60, 60),
+                        scaledSize: new google.maps.Size(60, 60)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+
+                });
+
+                mapa.fitBounds(bounds);
+            });
+        }
+
         function initMap() {
             var iconCPN =
                 {
                     //con el icono
-                    url: "../../Content/img/logo-o.png", // url
+                    url: "../../Imagenes/pushpin cliente-01.png", // url
                     size: new google.maps.Size(48, 48),
                     scaledSize: new google.maps.Size(48, 48), // scaled size
                     origin: new google.maps.Point(0, 0), // origin
@@ -188,10 +317,12 @@
             var log = $("#Longitud").val().replace(",", ".");
             var myLatLng = { lat: parseFloat(lat1), lng: parseFloat(log) };
 
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 center: myLatLng
             });
+
+            AddBuscador("txtBuscador", map);
             //geoLocation(map);
 
                      marker = new google.maps.Marker({
@@ -243,9 +374,129 @@
         var modelo;
         var cordenadas;
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy7xHSOffrWxVEax1kniS5-OxrWCuF4JU&libraries=drawing&callback=initMap"
-            async defer></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
+    </script>
+
+    <script>
+
+        if ($('#pie-chart').length) {
+
+            var data_pie = [];
+
+            @{
+                var series = Model.EstadisticosClienteRequest.ListaTipoCompromiso.Count;
+            }
 
 
+            @for (var i = 0; i < series; i++) {
+                <text>
+                    data_pie[@i] = {
+                        label: '@(Model.EstadisticosClienteRequest.ListaTipoCompromiso.ElementAt(i).Descripcion )',
+                        data: @(Model.EstadisticosClienteRequest.ListaTipoCompromiso.ElementAt(i).CantidadCompromiso )
+                    }
+                </text>
+
+            }
+
+            $.plot($("#pie-chart"), data_pie, {
+                series: {
+                    pie: {
+                        show: true,
+                        innerRadius: 0.4,
+                        radius: 0.7,
+                        label: {
+                            show: true,
+                            radius: 0.55,// 2/3 = 0.6666
+                            formatter: function (label, series) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;"><br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            threshold: 0.1
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    noColumns: 1, // number of colums in legend table
+                    labelFormatter: null, // fn: string -> string
+                    labelBoxBorderColor: "#000", // border color for the little label boxes
+                    container: null, // container (as jQuery object) to put legend in, null means default on top of graph
+                    position: "ne", // position of default legend container within plot
+                    margin: [5, 10], // distance from grid edge to default legend container within plot
+                    backgroundColor: "#efefef", // null means auto-detect
+                    backgroundOpacity: 1 // set to 0 to avoid background
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+            });
+
+        }
+
+
+
+        if ($('#pie-chart2').length) {
+
+            var data_pie = [];
+
+            @{
+                var series2 = 1;
+            }
+
+
+            @for (var i = 0; i < series2; i++) {
+                <text>
+                    data_pie[@i] = {
+                        label: 'Cumplidos',
+                        data: @(Model.EstadisticosClienteRequest.CompromisosCumplidos )
+                    }
+                </text>
+
+                <text>
+                    data_pie[@i+1] = {
+                        label: 'Incumplidos',
+                        data: @(Model.EstadisticosClienteRequest.CompromisosIncumplidos )
+                    }
+                </text>
+
+            }
+
+            $.plot($("#pie-chart2"), data_pie, {
+                series: {
+                    pie: {
+                        show: true,
+                        innerRadius: 0.4,
+                        radius: 0.7,
+                        label: {
+                            show: true,
+                            radius: 0.55,// 2/3 = 0.6666
+                            formatter: function (label, series) {
+                                return '<div style="font-size:11px;text-align:center;padding:4px;color:white;"><br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            threshold: 0.1
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    noColumns: 1, // number of colums in legend table
+                    labelFormatter: null, // fn: string -> string
+                    labelBoxBorderColor: "#000", // border color for the little label boxes
+                    container: null, // container (as jQuery object) to put legend in, null means default on top of graph
+                    position: "ne", // position of default legend container within plot
+                    margin: [5, 10], // distance from grid edge to default legend container within plot
+                    backgroundColor: "#efefef", // null means auto-detect
+                    backgroundOpacity: 1 // set to 0 to avoid background
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+            });
+
+        }
+
+    </script>
 
 }

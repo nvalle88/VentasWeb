@@ -1,0 +1,22 @@
+﻿@model  WebVentas.ObjectModel.VendedorRequest
+
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+
+<div class="btn-group btn-group-justified">
+
+    
+    <a href="../../Vendedores/vendedorIndex" class="btn btn-default" id="1" onclick="esperar()">
+        <i class="fa fa-lg fa-user"></i><br />Vendedores
+    </a>
+
+    <a href="../../Vendedores/CalendarioIndex" class="btn btn-default" id="2" onclick="esperar()">
+        <i class="fa fa-lg fa-calendar"></i><br />Agenda
+    </a>
+        
+    <script>
+
+        document.getElementById("@(Model.NumeroMenu)").classList.add('butoon');
+
+    </script>
+
+</div>

@@ -1,4 +1,14 @@
 @model List<WebVentas.ObjectModel.EventoRequest>
+@using WebVentas.ObjectModel
+
+@{
+
+    var vr = new VendedorRequest();
+    vr.NumeroMenu = 2;
+}
+
+
+@{ Html.RenderPartial("_MenuView", vr);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -8,20 +18,21 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
 
             <form id="buscar" method="post" novalidate="novalidate">
-                <section class="col col-lg-5 no-padding" >
+                <section class="col col-lg-5 no-padding">
 
                     <div class="col col-lg-4" style="padding-top:7px;text-align:center;">Vendores</div>
 
                     <label class="input col col-lg-8">
                         @Html.DropDownList("IdVendedor", null, htmlAttributes: new { @class = "form-control" })
+
                     </label>
 
                 </section>
 
 
                 <section class="col col-lg-1">
-                    
-                    <button type="submit" id="buscar" href="/Vendedores/CalendarioIndex" class="btn btn-primary">
+
+                    <button type="submit" id="buscar" href="/Vendedores/CalendarioIndex" class="btn btn-default butoon" onclick="esperar()">
                         <i class="fa fa-search fa-lg"></i>
                     </button>
                 </section>
@@ -30,16 +41,16 @@
 
         </div>
     </div>
-    
+
     <br />
 
     <div class="row">
 
-        
+
         <div class="col-sm-12 col-md-12 col-lg-12">
 
             <!-- new widget -->
-            <div class="jarviswidget jarviswidget-color-blueDark">
+            <div class="jarviswidget personalizado-table">
 
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
@@ -278,7 +289,7 @@
                                 end: new Date(@( yearF ), @( mesF ), @( diaF ),@( horaF ) ,@( minutoF )),
 
                                 description: '@(Model.ElementAt(i).Notas)',
-                                
+
 
                         </text>
 
@@ -394,5 +405,21 @@
 
     </script>
 
-    
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+    <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+    <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
+
+    <script>
+
+
+        function esperar() {
+            $('#content').waitMe({
+                effect: 'bounce',
+                text: '',
+                bg: 'rgba(255, 255, 255, 0.1)',
+                color: '#ff5722'
+            });
+        }
+    </script>
 }

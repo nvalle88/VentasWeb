@@ -1,0 +1,140 @@
+﻿@model  WebVentas.ObjectModel.VendedorRequest
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Scripts/chat.js"></script>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+
+<style>
+    #map_container {
+        position: relative;
+    }
+
+    #map {
+        height: 0;
+        overflow: hidden;
+        padding-bottom: 40.25%;
+        padding-top: 30px;
+        position: relative;
+    }
+</style>
+
+
+
+<style>
+    #map_container {
+        position: relative;
+    }
+
+    #map {
+        height: 0;
+        overflow: hidden;
+        padding-bottom: 35.25%;
+        padding-top: 10px;
+        position: relative;
+    }
+</style>
+<div id="content">
+    <p></p>
+    <a href="../../vendedores/perfilvendedor?idVendedor=@Model.IdVendedor" id="regresar" type="bt" title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <p></p>
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.HiddenFor(model => model.IdVendedor)
+            <div class="row">
+                <br />
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-3">
+                    <section class="col-lg-12">
+                        <img src="@Model.Foto" class="col col-lg-12" />
+                    </section>
+                </div>
+
+                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-6">
+                    <section>
+                        <label><b>Nombre:</b></label>
+                        <label>@Model.NombreApellido</label>
+                    </section>
+                    <br />
+                    <section>
+                        <label><b>Tel&eacute;fono:</b></label>
+                        <label>@Model.Telefono</label>
+                    </section>
+                    <br />
+                    <section>
+                        <label><b>Identificaci&oacute;n:</b></label>
+                        <label>@Model.Identificacion</label>
+                    </section>
+                    <br />
+                    <section>
+                        <label><b>Correo:</b></label>
+                        <label>@Model.Correo</label>
+                    </section>
+                    <br />
+                </div>
+
+
+
+
+            </div>
+
+            <section id="widget-grid" class="">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-close="false" data-widget-custombutton="false">
+                            <header draggable="true">
+                                <span class="widget-icon"> <i class="fa fa-map-marker"></i></span>
+                                <h2></h2>
+
+                            </header>
+                            <div>
+                                <div class="jarviswidget-editbox">
+                                </div>
+                                <div class="widget-body no-padding">
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+
+                                                <div id="map_container"></div>
+                                                <div id="map"></div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <footer></footer>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var map;
+    var vendedor = $("#IdVendedor").val();
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA"
+        async defer>
+</script>
+
