@@ -35,7 +35,7 @@ namespace WebVentas.Controllers
             ViewData["Error"] = mensaje;
         }
 
-
+      
         public async Task<ActionResult> VendedorIndex(string mensaje)
         {
             List<VendedorRequest> lista = new List<VendedorRequest>();
@@ -107,8 +107,8 @@ namespace WebVentas.Controllers
             }
             catch (Exception ex)
             {
-                InicializarMensaje(Mensaje.Excepcion);
-                lista.FirstOrDefault().NumeroMenu = 1;
+                //InicializarMensaje(Mensaje.Excepcion);
+                //lista.FirstOrDefault().NumeroMenu = 1;
                 return View(lista);
 
             }
@@ -343,6 +343,12 @@ namespace WebVentas.Controllers
                                 await db.SaveChangesAsync();
 
 
+                                var recuperarContrasenaRequest0 = new RecuperarContrasenaRequest();
+                                recuperarContrasenaRequest0.Email = user.Email;
+
+                                var response0= await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest0, new Uri(WebApp.BaseAddress)
+                                                               , "api/Usuarios/GenerarCodigo");
+
                                 return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
 
                             }
@@ -354,6 +360,12 @@ namespace WebVentas.Controllers
                             }
 
                         }
+
+                        var recuperarContrasenaRequest = new RecuperarContrasenaRequest();
+                        recuperarContrasenaRequest.Email = user.Email;
+
+                        var response2 = await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest, new Uri(WebApp.BaseAddress)
+                                                       , "api/Usuarios/GenerarCodigo");
 
                         return RedirectToAction("VendedorIndex", new { mensaje = response.Message });
                     }
@@ -686,6 +698,21 @@ namespace WebVentas.Controllers
             catch (Exception ex)
             {
                 InicializarMensaje(Mensaje.Excepcion);
+
+                lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarVendedoresPorSupervisor");
+
+                lista.Add(new VendedorRequest
+                {
+                    IdVendedor = 0,
+                    Nombres = "Seleccione"
+                });
+
+                lista = lista.OrderBy(x => x.IdVendedor).ToList();
+
+                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+
+
                 listaEventos.Add(new EventoRequest { NumeroMenu = menu });
                 return View(listaEventos);
             }
