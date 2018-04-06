@@ -13,8 +13,18 @@ namespace WebVentas.Controllers
     {
         public ActionResult Index()
         {
-           
-            return View();
+            if (User.IsInRole("Supervisor"))
+            {
+
+                return RedirectToAction("Estadisticas","Supervisor");
+            }
+            if (User.IsInRole("GerenteGeneral"))
+            {
+               
+               return RedirectToAction("MapaCalor", "InformacionGerencial");
+            }
+
+            return null;
         }
 
         public ActionResult About()
