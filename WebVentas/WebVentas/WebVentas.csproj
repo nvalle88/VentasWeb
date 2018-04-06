@@ -754,10 +754,13 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\ventasDemoWeb - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ventasDemoWeb - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ventasdg - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\chat.js" />
-    <Content Include="Scripts\datatables\init.js" />
+    <Content Include="Scripts\libs\Tablas\scriptTabla.js" />
+    <Content Include="Scripts\libs\Tablas\tablaCss.css" />
+    <Content Include="Scripts\tabla\init.js" />
     <Content Include="Scripts\demo.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
