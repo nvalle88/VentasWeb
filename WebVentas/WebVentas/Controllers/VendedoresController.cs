@@ -107,8 +107,8 @@ namespace WebVentas.Controllers
             }
             catch (Exception ex)
             {
-                InicializarMensaje(Mensaje.Excepcion);
-                lista.FirstOrDefault().NumeroMenu = 1;
+                //InicializarMensaje(Mensaje.Excepcion);
+                //lista.FirstOrDefault().NumeroMenu = 1;
                 return View(lista);
 
             }
@@ -698,6 +698,21 @@ namespace WebVentas.Controllers
             catch (Exception ex)
             {
                 InicializarMensaje(Mensaje.Excepcion);
+
+                lista = await ApiServicio.ObtenerElementoAsync1<List<VendedorRequest>>(vendedorRequest, new Uri(WebApp.BaseAddress)
+                                                              , "api/Vendedores/ListarVendedoresPorSupervisor");
+
+                lista.Add(new VendedorRequest
+                {
+                    IdVendedor = 0,
+                    Nombres = "Seleccione"
+                });
+
+                lista = lista.OrderBy(x => x.IdVendedor).ToList();
+
+                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+
+
                 listaEventos.Add(new EventoRequest { NumeroMenu = menu });
                 return View(listaEventos);
             }
