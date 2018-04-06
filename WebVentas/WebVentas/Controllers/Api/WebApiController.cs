@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using WebVentas.ObjectModel;
 using WebVentas.Utils;
 
 namespace WebVentas.Controllers.Api
@@ -94,24 +95,31 @@ namespace WebVentas.Controllers.Api
 
         [HttpPost]
         [Route("CambiarContraseña")]
-        public async Task<Response> CambiarContraseña([FromBody]JToken jsonbody)
+        public async Task<Response> IngresarContrasena(RecuperarContrasenaRequest recuperarContrasenaRequest)
         {
 
-            //if (recuperarContrasenaRequest.Contrasena != recuperarContrasenaRequest.ConfirmarContrasena)
-            //{
-            //    ModelState.AddModelError("", "La contraseña y la confirmación no coinciden...");
-            //}
-            //var user = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
-            //await UserManager.RemovePasswordAsync(user.Id);
-            //var pass = await UserManager.AddPasswordAsync(user.Id, recuperarContrasenaRequest.ConfirmarContrasena);
-            //if (!pass.Succeeded)
-            //{
-            //    ModelState.AddModelError("", "La contraseña no cumple con el formato establecido ...");
-            //    return View(recuperarContrasenaRequest);
-            //}
+            if (recuperarContrasenaRequest.Contrasena != recuperarContrasenaRequest.ConfirmarContrasena)
+            {
+                ModelState.AddModelError("", "La contraseña y la confirmación no coinciden...");
+            }
+            var user = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
+            await UserManager.RemovePasswordAsync(user.Id);
+            var pass = await UserManager.AddPasswordAsync(user.Id, recuperarContrasenaRequest.ConfirmarContrasena);
+            if (!pass.Succeeded)
+            {
+                ModelState.AddModelError("", "La contraseña no cumple con el formato establecido ...");
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "La contraseña no cumple con el formato establecido ..."
+                };
+            }
 
-            //return RedirectToAction("Login");
-            return null;
+            return new Response
+            {
+                IsSuccess = true,
+                Message= "Contraseña cambiada cambiada satisfactoriamente"
+            };
         }
 
     }
