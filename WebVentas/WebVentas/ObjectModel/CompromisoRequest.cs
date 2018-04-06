@@ -21,7 +21,7 @@ namespace WebVentas.ObjectModel
         [DisplayName("Dirección")]
         public string Descripcion { get; set; }
 
-        
+        [DisplayName("Solución")]
         public string Solucion { get; set; }
     }
 }
