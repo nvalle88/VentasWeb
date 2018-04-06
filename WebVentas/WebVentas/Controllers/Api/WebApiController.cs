@@ -118,7 +118,7 @@ namespace WebVentas.Controllers.Api
             return new Response
             {
                 IsSuccess = true,
-                Message= "Contraseña cambiada cambiada satisfactoriamente"
+                Message= "Contraseña cambiada satisfactoriamente"
             };
         }
 
