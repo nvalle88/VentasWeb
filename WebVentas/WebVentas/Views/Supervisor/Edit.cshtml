@@ -1,11 +1,4 @@
 ﻿@model WebVentas.ObjectModel.SupervisorRequest
-<link href="~/css/tabla/table.css" rel="stylesheet" />
-<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
-<link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
-<script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
-<script src="~/Scripts/libs/waitMe/waitMe.js"></script>
-
 
 @{
     ViewBag.Title = "Edit";
@@ -127,7 +120,7 @@
 
                                                 <label class="input">
 
-                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" pattern="[a-z A-Z]+" required />
+                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" required />
 
                                                     @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
 
@@ -182,7 +175,7 @@
                     </div>
                 </div>
 
-                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false">
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Lista de vendedores asignados</h2>
@@ -191,7 +184,7 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
                                         <th>
@@ -237,12 +230,10 @@
                 </div>
 
 
-
-
                 <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Lista de vendedores asignados</h2>
+                        <h2>Lista de vendedores</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -312,6 +303,11 @@
     <link rel="stylesheet" type="text/css" href="~/Scripts/libs/Tablas/tablaCss.css">
     <script type="text/javascript" charset="utf8" src="~/Scripts/libs/Tablas/scriptTabla.js"></script>
     <script src="~/Scripts/tabla/init.js"></script>
+    <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
+    <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
+    <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -333,6 +329,6 @@
         })
 
     </script>
-   
+
 
 }
