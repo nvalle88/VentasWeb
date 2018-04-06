@@ -20,7 +20,7 @@
                 scaledSize: new google.maps.Size(48, 48), // scaled size
                 origin: new google.maps.Point(0, 0), // origin
                 anchor: new google.maps.Point(24, 48), // anchor
-                url: "../../Imagenes/pushpin cliente-01.png" // url
+                url: "../../Imagenes/pushpin vendedor-01.png" // url
             };
         markers = [];
         markersDelete = [];
