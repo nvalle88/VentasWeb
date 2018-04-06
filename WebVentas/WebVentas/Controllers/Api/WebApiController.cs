@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebVentas.Utils;
@@ -57,7 +58,7 @@ namespace WebVentas.Controllers.Api
         {
             return new string[] { "value1", "value2" };
         }
-
+        
         public Response Post([FromBody]JToken jsonbody)
         {
             AccountController accountController = new AccountController();
@@ -90,5 +91,28 @@ namespace WebVentas.Controllers.Api
                
             }
         }
+
+        [HttpPost]
+        [Route("CambiarContraseña")]
+        public async Task<Response> CambiarContraseña([FromBody]JToken jsonbody)
+        {
+
+            //if (recuperarContrasenaRequest.Contrasena != recuperarContrasenaRequest.ConfirmarContrasena)
+            //{
+            //    ModelState.AddModelError("", "La contraseña y la confirmación no coinciden...");
+            //}
+            //var user = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
+            //await UserManager.RemovePasswordAsync(user.Id);
+            //var pass = await UserManager.AddPasswordAsync(user.Id, recuperarContrasenaRequest.ConfirmarContrasena);
+            //if (!pass.Succeeded)
+            //{
+            //    ModelState.AddModelError("", "La contraseña no cumple con el formato establecido ...");
+            //    return View(recuperarContrasenaRequest);
+            //}
+
+            //return RedirectToAction("Login");
+            return null;
+        }
+
     }
 }
