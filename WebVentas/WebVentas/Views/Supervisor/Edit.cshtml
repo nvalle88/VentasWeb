@@ -41,265 +41,265 @@
             }
 
         </div>
-        
-            <div class="row">
-                <article class="col-sm-12 col-md-12 col-lg-12">
 
-                    <!-- Widget ID (each widget will need unique ID)-->
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
 
-                    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="true" data-widget-custombutton="false">
+                <!-- Widget ID (each widget will need unique ID)-->
 
-                        <header>
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="true" data-widget-custombutton="false">
 
-                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <header>
 
-                            <h2>Supervisor</h2>
-                        </header>
-                        <!-- widget div-->
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 
-                        <div>
-                            <!-- widget edit box -->
+                        <h2>Supervisor</h2>
+                    </header>
+                    <!-- widget div-->
 
-                            <div class="jarviswidget-editbox">
+                    <div>
+                        <!-- widget edit box -->
 
-                                <!-- This area used as dropdown edit box -->
+                        <div class="jarviswidget-editbox">
 
-                            </div>
+                            <!-- This area used as dropdown edit box -->
 
-                            <!-- end widget edit box -->
-                            <!-- widget content -->
+                        </div>
 
-                            <div class="widget-body">
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
 
-                                <form id="checkout-form" method="post" class="smart-form">
+                        <div class="widget-body">
 
-                                    @Html.AntiForgeryToken()
-                                    @Html.HiddenFor(model => model.IdSupervisor)
-                                    @Html.HiddenFor(model => model.IdUsuario)
-                                    <fieldset>
-                                        <legend>Datos personales</legend>
-                                        <article>
+                            <form id="checkout-form" method="post" class="smart-form">
 
-                                            <div class="row">
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.IdSupervisor)
+                                @Html.HiddenFor(model => model.IdUsuario)
+                                <fieldset>
+                                    <legend>Datos personales</legend>
+                                    <article>
 
-                                                <section class="col col-6">
+                                        <div class="row">
 
-                                                    <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
+                                            <section class="col col-6">
 
-                                                    <label class="input">
-                                                        <input name="Identificacion" value="@Model.Identificacion" class="form-control" pattern="[0-9,a-z ]+" required />
-                                                        @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
-                                                    </label>
-                                                </section>
+                                                <label>@Html.DisplayNameFor(model => model.Identificacion)</label>
 
-                                                <section class="col col-6">
-                                                    <label>@Html.DisplayNameFor(model => model.Nombres)</label>
+                                                <label class="input">
+                                                    <input name="Identificacion" value="@Model.Identificacion" class="form-control" pattern="[0-9,a-z ]+" required />
+                                                    @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
 
-                                                    <label class="input">
-                                                        <input name="Nombres" value="@Model.Nombres" class="form-control" pattern="[a-z A-Z]+" required />
-                                                        @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+                                            <section class="col col-6">
+                                                <label>@Html.DisplayNameFor(model => model.Nombres)</label>
 
-                                                    </label>
+                                                <label class="input">
+                                                    <input name="Nombres" value="@Model.Nombres" class="form-control" pattern="[a-z A-Z]+" required />
+                                                    @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
 
-                                                </section>
+                                                </label>
 
-                                            </div>
+                                            </section>
 
-                                            <div class="row">
+                                        </div>
 
-                                                <section class="col col-6">
+                                        <div class="row">
 
-                                                    <label>@Html.DisplayNameFor(model => model.Apellidos)</label>
+                                            <section class="col col-6">
 
-                                                    <label class="input">
+                                                <label>@Html.DisplayNameFor(model => model.Apellidos)</label>
 
-                                                        <input name="Apellidos" value="@Model.Apellidos" class="form-control" pattern="[a-z A-Z]+" required />
+                                                <label class="input">
 
-                                                        @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                                                    <input name="Apellidos" value="@Model.Apellidos" class="form-control" pattern="[a-z A-Z]+" required />
 
-                                                    </label>
+                                                    @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
 
-                                                </section>
+                                                </label>
 
-                                                <section class="col col-6">
+                                            </section>
 
-                                                    <label>@Html.DisplayNameFor(model => model.Direccion)</label>
+                                            <section class="col col-6">
 
-                                                    <label class="input">
+                                                <label>@Html.DisplayNameFor(model => model.Direccion)</label>
 
-                                                        <input name="Direccion" value="@Model.Direccion" class="form-control" pattern="[a-z A-Z]+" required />
+                                                <label class="input">
 
-                                                        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                                                    <input name="Direccion" value="@Model.Direccion" class="form-control" pattern="[a-z A-Z]+" required />
 
-                                                    </label>
+                                                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
 
-                                                </section>
+                                                </label>
 
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-6">
+                                            </section>
 
-                                                    <label>@Html.DisplayNameFor(model => model.Telefono)</label>
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-6">
 
-                                                    <label class="input">
+                                                <label>@Html.DisplayNameFor(model => model.Telefono)</label>
 
-                                                        <input name="Telefono" value="@Model.Telefono" class="form-control" pattern="[0-9 ]+" required />
+                                                <label class="input">
 
-                                                        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                                                    <input name="Telefono" value="@Model.Telefono" class="form-control" pattern="[0-9 ]+" required />
 
-                                                    </label>
+                                                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
 
-                                                </section>
+                                                </label>
 
-                                                <section class="col col-6">
+                                            </section>
 
-                                                    <label>@Html.DisplayNameFor(model => model.Correo)</label>
+                                            <section class="col col-6">
 
-                                                    <label class="input">
+                                                <label>@Html.DisplayNameFor(model => model.Correo)</label>
 
-                                                        <input name="Correo" value="@Model.Correo" class="form-control" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" required />
+                                                <label class="input">
 
-                                                        @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                                                    <input name="Correo" value="@Model.Correo" class="form-control" pattern="[A-Za-z0-9._%+-]+@("@")[a-z0-9.-]+.[a-z]{2,3}" required />
 
-                                                    </label>
+                                                    @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
 
-                                                </section>
-                                            </div>
-                                        </article>
-                                    </fieldset>
-                                    <footer>
-                                        <button type="submit" id="Edit" class="btn btn-default butoon">
-                                            Guardar
-                                        </button>
-                                        <a class=" btn btn-default" id="regresar1" href="/Supervisor/Index">Cancelar</a>
-                                    </footer>
-                                </form>
+                                                </label>
 
-
+                                            </section>
+                                        </div>
+                                    </article>
+                                </fieldset>
+                                <footer>
+                                    <button type="submit" id="Edit" class="btn btn-default butoon">
+                                        Guardar
+                                    </button>
+                                    <a class=" btn btn-default" id="regresar1" href="/Supervisor/Index">Cancelar</a>
+                                </footer>
+                            </form>
 
 
-                            </div>
+
+
                         </div>
                     </div>
+                </div>
 
-                    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false">
-                        <header id="table">
-                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>Lista de vendedores asignados</h2>
-                        </header>
-                        <div>
-                            <div class="jarviswidget-editbox">
-                            </div>
-                            <div class="widget-body no-padding">
-                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Nombres)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Apellidos)
-                                            </th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.ListaVendedoresAsignados != null)
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Lista de vendedores asignados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Nombres)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Apellidos)
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.ListaVendedoresAsignados != null)
+                                    {
+                                        foreach (var item in Model.ListaVendedoresAsignados)
                                         {
-                                            foreach (var item in Model.ListaVendedoresAsignados)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Nombres)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Apellidos)
-                                                    </td>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                                </td>
 
-                                                    <td>
-                                                        @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor, idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
+                                                <td>
+                                                    @Html.ActionLink("Quitar", "Quitarvendedor", new { id = item.IdVendedor, idsupervisor = item.IdSupervisor }, new { onclick = "return confirm('Desea quitar vendedor... ?');" })
 
-                                                    </td>
+                                                </td>
 
-                                                </tr>
+                                            </tr>
 
-                                            }
                                         }
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <!-- end widget content -->
+                                    }
+                                </tbody>
+                            </table>
 
                         </div>
-                        <!-- end widget div -->
+                        <!-- end widget content -->
 
                     </div>
+                    <!-- end widget div -->
+
+                </div>
 
 
 
 
-                    <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-                        <header id="table">
-                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>Lista de vendedores asignados</h2>
-                        </header>
-                        <div>
-                            <div class="jarviswidget-editbox">
-                            </div>
-                            <div class="widget-body no-padding">
-                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Nombres)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Apellidos)
-                                            </th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.ListaVendedoresSinAsignar != null)
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Lista de vendedores asignados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Nombres)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Apellidos)
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.ListaVendedoresSinAsignar != null)
+                                    {
+                                        foreach (var item in Model.ListaVendedoresSinAsignar)
                                         {
-                                            foreach (var item in Model.ListaVendedoresSinAsignar)
-                                            {
-                                                <tr>
+                                            <tr>
 
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Nombres)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Apellidos)
-                                                    </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nombres)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Apellidos)
+                                                </td>
 
-                                                    <td>
+                                                <td>
 
-                                                        @Html.ActionLink("Asignar", "Asignarvendedor", new { id = item.IdVendedor, idsupervisor = Model.IdSupervisor }, new { onclick = "return confirm('Desea asignar vendedor... ?');" })
-                                                    </td>
+                                                    @Html.ActionLink("Asignar", "Asignarvendedor", new { id = item.IdVendedor, idsupervisor = Model.IdSupervisor }, new { onclick = "return confirm('Desea asignar vendedor... ?');" })
+                                                </td>
 
-                                                </tr>
-                                            }
+                                            </tr>
                                         }
+                                    }
 
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <!-- end widget content -->
+                                </tbody>
+                            </table>
 
                         </div>
-                        <!-- end widget div -->
+                        <!-- end widget content -->
 
                     </div>
+                    <!-- end widget div -->
+
+                </div>
 
 
 
 
-                </article>
-            </div>
-       
+            </article>
+        </div>
+
         <!-- END ROW -->
     </section>
 </div>
@@ -309,6 +309,9 @@
 
 
 @section pagespecific {
+    <link rel="stylesheet" type="text/css" href="~/Scripts/libs/Tablas/tablaCss.css">
+    <script type="text/javascript" charset="utf8" src="~/Scripts/libs/Tablas/scriptTabla.js"></script>
+    <script src="~/Scripts/tabla/init.js"></script>
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -330,147 +333,6 @@
         })
 
     </script>
-    @*<script type="text/javascript">
-
-            // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-            $(document).ready(function () {
-
-                var $checkoutForm = $('#checkout-form').validate({
-
-                    // Rules for form validation
-
-                    rules: {
-
-                        Nombres: {
-
-                            required: true
-
-                        },
-
-                        Apellidos: {
-
-                            required: true
-
-                        },
-
-                        Correo: {
-
-                            required: true,
-
-                            email: true
-
-                        },
-
-                        Direccion: {
-
-                            required: true
-
-                        },
-
-                        Identificacion: {
-
-                            required: true,
-
-                            digits: true
-
-                        },
-
-                        Telefono: {
-
-                            required: true
-
-                        },
-
-                    },
-
-
-
-                    // Messages for form validation
-
-                    messages: {
-
-                        Nombres: {
-
-                            required: ""
-
-                        },
-
-                        Apellidos: {
-
-                            required: ""
-
-                        },
-
-                        Correo: {
-
-                            required: "",
-
-                            email: "Formato de correo INVÁLIDO"
-
-                        },
-
-                        Direccion: {
-
-                            required: ""
-
-                        },
-
-                        Identificacion: {
-
-                            required: ""
-
-                        },
-
-                    },
-
-
-
-                    // Do not change code below
-
-                    errorPlacement: function (error, element) {
-
-                        error.insertAfter(element.parent());
-
-                    }
-
-                });
-
-
-                $("#regresar1").click(function () {
-
-                    $('#content').waitMe({
-
-                        effect: 'ios',
-
-                        text: '',
-
-                        bg: 'rgba(255, 255, 255, 0.1)',
-
-                        color: '#118df9'
-
-                    });
-
-                });
-
-                $("#regresar").click(function () {
-
-                    $('#content').waitMe({
-
-                        effect: 'ios',
-
-                        text: '',
-
-                        bg: 'rgba(255, 255, 255, 0.1)',
-
-                        color: '#118df9'
-
-                    });
-
-                });
-
-            })
-
-        </script>*@
+   
 
 }
