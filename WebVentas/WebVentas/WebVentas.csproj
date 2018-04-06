@@ -1386,7 +1386,7 @@
     <Content Include="Views\Reportes\ReporteClientes.cshtml" />
     <Content Include="Views\Reportes\ReporteCompromisos.cshtml" />
     <Content Include="Views\Reportes\ReporteVendedores.cshtml" />
-    <Content Include="Views\Supervisor\Estadisticas.cshtml" />
+    <Content Include="Views\Home\Estadisticas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
