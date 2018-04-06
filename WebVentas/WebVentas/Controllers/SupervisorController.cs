@@ -320,13 +320,13 @@ namespace WebVentas.Controllers
                     IdEmpresa = empresaActual.IdEmpresa
                 };
                 var result = await userManager.CreateAsync(user, "A12345.1a");
-                //var result = await userManager.CreateAsync(user, supervisorRequest.Identificacion);
                 db.SaveChanges();
                 var recuperarContrasenaRequest = new RecuperarContrasenaRequest();
                 recuperarContrasenaRequest.Email = user.Email;
                 recuperarContrasenaRequest.Codigo = "A12345.1a";
                 var response2 = await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest, new Uri(WebApp.BaseAddress)
                                                , "api/Usuarios/EnviarContrasena");
+                //varifica el rol
                 userManager.AddToRoles(user.Id, "Supervisor");
                 if (result != null)
                 {
