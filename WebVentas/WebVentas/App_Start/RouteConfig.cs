@@ -14,6 +14,7 @@ namespace WebVentas
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
+            
             routes.MapRoute("Default", "{controller}/{action}/{id}", new
             {
                 controller = "Home",

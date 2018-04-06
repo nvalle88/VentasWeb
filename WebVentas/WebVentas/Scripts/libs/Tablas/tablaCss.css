@@ -347,8 +347,8 @@ table.dataTable {
         .dataTables_wrapper .dataTables_filter input {
             margin-left: 0.5em;
             height: 30px;
-            border-color: orange;
-            border-width: 1px;
+            border-color: black;
+            border-width: 0.5px;
         }
 
     .dataTables_wrapper .dataTables_info {
