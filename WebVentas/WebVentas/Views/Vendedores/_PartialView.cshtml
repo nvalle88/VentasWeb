@@ -49,7 +49,7 @@
             <label>@Html.DisplayNameFor(model => model.Telefono)</label>
 
             <label class="input">
-                <input name="Telefono" class="form-control" type="text" pattern="[0-9 ]+" data-mask="999999999" value="@Model.Telefono" required />
+                <input name="Telefono" class="form-control" type="text" pattern="[0-9 ]+" data-mask="9999999999" value="@Model.Telefono" required />
             </label>
         </section>
 
@@ -85,7 +85,7 @@
             <label>&nbsp;</label>
 
             <section class="input" id="fotocliente">
-                <object id="output" type="" style="background-size:100% 100%;background-image:url('@Model.Foto');"></object>
+                <object id="output" height="400px;" width="400px;" type="" style="background-size:100% 100%;background-image:url('@Model.Foto');"></object>
             </section>
 
         </section>
