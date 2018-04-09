@@ -320,8 +320,13 @@ namespace WebVentas.Controllers
                     IdEmpresa = empresaActual.IdEmpresa
                 };
                 var result = await userManager.CreateAsync(user, "A12345.1a");
-                //var result = await userManager.CreateAsync(user, supervisorRequest.Identificacion);
                 db.SaveChanges();
+                var recuperarContrasenaRequest = new RecuperarContrasenaRequest();
+                recuperarContrasenaRequest.Email = user.Email;
+                recuperarContrasenaRequest.Codigo = "A12345.1a";
+                var response2 = await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest, new Uri(WebApp.BaseAddress)
+                                               , "api/Usuarios/EnviarContrasena");
+                //varifica el rol
                 userManager.AddToRoles(user.Id, "Supervisor");
                 if (result != null)
                 {
@@ -541,51 +546,7 @@ namespace WebVentas.Controllers
         }
         #endregion
 
-        #region Estadisticos
-        public async Task<ActionResult> Estadisticas()
-        {
-            try
-            {
-                InicializarMensaje("");
-                SupervisorRequest supervisorRequest = new SupervisorRequest();
-                int idEmpresaInt = 0;
-                var userWithClaims = (ClaimsPrincipal)User;
-                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-
-
-                idEmpresaInt = Convert.ToInt32(idEmpresa);
-                supervisorRequest.IdEmpresa = idEmpresaInt;
-
-                ApplicationDbContext db = new ApplicationDbContext();
-                Response response = new Response();
-                
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                var idUsuarioActual = User.Identity.GetUserId();
-                supervisorRequest.IdUsuario = idUsuarioActual;
-                supervisorRequest.IdEmpresa = idEmpresaInt;
-                //metodo buscar supervisor
-
-                response = await ApiServicio.InsertarAsync(supervisorRequest,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/Vendedores/obtenerSupervisorPorIdUsuario");
-
-                supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
-                supervisorRequest.IdSupervisor = supervisorRequest.IdSupervisor;
-
-
-                var estadisticoVendedorRequest = await ApiServicio.ObtenerElementoAsync1<EstadisticoSupervisorRequest>(supervisorRequest,
-                    new Uri(WebApp.BaseAddress),
-                    "api/Compromiso/VerEstadisticosPorSupervisor");
-                supervisorRequest.estadisticoSupervisorRequest = estadisticoVendedorRequest;
-                return View(supervisorRequest);
-            }
-            catch
-            {
-                InicializarMensaje(Mensaje.Excepcion);
-                return View();
-            }
-        }
-        #endregion
+       
     }
 
 

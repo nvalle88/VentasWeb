@@ -35,7 +35,7 @@ namespace WebVentas.Controllers
             ViewData["Error"] = mensaje;
         }
 
-
+      
         public async Task<ActionResult> VendedorIndex(string mensaje)
         {
             List<VendedorRequest> lista = new List<VendedorRequest>();
