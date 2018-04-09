@@ -54,7 +54,7 @@ namespace WebVentas.Controllers
                 supervisorRequest.IdEmpresa = idEmpresaInt;
                 //metodo buscar supervisor
 
-                response = await ApiServicio.InsertarAsync(supervisorRequest,
+                response = await ApiServicio.ObtenerElementoAsync(supervisorRequest,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "api/Vendedores/obtenerSupervisorPorIdUsuario");
 
