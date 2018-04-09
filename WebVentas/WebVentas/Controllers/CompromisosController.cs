@@ -66,9 +66,9 @@ namespace WebVentas.Controllers
 
             if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
             {
-                Response response = await ApiServicio.InsertarAsync(supervisorRequest,
+                Response response = await ApiServicio.ObtenerElementoAsync(supervisorRequest,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "api/Vendedores/obtenerSupervisorPorIdUsuario");
+                                                             "api/Vendedores/obtenerGerentePorIdUsuario");
 
                 supervisorRequest = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
                 var userWithClaims = (ClaimsPrincipal)User;
@@ -76,7 +76,7 @@ namespace WebVentas.Controllers
                 {
                     var lista = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest, new Uri(WebApp.BaseAddress)
                                                               , "api/Vendedores/ListarVendedoresGerente");
-                    //var objeto = JsonConvert.DeserializeObject<SupervisorRequest>(lista.ListaVendedores.ToString());
+                   
                     ViewBag.IdVendedor = new SelectList(lista.ListaVendedores, "IdVendedor", "NombreApellido");
                     var vista1 = new SupervisorRequest { FechaInicio = DateTime.Now, FechaFin = DateTime.Now, ListaVendedores = lista.ListaVendedores, Listarcompromiso = new List<CompromisoRequest>() };
 
@@ -95,7 +95,7 @@ namespace WebVentas.Controllers
             }
             if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
             {
-                Response response = await ApiServicio.InsertarAsync(supervisorRequest,
+                Response response = await ApiServicio.ObtenerElementoAsync(supervisorRequest,
                                                               new Uri(WebApp.BaseAddress),
                                                               "api/Vendedores/obtenerSupervisorPorIdUsuario");
 
@@ -160,9 +160,9 @@ namespace WebVentas.Controllers
 
             if (userManager.IsInRole(idUsuarioActual, "GerenteGeneral"))
             {
-                Response response = await ApiServicio.InsertarAsync(supervisorRequest1,
+                Response response = await ApiServicio.ObtenerElementoAsync(supervisorRequest1,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "api/Vendedores/obtenerSupervisorPorIdUsuario");
+                                                             "api/Vendedores/obtenerGerentePorIdUsuario");
 
                 supervisorRequest1 = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
                 supervisorRequest.IdSupervisor = supervisorRequest1.IdSupervisor;
@@ -181,7 +181,7 @@ namespace WebVentas.Controllers
             }
             if (userManager.IsInRole(idUsuarioActual, "Supervisor"))
             {
-                Response response = await ApiServicio.InsertarAsync(supervisorRequest1,
+                Response response = await ApiServicio.ObtenerElementoAsync(supervisorRequest1,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/Vendedores/obtenerSupervisorPorIdUsuario");
 
