@@ -150,12 +150,93 @@
 
 @section pagespecific{
 
-    <script src="~/Scripts/datatables/init.js"></script>
+<style>
+    .fondoFicha {
+        width:75%;
+        background-color: white;
+        margin-left:20%;
+    }
+
+    .tituloFicha {
+        width:100%;
+        background-color: black;
+        color: white;
+    }
+    .labelFicha {
+        width:20%;
+        color:black;
+        float:left;
+        padding-left:10px;
+    }
+    .textoFicha {
+        width: 80%;
+        color: black;
+        float: left;
+    }
+    
+</style>
 
     <script>
 
+        // Variables para ir creado las fichas
+        var fichas = [];
+
+        function dibujarFichas() {
+            var text = "";
+            var contadorFichas = fichas.length;
+            var fechaAnterior = 0;
+            var cerrar = false;
+            var abrir = true;
+            alert("Cargando datos: " + contadorFichas);
+
+            for (var i = 0; i < contadorFichas; i++){
+
+                if (abrir == true) {
+
+                    text = text +
+                        '<div class="fondoFicha">' +
+                        '<div class="tituloFicha">Visita ' + (i + 1) + '</div>' +
+                        '<div class="labelFicha">Fecha</div><div class="textoFicha">' + moment(fichas[i].fecha).format('DD-MM-YYYY hh:mm:ss A') + '</div>';
+
+                    cerrar = true;
+                    abrir = false;
+                }
+
+
+                if (fichas[i].fecha != fechaAnterior) {
+                    
+
+                } 
+
+                
+                text = text +
+                    /*'<div class="labelFicha">Hora</div><div class="textoFicha">' + fichas[i].hora +"</div><br />"+*/
+                    '<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichas[i].tipoCompromiso +'</div><br />'+
+                    '<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichas[i].detalle +'</div><br />'+
+                    '<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichas[i].solucion +'</div><br />';
+                
+                
+                if (cerrar == true) {
+                    text = text + '</div ><br />';
+                    abrir = true;
+                }
+
+            }
+
+            document.getElementById("divFichas").innerHTML = text;
+            
+        }
 
         function initMap() {
+
+            
+
+            function AddFicha(fecha,hora,tipoCompromiso,detalle,solucion) {
+
+                var fichaDatos = { fecha: fecha, hora: hora, tipoCompromiso: tipoCompromiso, detalle: detalle, solucion: solucion};
+
+                fichas.push(fichaDatos);
+            }
 
             // Variables de dibujo
             var map;
@@ -421,6 +502,7 @@
             function DibujarRutas(idVendedor) {
                 
                 var numeradorVisita = 1;
+                var visitaFechaAnterior = 0;
 
                 var fechaBuscar = document.getElementById("txtFecha").value;
 
@@ -448,17 +530,15 @@
                             marker.setMap(null);
                         });
                         vendedoresLista = [];
-                        
-                        
 
 
                         for (var i = 0; i < arreglo.length; i++) {
-
+                            
                             if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
 
                                 var coordenada = { lat: arreglo[i].Latitud, lng: arreglo[i].Longitud };
 
-                                if (arreglo[i].IdLogRutaVendedor == 0) {
+                                if (arreglo[i].IdLogRutaVendedor == 0 && arreglo[i].Fecha != visitaFechaAnterior) {
 
 
                                     AddToVendedorList(
@@ -468,11 +548,18 @@
                                         0,
                                         numeradorVisita + ""
                                     );
-
+                                    
                                     numeradorVisita++;
+                                    visitaFechaAnterior = arreglo[i].Fecha;
                                 }
 
-
+                                if (arreglo[i].IdLogRutaVendedor == 0 ) {
+                                    
+                                    
+                                    AddFicha(arreglo[i].Fecha, arreglo[i].Hora, arreglo[i].TipoCompromiso, arreglo[i].Detalle, arreglo[i].Solucion);
+                                    
+                                }
+                                
                                 DibujarVendedores(map);
 
                                 polilinea.push(coordenada);
@@ -492,7 +579,7 @@
                            
 
                             map.panTo(polilinea[0]);
-
+                            dibujarFichas();
                             //alert("Ruta creada exitosamente");
 
                         } else {
@@ -635,6 +722,7 @@
                 var onChange = function () {
 
                     DibujarRutas(@Model.IdVendedor);
+                    
                 };
 
                 controlDiv.appendChild(document.getElementById("txtFecha"));
@@ -666,6 +754,10 @@
 
     </script>
 
+
+    <div id="divFichas" style="background-color:transparent;width:100%;">
+
+    </div>
 
 
     <script async defer

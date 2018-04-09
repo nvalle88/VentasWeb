@@ -20,5 +20,15 @@ namespace WebVentas.ObjectModel
 
         public int IdVendedor { get; set; }
 
+        public int Hora { get; set; }
+
+        public string TipoCompromiso { get; set; }
+
+        public string Detalle { get; set; }
+
+        public string Solucion { get; set; }
+
+        public TimeSpan TiempoRecorrido { get; set; }
+
     }
 }
