@@ -315,6 +315,7 @@
     <Compile Include="ObjectModel\EventoRequest.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
     <Compile Include="ObjectModel\RutaRequest.cs" />
+    <Compile Include="ObjectModel\RutasVisitasRequest.cs" />
     <Compile Include="ObjectModel\SupervisorRequest.cs" />
     <Compile Include="ObjectModel\TipoClienteRequest.cs" />
     <Compile Include="ObjectModel\TipoCompromisoRequest.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Utils\LivePositionRequest.cs" />
     <Compile Include="Utils\Mensaje.cs" />
     <Compile Include="Utils\Response.cs" />
+    <Compile Include="ObjectModel\VisitaRecorrido.cs" />
     <Compile Include="Utils\WebApp.cs" />
   </ItemGroup>
   <ItemGroup>

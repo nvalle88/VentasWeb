@@ -2,7 +2,9 @@
 
 @{
     ViewData["Title"] = "Index";
+    List<WebVentas.ObjectModel.VisitaRecorrido> Visitas= new List<WebVentas.ObjectModel.VisitaRecorrido>();
 }
+
 
 <style>
 
@@ -19,16 +21,13 @@
 
     .controlFecha {
         margin-top: 10px;
-        margin-left:10px;
+        margin-left: 10px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
-
         height: 32px;
-        
         outline: none;
-        
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
@@ -99,18 +98,18 @@
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget  personalizado-table" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
+        data-widget-colorbutton="false"
+        data-widget-editbutton="false"
+        data-widget-togglebutton="false"
+        data-widget-deletebutton="false"
+        data-widget-fullscreenbutton="false"
+        data-widget-custombutton="false"
+        data-widget-collapsed="true"
+        data-widget-sortable="false"
 
-                    -->
+        -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Rutas</h2>
@@ -137,10 +136,49 @@
                     </div>
                     <!-- end widget div -->
                 </div>
+                @*<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-close="false" data-widget-custombutton="false">
+            <header draggable="true">
+                <span class="widget-icon"> <i class="fa fa-road"></i> </span>
+                <h2>Detalle...</h2>
+            </header>
+            <div>
+                <div class="jarviswidget-editbox">
+                </div>
+                <div class="widget-body no-padding">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="divFichas"></div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>*@
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-close="false" data-widget-custombutton="false">
+                    <header draggable="true">
+                        <span class="widget-icon"> <i class="fa fa-road"></i> </span>
+                        <h2>Detalle...</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="divFichas"></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
 
             </article>
             <!-- WIDGET END -->
         </div>
+
         <!-- end row -->
         <!-- end row -->
     </section>
@@ -150,72 +188,100 @@
 
 @section pagespecific{
 
-<style>
-    .fondoFicha {
-        width:75%;
-        background-color: white;
-        margin-left:20%;
-    }
+    <style>
+        .fondoFicha {
+            width: 75%;
+            background-color: white;
+            margin-left: 20%;
+        }
 
-    .tituloFicha {
-        width:100%;
-        background-color: black;
-        color: white;
-    }
-    .labelFicha {
-        width:20%;
-        color:black;
-        float:left;
-        padding-left:10px;
-    }
-    .textoFicha {
-        width: 80%;
-        color: black;
-        float: left;
-    }
-    
-</style>
+        .tituloFicha {
+            width: 100%;
+            background-color: black;
+            color: white;
+        }
+
+        .labelFicha {
+            width: 20%;
+            color: black;
+            float: left;
+            padding-left: 10px;
+        }
+
+        .textoFicha {
+            width: 80%;
+            color: black;
+            float: left;
+        }
+    </style>
 
     <script>
 
-        // Variables para ir creado las fichas
+        // Variables para ir creando las fichas
         var fichas = [];
+
 
         function dibujarFichas() {
             var text = "";
+
             var contadorFichas = fichas.length;
+
             var fechaAnterior = 0;
             var cerrar = false;
             var abrir = true;
-            alert("Cargando datos: " + contadorFichas);
+            ////alert("Cargando datos: " + contadorFichas);
 
             for (var i = 0; i < contadorFichas; i++){
 
                 if (abrir == true) {
 
+                    
+
                     text = text +
-                        '<div class="fondoFicha">' +
                         '<div class="tituloFicha">Visita ' + (i + 1) + '</div>' +
-                        '<div class="labelFicha">Fecha</div><div class="textoFicha">' + moment(fichas[i].fecha).format('DD-MM-YYYY hh:mm:ss A') + '</div>';
+                        '<div class="labelFicha">Fecha</div><div class="textoFicha">' + moment(fichas[i].fecha).format('DD-MM-YYYY hh:mm:ss A') + '</div>' +
+                        '<div class="labelFicha">Cliente</div><div class="textoFicha">' + fichas[i].cliente + '</div> <br><br>' ;
 
                     cerrar = true;
                     abrir = false;
+
+
                 }
 
+                //var contadorCompromiso = fichas[i].compromisos.length;
+                //if (contadorCompromiso>0)
+                //{
 
-                if (fichas[i].fecha != fechaAnterior) {
-                    
+                //    for (var z = 0; z < contadorCompromiso; z++)
+                //    {
 
-                } 
+                //    text = text +
+                //    /*'<div class="labelFicha">Hora</div><div class="textoFicha">' + fichas[i].hora +"</div><br />"+*/
+                //            //TipoCompromiso: tipoCompromiso,
+                //            //    Detalle: detalle,
+                //            //        Solucion: solucion
 
-                
-                text = text +
+                //        '<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichas[i].compromisos[z].TipoCompromiso +'</div><br />'+
+                //        '<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichas[i].compromisos[z].Detalle +'</div><br />'+
+                //        '<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichas[i].compromisos[z].Solucion +'</div><br />';
+
+                //    }
+                //}
+
+
+                //if (fichas[i].fecha != fechaAnterior) {
+
+
+                //}
+
+
+                //text = text +
                     /*'<div class="labelFicha">Hora</div><div class="textoFicha">' + fichas[i].hora +"</div><br />"+*/
-                    '<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichas[i].tipoCompromiso +'</div><br />'+
-                    '<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichas[i].detalle +'</div><br />'+
-                    '<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichas[i].solucion +'</div><br />';
-                
-                
+                    //'<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichasCompromiso[i].tipoCompromiso +'</div><br />'+
+                    //'<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichasCompromiso[i].detalle +'</div><br />'+
+                    //'<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichasCompromiso[i].solucion +'</div><br />';
+
+
                 if (cerrar == true) {
                     text = text + '</div ><br />';
                     abrir = true;
@@ -224,19 +290,23 @@
             }
 
             document.getElementById("divFichas").innerHTML = text;
-            
+
         }
 
         function initMap() {
 
-            
 
-            function AddFicha(fecha,hora,tipoCompromiso,detalle,solucion) {
 
-                var fichaDatos = { fecha: fecha, hora: hora, tipoCompromiso: tipoCompromiso, detalle: detalle, solucion: solucion};
+            function AddFicha(fecha, RazonSocial, Compromisos)
+            {
+                var fichaDatos = { fecha: fecha, hora: fecha, cliente: RazonSocial, compromisos: Compromisos };
 
+              //  Console.log(fichaDatos);
                 fichas.push(fichaDatos);
+                
             }
+
+
 
             // Variables de dibujo
             var map;
@@ -500,7 +570,7 @@
 
             // Función para Crear rutas
             function DibujarRutas(idVendedor) {
-                
+
                 var numeradorVisita = 1;
                 var visitaFechaAnterior = 0;
 
@@ -516,7 +586,7 @@
                     dataType: 'json',
                     data: { IdVendedor: idVendedor, fecha : fechaBuscar},
                     success: function (data) {
-                        arreglo = data;
+                     arreglo = data;
 
                     }, complete: function (data) {
 
@@ -531,35 +601,41 @@
                         });
                         vendedoresLista = [];
 
+                        //TestLista comprimiso
+                        fichas.pop();
+                        polilinea.pop();
+                        //For para las Rutas diarias
+                        for (var i = 0; i < arreglo.ListaRutas.length; i++) {
 
-                        for (var i = 0; i < arreglo.length; i++) {
-                            
-                            if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
+                            if (arreglo.ListaRutas[i].Latitud != null && arreglo.ListaRutas[i].Longitud != null) {
 
-                                var coordenada = { lat: arreglo[i].Latitud, lng: arreglo[i].Longitud };
+                                var coordenada = { lat: arreglo.ListaRutas[i].Latitud, lng: arreglo.ListaRutas[i].Longitud };
 
-                                if (arreglo[i].IdLogRutaVendedor == 0 && arreglo[i].Fecha != visitaFechaAnterior) {
+                                if (arreglo.ListaRutas[i].IdLogRutaVendedor == 0 && arreglo.ListaRutas[i].Fecha != visitaFechaAnterior) {
 
 
                                     AddToVendedorList(
                                         i,
-                                        arreglo[i].Latitud,
-                                        arreglo[i].Longitud,
+                                        arreglo.ListaRutas[i].Latitud,
+                                        arreglo.ListaRutas[i].Longitud,
                                         0,
                                         numeradorVisita + ""
                                     );
-                                    
+
                                     numeradorVisita++;
-                                    visitaFechaAnterior = arreglo[i].Fecha;
+                                    visitaFechaAnterior = arreglo.ListaRutas[i].Fecha;
                                 }
 
-                                if (arreglo[i].IdLogRutaVendedor == 0 ) {
-                                    
-                                    
-                                    AddFicha(arreglo[i].Fecha, arreglo[i].Hora, arreglo[i].TipoCompromiso, arreglo[i].Detalle, arreglo[i].Solucion);
-                                    
-                                }
-                                
+                                //if (arreglo.ListaVisitas.length>=0) {
+
+
+                                //    AddFicha(arreglo.ListaVisitas[i].Fecha, arreglo.ListaVisitas[i].Hora, arreglo.ListaVisitas[i].TipoCompromiso, arreglo.ListaVisitas[i].Detalle, arreglo.ListaVisitas[i].Solucion);
+
+                                //}
+
+
+
+
                                 DibujarVendedores(map);
 
                                 polilinea.push(coordenada);
@@ -567,16 +643,51 @@
 
 
                         }
-                        
+
+                        //For para Las visitas y compromisos
+                        for (var i = 0; i < arreglo.ListaVisitas.length; i++) {
+
+                            if (arreglo.ListaVisitas[i].Fecha != null && arreglo.ListaVisitas[i].ClienteRequest != null)
+                            {
+                               // console.log("inicio");
+                                var RazonSocial = arreglo.ListaVisitas[i].ClienteRequest.RazonSocial;
+                              //  console.log(arreglo.ListaVisitas[i].ListaCompromisos.length);
+
+                                var NewCompromiso =[];
+
+
+                                if (arreglo.ListaVisitas[i].ListaCompromisos.length >= 0) {
+                                    for (var f = 0; f < arreglo.ListaVisitas[i].ListaCompromisos.length; f++)
+                                    {
+                                        var tipoCompromiso = arreglo.ListaVisitas[i].ListaCompromisos[f].TipoCompromiso;
+                                        var detalle = arreglo.ListaVisitas[i].ListaCompromisos[f].Detalle;
+                                        var solucion = arreglo.ListaVisitas[i].ListaCompromisos[f].Solucion;
+                                      //  console.log(detalle);
+
+                                        var compromiso = {
+                                            TipoCompromiso: tipoCompromiso,
+                                            Detalle: detalle,
+                                            Solucion: solucion
+                                        };
+                                        NewCompromiso.push(compromiso);
+                                    }
+                                }
+                             //   console.log(NewCompromiso);
+
+                                AddFicha(arreglo.ListaVisitas[i].Fecha, RazonSocial,NewCompromiso);
+
+                            }
+                        }
+
 
                         ruta.setPath(polilinea);
 
 
-                        if (arreglo.length > 0) {
-                            
+                        if (arreglo.ListaRutas.length > 0) {
+
                             //Dibujar la ruta en el mapa
                             ruta.setMap(map);
-                           
+
 
                             map.panTo(polilinea[0]);
                             dibujarFichas();
@@ -587,7 +698,7 @@
                            // alert("No existe una ruta registrada este día");
                         }
 
-                        
+
 
 
                     },
@@ -596,7 +707,7 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                
+
 
             }
 
@@ -722,7 +833,7 @@
                 var onChange = function () {
 
                     DibujarRutas(@Model.IdVendedor);
-                    
+
                 };
 
                 controlDiv.appendChild(document.getElementById("txtFecha"));
@@ -733,10 +844,10 @@
             }
 
 
-            
-        
 
-            
+
+
+
         }
 
         function setFechaActual() {
@@ -744,9 +855,9 @@
             if (document.getElementById("txtFecha").valueAsDate == null) {
 
                 document.getElementById("txtFecha").valueAsDate = new Date();
-                
+
             }
-            
+
         }
 
         setFechaActual();
@@ -755,10 +866,9 @@
     </script>
 
 
-    <div id="divFichas" style="background-color:transparent;width:100%;">
 
-    </div>
 
+   
 
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">

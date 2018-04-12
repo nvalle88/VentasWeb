@@ -984,50 +984,33 @@ namespace WebVentas.Controllers
 
         public async Task<JsonResult> ListaRutas(int IdVendedor,DateTime fecha)
         {
-            var lista = new List<RutaRequest>();
+            var lista = new RutasVisitasRequest();
 
             VendedorRequest vendedorRequest = new VendedorRequest();
             vendedorRequest.FechaRuta = fecha;
-
-
             int idEmpresaInt = 0;
-
             try
             {
                 ApplicationDbContext db = new ApplicationDbContext();
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-
                 // obtener el idEmpresa
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-
                 // convertir el idEmpresa a int
                 idEmpresaInt = Convert.ToInt32(idEmpresa);
-
-
                 //** agregar el idEmpresa al vendedorRequest **
                 vendedorRequest.idEmpresa = idEmpresaInt;
-
                 //** agregar el idVendedor al vendedorRequest **
                 vendedorRequest.IdVendedor = IdVendedor;
-
-
-
-                lista = await ApiServicio.ObtenerElementoAsync1<List<RutaRequest>>(vendedorRequest,
+                lista = await ApiServicio.ObtenerElementoAsync1<RutasVisitasRequest>(vendedorRequest,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/Vendedores/ListarRutaVendedores");
-
-
                 return Json(lista);
-
             }
             catch (Exception ex)
             {
-
                 return Json(false);
-
             }
-
         }
 
 
@@ -1040,7 +1023,6 @@ namespace WebVentas.Controllers
             fileStream.Read(mStreamer.GetBuffer(), 0, (int)fileStream.Length);
             mStreamer.Seek(0, SeekOrigin.Begin);
             byte[] fileBytes = mStreamer.GetBuffer();
-
             //////using (MemoryStream ms = new MemoryStream())
             //////{
             ////// file.InputStream.CopyTo(ms);
