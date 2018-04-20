@@ -28,7 +28,6 @@
                             <div class="jarviswidget col-lg-12" id="wid-id-6" data-widget-editbutton="false">
                                 <!-- widget options:
                                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
                                 data-widget-colorbutton="false"
                                 data-widget-editbutton="false"
                                 data-widget-togglebutton="false"
@@ -140,11 +139,19 @@
 
             @{
                 var series = 0;
-
-                if (Model.estadisticoSupervisorRequest.ListaTipoCompromiso != null)
+                try
                 {
-                    series = Model.estadisticoSupervisorRequest.ListaTipoCompromiso.Count;
+                    if (Model.estadisticoSupervisorRequest.ListaTipoCompromiso != null)
+                    {
+                        series = Model.estadisticoSupervisorRequest.ListaTipoCompromiso.Count;
+                    }
                 }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
             }
 
             @for (var i = 0; i < series; i++) {

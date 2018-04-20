@@ -389,6 +389,12 @@ namespace WebVentas.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// Método para actualizar el ususario validando que no exista otro con el mismo correo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="supervisorRequest"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Edit(string id, SupervisorRequest supervisorRequest)
         {
@@ -397,7 +403,6 @@ namespace WebVentas.Controllers
             //VALIDA SI EXITE EL CORREO AL CREAR
             var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var InstanciaUsuario = await userManager2.FindByEmailAsync(supervisorRequest.Correo);
-
             if (InstanciaUsuario != null)
             {
                 var super = new SupervisorRequest
@@ -407,18 +412,21 @@ namespace WebVentas.Controllers
                 response = await ApiServicio.ObtenerElementoAsync(super,
                                                             new Uri(WebApp.BaseAddress),
                                                             "api/Supervisor/obtenerSupervisor");
-                response.Resultado = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
-
-                InicializarMensaje(Mensaje.ExisteCorreo);
-                return View(response.Resultado);
+               var MyUser = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                if (MyUser.Correo!=supervisorRequest.Correo)
+                {
+                    InicializarMensaje(Mensaje.ExisteCorreo);
+                    return View(response.Resultado);
+                }
+               
             }
 
             //VALIDA SI EXITE LA IDENTIFICACION AL CREAR
-            var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<SupervisorRequest>>(supervisorRequest,
+            var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest,
                                                      new Uri(WebApp.BaseAddress),
                                                      "api/Supervisor/BuscarSupervisorPorEmpresaEIdentificacion");
 
-            if (ExisteUsuario.Count > 0)
+            if (ExisteUsuario!= null)
             {
                 var super = new SupervisorRequest
                 {
@@ -427,10 +435,14 @@ namespace WebVentas.Controllers
                 response = await ApiServicio.ObtenerElementoAsync(super,
                                                             new Uri(WebApp.BaseAddress),
                                                             "api/Supervisor/obtenerSupervisor");
-                response.Resultado = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
+                var MyUser = JsonConvert.DeserializeObject<SupervisorRequest>(response.Resultado.ToString());
 
-                InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
-                return View(response.Resultado);
+                if (MyUser.Identificacion!=supervisorRequest.Identificacion)
+                {
+                    InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
+                    return View(response.Resultado);
+                }
+               
             }
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var user = db.Users.Find(supervisorRequest.IdUsuario);

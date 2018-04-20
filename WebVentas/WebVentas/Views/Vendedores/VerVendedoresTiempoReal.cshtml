@@ -56,42 +56,78 @@
     <p></p>
     <div class="row">
         <div class="col-sm-12">
+
+
+
             @Html.HiddenFor(model => model.IdVendedor)
-            <div class="row">
-                <br />
-                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-3">
-                    <section class="col-lg-12">
-                        <img src="@Model.Foto" class="col col-lg-12" />
-                    </section>
+
+            <!-- widget grid -->
+            <section id="widget-grid" class="">
+                <!-- row -->
+                <div class="row">
+                    <!-- NEW WIDGET START -->
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget personalizado-table" id="wid-id-0" data-widget-editbutton="false">
+
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+
+                                <h2>@Model.NombreApellido</h2>
+                            </header>
+                            <!-- widget div-->
+
+                            <div class="row">
+
+                                <div class="col-sm-12">
+
+                                    <div class="row">
+
+                                        <div class="col-sm-3 profile-pic">
+                                            <img src="@Model.Foto"  alt="demo user">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h1>
+                                                <span class="semi-bold">@Model.NombreApellido</span>
+                                                <br>
+                                                <small> @Model.Identificacion</small>
+                                            </h1>
+
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <p class="text-muted">
+                                                        <i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">@Model.Telefono</span> 
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="text-muted">
+                                                        <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a>@Model.Correo</a>
+                                                    </p>
+                                                </li>
+                                               
+                                            </ul>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- end widget div -->
+                        </div>
+
+                    </article>
+                    <!-- WIDGET END -->
                 </div>
+                <!-- end row -->
+                <!-- end row -->
+            </section>
 
-                <div class="col-xs-12 col-sm-1 col-md-1 col-lg-6">
-                    <section>
-                        <label><b>Nombre:</b></label>
-                        <label>@Model.NombreApellido</label>
-                    </section>
-                    <br />
-                    <section>
-                        <label><b>Tel&eacute;fono:</b></label>
-                        <label>@Model.Telefono</label>
-                    </section>
-                    <br />
-                    <section>
-                        <label><b>Identificaci&oacute;n:</b></label>
-                        <label>@Model.Identificacion</label>
-                    </section>
-                    <br />
-                    <section>
-                        <label><b>Correo:</b></label>
-                        <label>@Model.Correo</label>
-                    </section>
-                    <br />
-                </div>
-
-
-
-
-            </div>
+            
 
             <section id="widget-grid" class="">
                 <div class="row">
