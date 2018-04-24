@@ -1,17 +1,21 @@
 (function ($) {
+
     $(function () {
+        var map;
+
+         map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -0.225219, lng: -78.5248 },
+            zoom: 15
+        });
 
         var resultado;
         var MyMarker = null;
         var chatInput = $("#chat-input");
         var userName;
-        var map;
+      
         var chat = $.connection.recived;
         var chatWindow = $("#chat-window");
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: -0.225219, lng: -78.5248 },
-            zoom: 15
-        });
+       
         geoLocation(map);
 
         var icon1 =

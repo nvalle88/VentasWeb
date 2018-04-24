@@ -9,6 +9,7 @@
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 <script src="~/signalr/hubs"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA"></script>
 <script src="~/Scripts/chat.js"></script>
 <script src="~/Scripts/jquery-3.2.1.min.js"></script>
 <script src="~/Scripts/jquery-3.2.1.js"></script>
@@ -18,7 +19,6 @@
 <script src="~/Scripts/jquery-1.11.1.min.js"></script>
 <script src="~/Scripts/jquery-2.1.1.js"></script>
 <script src="~/Scripts/jquery-2.1.1.min.js"></script>
-
 <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
 
 <style>
@@ -34,8 +34,6 @@
         position: relative;
     }
 </style>
-
-
 
 <style>
     #map_container {
@@ -56,11 +54,7 @@
     <p></p>
     <div class="row">
         <div class="col-sm-12">
-
-
-
             @Html.HiddenFor(model => model.IdVendedor)
-
             <!-- widget grid -->
             <section id="widget-grid" class="">
                 <!-- row -->
@@ -114,8 +108,6 @@
                                 </div>
 
                             </div>
-
-
                             <!-- end widget div -->
                         </div>
 
@@ -125,9 +117,6 @@
                 <!-- end row -->
                 <!-- end row -->
             </section>
-
-            
-
             <section id="widget-grid" class="">
                 <div class="row">
                     <article class="col-sm-12 col-md-12 col-lg-12">
@@ -169,13 +158,13 @@
     var vendedor = $("#IdVendedor").val();
 
     function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: -0.170208, lng: -78.480866 },
             zoom: 15
         });
 
         // Try HTML5 geolocation.
-        //geoLocation(map);
+        //   geoLocation(map);
     }
 
     function geoLocation(map) {
@@ -201,12 +190,17 @@
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
+            'Error: No podemos obtener tu geolocalizaci&oacute;n.' :
+            'Error: El navegador no soparta la geolocalizaci&oacute;n.');
     }
 </script>
 
-<script async defer
+@*<script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
-</script>
+</script>*@
+
+
+
+
+
 
