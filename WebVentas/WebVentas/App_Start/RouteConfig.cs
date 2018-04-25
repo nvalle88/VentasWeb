@@ -17,7 +17,7 @@ namespace WebVentas
             
             routes.MapRoute("Default", "{controller}/{action}/{id}", new
             {
-                controller = "Home",
+                controller = "Landings",
                 action = "Index",
                 id = UrlParameter.Optional
             }).RouteHandler = new DashRouteHandler();
