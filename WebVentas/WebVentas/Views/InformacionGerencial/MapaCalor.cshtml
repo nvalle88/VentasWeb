@@ -284,26 +284,29 @@
                 success: function (data) {
                     arreglo = data;
 
-                }, complete: function (data) {
+                }, complete: function (data)
 
-                    for (var i = 0; i < arreglo.length; i++) {
-                        
-                        heatmapData.push(new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud))
+                {
 
-                    }
+                  
+                        for (var i = 0; i < arreglo.length; i++)
+                        {                        
+                            heatmapData.push(new google.maps.LatLng(arreglo[i].Latitud, arreglo[i].Longitud))
+                        }
 
-                    heatmap = new google.maps.visualization.HeatmapLayer({
-                        data: heatmapData,
-                        radius: 20,
-                        maxIntensity: 4,
-                        dissipating: true
-                    });
+                            heatmap = new google.maps.visualization.HeatmapLayer({
+                            data: heatmapData,
+                            radius: 20,
+                            maxIntensity: 4,
+                            dissipating: true
+                        });
+                        heatmap.setMap(map);
+                    
 
-                    heatmap.setMap(map);
                 },
 
                 error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
+                    console.log('Failed to retrieve data.' + ex);
                 }
             });
 
@@ -343,7 +346,7 @@
                 },
 
                 error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
+                    console.log('Failed to retrieve data.' + ex);                  
                 }
             });
 
@@ -387,7 +390,7 @@
                 },
 
                 error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
+                    console.log('Failed to retrieve data.' + ex);
                 }
             });
         }
@@ -428,7 +431,7 @@
                 },
 
                 error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
+                    console.log('Failed to retrieve data.' + ex);
                 }
             });
         }
@@ -470,7 +473,7 @@
                     },
 
                     error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
+                        console.log('Failed to retrieve data.' + ex);
                     }
                 });
             }

@@ -246,6 +246,7 @@
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="Controllers\VerVendedoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -312,6 +313,7 @@
     <Compile Include="ObjectModel\EstadisticosClienteRequest.cs" />
     <Compile Include="ObjectModel\EstadisticoSupervisorRequest.cs" />
     <Compile Include="ObjectModel\EstadisticoVendedorRequest.cs" />
+    <Compile Include="ObjectModel\InfoRequest.cs" />
     <Compile Include="ObjectModel\MapaCalorRequest.cs" />
     <Compile Include="ObjectModel\EventoRequest.cs" />
     <Compile Include="ObjectModel\RecuperarContrasenaRequest.cs" />
@@ -324,6 +326,7 @@
     <Compile Include="ObjectModel\UserRequest.cs" />
     <Compile Include="ObjectModel\UsuarioRequest.cs" />
     <Compile Include="ObjectModel\ClienteRequest.cs" />
+    <Compile Include="ObjectModel\VendedorPositionRequest.cs" />
     <Compile Include="ObjectModel\VendedorRequest.cs" />
     <Compile Include="ObjectModel\VisitaRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1083,6 +1086,8 @@
     <Content Include="Scripts\chat.js" />
     <Content Include="Scripts\libs\Tablas\scriptTabla.js" />
     <Content Include="Scripts\libs\Tablas\tablaCss.css" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\tabla\init.js" />
     <Content Include="Scripts\demo.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1764,6 +1769,7 @@
     <Content Include="Views\Landings\fonts\themify.eot" />
     <Content Include="Views\Landings\fonts\themify.ttf" />
     <Content Include="Views\Landings\fonts\themify.woff" />
+    <Content Include="Views\VerVendedores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

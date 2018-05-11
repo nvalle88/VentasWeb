@@ -79,6 +79,10 @@ namespace WebVentas.Models
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
+
+
+        [Display(Name = "Id Empresa")]
+        public int IdEmpresa { get; set; }
     }
 
     public class ResetPasswordViewModel

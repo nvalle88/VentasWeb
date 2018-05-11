@@ -60,7 +60,6 @@ namespace WebVentas.Controllers
             ViewBag.ReportViewer = rptViewer;
             return View();
         }
-
         public ActionResult ReporteVendedores()
         {
             ReportViewer rptViewer = new ReportViewer();

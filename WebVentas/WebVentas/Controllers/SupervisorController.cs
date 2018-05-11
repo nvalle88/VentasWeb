@@ -270,6 +270,11 @@ namespace WebVentas.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(SupervisorRequest supervisorRequest)
         {
+            //Seteando el id de la empresa 
+            var userWithClaims = (ClaimsPrincipal)User;
+            var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+
+            InicializarMensaje(null);
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(null);
@@ -279,6 +284,7 @@ namespace WebVentas.Controllers
             try
             {
                 ApplicationDbContext db = new ApplicationDbContext();
+                supervisorRequest.IdEmpresa = int.Parse(idEmpresa);
 
                 //VALIDA SI EXITE EL CORREO AL CREAR
                 var userManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
@@ -290,12 +296,14 @@ namespace WebVentas.Controllers
                     return View(supervisorRequest);
                 }
 
+
                 //VALIDA SI EXITE LA IDENTIFICACION AL CREAR
-                var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<List<SupervisorRequest>>(supervisorRequest,
+
+                var ExisteUsuario = await ApiServicio.ObtenerElementoAsync1<SupervisorRequest>(supervisorRequest,
                                                          new Uri(WebApp.BaseAddress),
                                                          "api/Supervisor/BuscarSupervisorPorEmpresaEIdentificacion");
 
-                if (ExisteUsuario.Count > 0)
+                if (ExisteUsuario != null)
                 {
                     InicializarMensaje(Mensaje.ExisteIdentificacionUsuario);
                     return View(supervisorRequest);
@@ -304,8 +312,7 @@ namespace WebVentas.Controllers
                 //Inserta el supervisor
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
-                var userWithClaims = (ClaimsPrincipal)User;
-                var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
+              
                 var empresaActual = new EmpresaActual { IdEmpresa = Convert.ToInt32(idEmpresa) };
                 var user = new ApplicationUser
                 {
@@ -321,10 +328,10 @@ namespace WebVentas.Controllers
                 };
                 var result = await userManager.CreateAsync(user, "A12345.1a");
                 db.SaveChanges();
-                var recuperarContrasenaRequest = new RecuperarContrasenaRequest();
-                recuperarContrasenaRequest.Email = user.Email;
-                recuperarContrasenaRequest.Codigo = "A12345.1a";
-                var response2 = await ApiServicio.ObtenerElementoAsync1<Response>(recuperarContrasenaRequest, new Uri(WebApp.BaseAddress)
+                var enviarContrasenaRequest = new RecuperarContrasenaRequest();
+                enviarContrasenaRequest.Email = user.Email;
+                enviarContrasenaRequest.Codigo="A12345.1a";
+                var response2 = await ApiServicio.ObtenerElementoAsync1<Response>(enviarContrasenaRequest, new Uri(WebApp.BaseAddress)
                                                , "api/Usuarios/EnviarContrasena");
                 //varifica el rol
                 userManager.AddToRoles(user.Id, "Supervisor");

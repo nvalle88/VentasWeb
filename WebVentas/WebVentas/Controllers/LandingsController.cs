@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebVentas.ObjectModel;
+using WebVentas.Services;
+using WebVentas.Utils;
 
 namespace WebVentas.Controllers
 {
@@ -16,10 +19,13 @@ namespace WebVentas.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        public ActionResult Login()
-        {          
-            return RedirectToAction("Login");
+        public async Task<ActionResult> EnviarCorreo(InfoRequest info)
+        {
+            var respuesta = await ApiServicio.InsertarAsync<Response>(info, new Uri(WebApp.BaseAddress)
+                                                                      , "api/Informacion/Generar");
+
+            return 
+            RedirectToAction("Index");
         }
     }
 }

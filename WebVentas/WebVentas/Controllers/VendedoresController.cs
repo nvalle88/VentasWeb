@@ -34,7 +34,6 @@ namespace WebVentas.Controllers
 
             ViewData["Error"] = mensaje;
         }
-
       
         public async Task<ActionResult> VendedorIndex(string mensaje)
         {
@@ -114,7 +113,6 @@ namespace WebVentas.Controllers
             }
         }
 
-
         public async Task<ActionResult> PerfilVendedor(string mensaje, int idVendedor)
         {
             SupervisorRequest supervisorRequest = new SupervisorRequest();
@@ -171,7 +169,6 @@ namespace WebVentas.Controllers
             }
         }
 
-
         public async Task<ActionResult> CrearVendedor(string mensaje)
         {
             VendedorRequest vendedorRequest = new VendedorRequest();
@@ -180,8 +177,6 @@ namespace WebVentas.Controllers
 
             return View(vendedorRequest);
         }
-
-
 
         [HttpPost]
         public async Task<ActionResult> CrearVendedor(HttpPostedFileBase fileUpload, VendedorRequest vendedorRequest)
@@ -384,8 +379,6 @@ namespace WebVentas.Controllers
 
         }
 
-
-
         public async Task<ActionResult> EditarVendedor(int id)
         {
             VendedorRequest vendedor = new VendedorRequest();
@@ -428,7 +421,6 @@ namespace WebVentas.Controllers
                 return View(vendedor);
             }
         }
-
 
         [HttpPost]
         public async Task<ActionResult> EditarVendedor(HttpPostedFileBase fileUpload, VendedorRequest vendedorRequest)
@@ -585,7 +577,6 @@ namespace WebVentas.Controllers
 
 
         }
-
         public async Task<ActionResult> DeshabilitarVendedor(string idUsuario)
         {
 
@@ -616,8 +607,6 @@ namespace WebVentas.Controllers
                 }
             }
         }
-
-
         public async Task<ActionResult> CalendarioIndex(string mensaje)
         {
             InicializarMensaje(mensaje);
@@ -717,7 +706,6 @@ namespace WebVentas.Controllers
                 return View(listaEventos);
             }
         }
-
         [HttpPost]
         public async Task<ActionResult> CalendarioIndex(int idVendedor)
         {
@@ -804,12 +792,9 @@ namespace WebVentas.Controllers
             }
         }
 
-
-
         /*
          ************************************* Métodos para mapa Y Ajax-mapa
          */
-
 
         public async Task<ActionResult> MapaRuta(int? idVendedor, string mensaje)
         {
@@ -980,8 +965,6 @@ namespace WebVentas.Controllers
 
         }
 
-
-
         public async Task<JsonResult> ListaRutas(int IdVendedor,DateTime fecha)
         {
             var lista = new RutasVisitasRequest();
@@ -1013,8 +996,6 @@ namespace WebVentas.Controllers
             }
         }
 
-
-
         private byte[] readFileContents(HttpPostedFileBase file)
         {
             Stream fileStream = file.InputStream;
@@ -1028,10 +1009,8 @@ namespace WebVentas.Controllers
             ////// file.InputStream.CopyTo(ms);
             ////// fileBytes = ms.GetBuffer();
             //////}
-
             return fileBytes;
         }
-
 
 
     }

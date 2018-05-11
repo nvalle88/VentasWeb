@@ -235,8 +235,16 @@ namespace WebVentas.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,IdEmpresa=2};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IdEmpresa = model.IdEmpresa };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                //Aqui se debe crear el rol de gerente
+                UserManager.AddToRoles(user.Id, "GerenteGeneral");
+
+                var gerente = new Gerente() {IdUsuario=user.Id};
+                var response = await ApiServicio.InsertarAsync<Gerente>(gerente,
+                                                         new Uri(WebApp.BaseAddress),
+                                                         "Api/Gerentes");
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

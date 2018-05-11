@@ -1,6 +1,8 @@
 ﻿
+@model WebVentas.ObjectModel.InfoRequest
 @{
     Layout = null;
+    
 }
 
 <!DOCTYPE html>
@@ -59,19 +61,19 @@
                                     <li class="nav-item"><a class="nav-link" href="#team">Equipo</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
                                 </ul>
-                                <div class="sing-up-button d-lg-none">
+                                @*<div class="sing-up-button d-lg-none">
                                     <a href="#">Registrarse</a>
-                                </div>
+                                </div>*@
                             </div>
                         </nav>
                     </div>
                 </div>
                 <!-- Signup btn -->
-                <div class="col-12 col-lg-2">
+                @*<div class="col-12 col-lg-2">
                     <div class="sing-up-button d-none d-lg-block">
                         <a href="#">Registrarse</a>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </header>
@@ -599,26 +601,26 @@
                 <div class="col-md-6">
                     <!-- Form Start-->
                     <div class="contact_from">
-                        <form action="#" method="post">
+                        <form action="/Landings/EnviarCorreo"  method="post">
                             <!-- Message Input Area Start -->
                             <div class="contact_input_area">
                                 <div class="row">
                                     <!-- Single Input Area Start -->
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Su Nombre" required>
+                                            <input type="text" class="form-control" name="Name" id="name" placeholder="Su Nombre" required>
                                         </div>
                                     </div>
                                     <!-- Single Input Area Start -->
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Su e-mail" required>
+                                            <input type="email" class="form-control" name="Mail" id="email" placeholder="Su e-mail" required>
                                         </div>
                                     </div>
                                     <!-- Single Input Area Start -->
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Su mensaje *" required></textarea>
+                                            <textarea name="Mensaje" class="form-control" id="Mensaje" cols="30" rows="4" placeholder="Su mensaje *" required></textarea>
                                         </div>
                                     </div>
                                     <!-- Single Input Area Start -->

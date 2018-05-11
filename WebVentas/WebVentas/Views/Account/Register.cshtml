@@ -1,4 +1,5 @@
 ﻿@model WebVentas.Models.RegisterViewModel
+
 @{
     ViewBag.Title = "Registrarse";
 }
@@ -18,6 +19,17 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationBootstrap()
                         <fieldset>
+
+
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.IdEmpresa)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input  name="idEmpresa">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor ingrese el id de la empresa</b>
+                                </label>
+                            </section>
+
                             <section>
                                 <label class="label">@Html.DisplayNameFor(model => model.Email)</label>
                                 <label class="input">
