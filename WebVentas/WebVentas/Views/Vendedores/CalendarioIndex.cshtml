@@ -121,25 +121,35 @@
     <!-- end row -->
 
 </div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Detalle</h4>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- END MAIN CONTENT -->
 @section pagespecific {
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="/scripts/plugin/moment/moment.min.js"></script>
     <script src="/scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
-
-
-
     <script type="text/javascript">
-
-
-
-
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
         $(document).ready(function () {
-
-
             "use strict";
-
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();
@@ -215,7 +225,9 @@
                 },
 
                 editable: false,
-                droppable: false, // this allows things to be dropped onto the calendar !!!
+                droppable: false,
+               
+                // this allows things to be dropped onto the calendar !!!
 
                 drop: function (date, allDay) { // this function is called when something is dropped
 
@@ -253,7 +265,9 @@
                         );
                     }
                     calendar.fullCalendar('unselect');
-                },
+                },              
+
+              
 
                 events: [
 
@@ -334,7 +348,7 @@
                                 ,
                                 allDay: true,
                                 className: ["event", "bg-color-blue"],
-                                icon: 'fa-clock-o'
+                                icon: 'fa-calendar'
                             }
 
                         </text>
@@ -345,18 +359,12 @@
                     {
                         <text>,</text>
                     }
-
                 }
-
-
-
-
                 ]
                 ,
-
                 eventRender: function (event, element, icon) {
                     if (!event.description == "") {
-                        element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description +
+                        element.find('.fc-event-title').append("<br/><span class='ultra-light' onclick='clickcalendar(this)'>" + event.description +
                             "</span>");
                     }
                     if (!event.icon == "") {
@@ -369,10 +377,9 @@
                     $('#calendar').fullCalendar('render');
                 }
             });
-
+       
             /* hide default buttons */
             $('.fc-header-right, .fc-header-center').hide();
-
 
             $('#calendar-buttons #btn-prev').click(function () {
                 $('.fc-button-prev').click();
@@ -400,19 +407,14 @@
             $('#td').click(function () {
                 $('#calendar').fullCalendar('changeView', 'agendaDay');
             });
-
         })
 
     </script>
-
     <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.min.css" />
     <link rel="stylesheet" href="~/Scripts/libs/waitMe/waitMe.css" />
     <script src="~/Scripts/libs/waitMe/waitMe.min.js"></script>
     <script src="~/Scripts/libs/waitMe/waitMe.js"></script>
-
     <script>
-
-
         function esperar() {
             $('#content').waitMe({
                 effect: 'bounce',
@@ -420,6 +422,11 @@
                 bg: 'rgba(255, 255, 255, 0.1)',
                 color: '#ff5722'
             });
+        }
+        function clickcalendar(element) {
+           // alert(element.innerHTML);
+            $('#myModalContent').html(element.innerHTML);  
+            $("#myModal").modal() 
         }
     </script>
 }

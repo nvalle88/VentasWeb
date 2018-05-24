@@ -20,13 +20,17 @@ namespace WebVentas.ObjectModel
         // Campos de la tabla vendedor
         public int IdVendedor { get; set; }
 
-        public int? TiempoSeguimiento { get; set; } 
-        
+        public int? TiempoSeguimiento { get; set; }
+
+        [DisplayName("Distancia de Seguimiento")]
+        public Double? DistanciaSeguimiento { get; set; }
+
         public int? IdSupervisor { get; set; }
         public string IdCliente { get; set; }
 
         [DisplayName("Nombres y apellidos")]
         public string NombreApellido { get; set; }
+
 
 
 

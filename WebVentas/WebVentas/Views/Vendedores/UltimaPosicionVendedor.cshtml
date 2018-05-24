@@ -1,0 +1,321 @@
+﻿@model  WebVentas.ObjectModel.VendedorPositionRequest
+@{
+    ViewBag.Title = "Home";
+}
+
+
+
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery-1.11.1.js"></script>
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+<script src="~/Scripts/moment-with-locales.js"></script>
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+
+
+<style>
+    #map_container {
+        position: relative;
+    }
+
+    #map {
+        margin: 0;
+        padding: 0;
+        height: 400px;
+        max-width: none;
+    }
+</style>
+<style>
+    #map_container {
+        position: relative;
+    }
+
+    #map {
+        height: 0;
+        overflow: hidden;
+        padding-bottom: 35.25%;
+        padding-top: 10px;
+        position: relative;
+    }
+</style>
+<!-- Estilo para nuestro infowindows -->
+<style>
+    #map-canvas {
+        margin: 0;
+        padding: 0;
+        height: 400px;
+        max-width: none;
+    }
+
+        #map-canvas img {
+            max-width: none !important;
+        }
+
+    .gm-style-iw {
+        top: 7px !important;
+        left: 21px !important;
+        background-color: #fff;
+        box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+        border: 1px solid rgba(255, 87, 34, 0.6);
+        border-radius: 2px 2px 10px 10px;
+    }
+
+    #iw-container {
+        margin-bottom: 0px;
+    }
+
+        #iw-container .iw-title {
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            background-color: #FF5722;
+            width: 100%;
+            color: white;
+            margin: 0;
+            border-radius: 2px 2px 0 0;
+        }
+
+        #iw-container .iw-content {
+            font-size: 13px;
+            line-height: 18px;
+            font-weight: 400;
+            padding: 0px 0px 0px 0px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+    .iw-content img {
+        float: right;
+    }
+
+    .iw-subTitle {
+        font-size: 13px;
+        font-weight: 700;
+        padding: 5px 0;
+    }
+
+    .iw-bottom-gradient {
+        position: absolute;
+        height: 25px;
+        bottom: 10px;
+        right: 18px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+        background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+        background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+        background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    }
+</style>
+<div id="content">
+    <p></p>
+    <a href="../../vendedores/perfilvendedor?idVendedor=@Model.VendedorId" id="regresar" type="bt" title="Regresar" class="btn btn-default butoon"><i class="glyphicon glyphicon-arrow-left"></i></a>
+    <p></p>
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.HiddenFor(model => model.VendedorId)
+            <!-- widget grid -->
+            <section id="widget-grid" class="">
+                <!-- row -->
+                <div class="row">
+                    <!-- NEW WIDGET START -->
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget personalizado-table" id="wid-id-0" data-widget-editbutton="false">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                <h2>@Model.Nombre</h2>
+                            </header>
+                            <!-- widget div-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3 profile-pic ">
+                                            <img src="@Model.urlFoto" alt="demo user">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h1>
+                                                <span class="semi-bold">@Model.Nombre</span>
+                                                <br>
+                                                <small> @Model.Identificacion</small>
+                                            </h1>
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <p class="text-muted">
+                                                        <i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">@Model.Telefono</span>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="text-muted">
+                                                        <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a>@Model.Correo</a>
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end widget div -->
+                        </div>
+
+                    </article>
+                    <!-- WIDGET END -->
+                </div>
+                <!-- end row -->
+                <!-- end row -->
+            </section>
+            <!-- widget grid -->
+            <section id="widget-grid" class="">
+                <div class="row">
+                    <article class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-close="false" data-widget-custombutton="false">
+                            <header draggable="true">
+                                <span class="widget-icon"> <i class="fa fa-map-marker"></i></span>
+                                <h2></h2>
+                            </header>
+                            <div>
+                                <div class="jarviswidget-editbox">
+
+                                </div>
+                                <div class="widget-body no-padding">
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div id="map_container"></div>
+                                                <div id="map"></div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <footer></footer>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var map;
+    var vendedor = $("#IdVendedor").val();
+
+    function initMap() {
+        var imagenIconoVendedor = "../Imagenes/pushpin vendedor-01.png";
+        var iconoVendedor =
+            {
+                url: imagenIconoVendedor,
+                size: new google.maps.Size(48, 48),
+                scaledSize: new google.maps.Size(48, 48), // scaled size
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(24, 48) // anchor
+            };
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -0.170208, lng: -78.480866 },
+            zoom: 15
+        });
+
+        var myLatlng = new google.maps.LatLng(parseFloat('@Model.Lat'.replace(",", ".")), parseFloat('@Model.Lon'.replace(",", ".")));
+
+        var marker = new google.maps.Marker({
+            icon: iconoVendedor,
+            map: map,
+            title: '@Model.Nombre',
+            position: myLatlng,
+
+        });
+   
+        var content = '<div id="iw-container">' +
+            '<div class="iw-title">' + '@Model.Nombre' + '</div>' +
+            '<div class="iw-content">' +
+            '<div class="iw-subTitle">Última ubicación</div>' +
+            '<img src="' + '@Model.urlFoto' + '" alt="" height="80" width="63">' +
+            '<p>' + '@Model.Fecha.ToString()' + '.</p>' +
+            '</div>' +
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: content,
+            // Assign a maximum value for the width of the infowindow allows
+            // greater control over the various content elements
+        });
+
+        new google.maps.event.addListener(map, 'click', function () {
+            infowindow.close();
+        });
+
+        new google.maps.event.addListener(marker, "click", (function (marker, content, infowindow) {
+            // !!! PROBLEM HERE
+            return function (evt) {
+                infowindow.setContent(content);
+                infowindow.open(map, marker);
+            }
+        })(marker, content, infowindow));
+
+        google.maps.event.addListener(infowindow, 'domready', function () {
+            // Reference to the DIV that wraps the bottom of infowindow
+            var iwOuter = $('.gm-style-iw');
+
+            /* Since this div is in a position prior to .gm-div style-iw.
+             * We use jQuery and create a iwBackground variable,
+             * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+            */
+            var iwBackground = iwOuter.prev();
+
+            // Removes background shadow DIV
+            iwBackground.children(':nth-child(2)').css({ 'display': 'none' });
+
+            // Removes white background DIV
+            iwBackground.children(':nth-child(4)').css({ 'display': 'none' });
+
+        });
+
+    }
+
+    function geoLocation(map) {
+        var infoWindow = new google.maps.InfoWindow({ map: map });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Posici&oacute;n actual');
+                map.setCenter(pos);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: No podemos obtener tu geolocalizaci&oacute;n.' :
+            'Error: El navegador no soparta la geolocalizaci&oacute;n.');
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=visualization&callback=initMap"
+        async defer></script>
+
+
+
+
+
+
+

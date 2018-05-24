@@ -499,7 +499,7 @@ namespace WebVentas.Controllers
                     InstanciaUsuario.Apellidos = vendedorRequest.Apellidos;
                     InstanciaUsuario.Direccion = vendedorRequest.Direccion;
                     InstanciaUsuario.Telefono = vendedorRequest.Telefono;
-
+                   
                     InstanciaUsuario.Estado = 1;
                     InstanciaUsuario.IdEmpresa = idEmpresaInt;
 
@@ -533,7 +533,7 @@ namespace WebVentas.Controllers
                             {
 
                                 InstanciaUsuario.Foto = fotoRequest.Resultado.ToString();
-
+                                
                                 db.Entry(InstanciaUsuario).State = EntityState.Modified;
                                 await db.SaveChangesAsync();
 
@@ -672,12 +672,13 @@ namespace WebVentas.Controllers
                 lista.Add(new VendedorRequest
                 {
                     IdVendedor = 0,
-                    Nombres = "Seleccione"
+                    NombreApellido = "Seleccione"
+
                 });
 
                 lista = lista.OrderBy(x => x.IdVendedor).ToList();
 
-                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "NombreApellido");
 
 
                 listaEventos.FirstOrDefault().NumeroMenu = menu;
@@ -694,12 +695,12 @@ namespace WebVentas.Controllers
                 lista.Add(new VendedorRequest
                 {
                     IdVendedor = 0,
-                    Nombres = "Seleccione"
+                    NombreApellido = "Seleccione"
                 });
 
                 lista = lista.OrderBy(x => x.IdVendedor).ToList();
 
-                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "NombreApellido");
 
 
                 listaEventos.Add(new EventoRequest { NumeroMenu = menu });
@@ -769,12 +770,13 @@ namespace WebVentas.Controllers
 
                 lista.Add(new VendedorRequest {
                     IdVendedor = 0,
-                    Nombres = "Seleccione"
+                    NombreApellido = "Seleccione"
+
                 });
 
                 lista = lista.OrderBy(x => x.IdVendedor).ToList();
 
-                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "Nombres");
+                ViewBag.IdVendedor = new SelectList(lista, "IdVendedor", "NombreApellido");
 
 
 
@@ -795,6 +797,31 @@ namespace WebVentas.Controllers
         /*
          ************************************* Métodos para mapa Y Ajax-mapa
          */
+
+        public async Task<ActionResult> UltimaPosicionVendedor(int? idVendedor, string mensaje)
+        {
+            InicializarMensaje(mensaje);
+            if (idVendedor != null)
+            {
+                var vendedor = new VendedorRequest { IdVendedor = Convert.ToInt32(idVendedor) };
+
+                var vendedorRequest = await ApiServicio.ObtenerElementoAsync1<Response>(vendedor, new Uri(WebApp.BaseAddress)
+                                                             , "api/LogRutaVendedors/PosicionPorUsuario");
+                if (vendedorRequest.IsSuccess)
+                {
+                    var vistaVendedor = JsonConvert.DeserializeObject<VendedorPositionRequest>(vendedorRequest.Resultado.ToString());
+                    var foto = string.IsNullOrEmpty(vistaVendedor.urlFoto) != true ? vistaVendedor.urlFoto.Replace("~", WebApp.BaseAddress) : "";
+                    vistaVendedor.urlFoto = foto;
+                    return View(vistaVendedor);
+                }
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+        }
+
 
         public async Task<ActionResult> MapaRuta(int? idVendedor, string mensaje)
         {

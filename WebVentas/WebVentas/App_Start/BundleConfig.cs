@@ -6,7 +6,7 @@ namespace WebVentas
     public class BundleConfig
     {
         // Para obtener más información sobre las uniones, visite https://go.microsoft.com/fwlink/?LinkId=301862
-        public static void RegisterBundles(BundleCollection bundles)
+        public static void RegisterBundles (BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/content/smartadmin").IncludeDirectory("~/content/css", "*.min.css"));
             bundles.Add(new ScriptBundle("~/scripts/smartadmin").Include(
@@ -75,7 +75,16 @@ namespace WebVentas
                 "~/scripts/plugin/vectormap/jquery-jvectormap-world-mill-en.js"
                 ));
 
+         bundles.Add(new ScriptBundle("~/scripts/monent").Include(
+                "~/scripts/moment.js",
+                "~/scripts/moment.min.js",
+                 "~/scripts/moment-with-locales.js",
+                "~/scripts/moment-with-locales.min.js"
+                ));
+        
+        
             BundleTable.EnableOptimizations = true;
+            
         }
     }
 }

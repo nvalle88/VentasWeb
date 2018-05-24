@@ -951,6 +951,7 @@
     <Content Include="Imagenes\pushpin cliente-01.png" />
     <Content Include="Imagenes\pushpin vacio.png" />
     <Content Include="Imagenes\pushpin vendedor-01.png" />
+    <Content Include="Imagenes\pushpin-ruta.png" />
     <Content Include="Imagenes\star_outline.png" />
     <Content Include="Imagenes\star_selected.png" />
     <Content Include="img\bg-img\client-1.jpg" />
@@ -1088,6 +1089,7 @@
     <Content Include="Scripts\libs\Tablas\tablaCss.css" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\simplify.js" />
     <Content Include="Scripts\tabla\init.js" />
     <Content Include="Scripts\demo.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1770,6 +1772,7 @@
     <Content Include="Views\Landings\fonts\themify.ttf" />
     <Content Include="Views\Landings\fonts\themify.woff" />
     <Content Include="Views\VerVendedores\Index.cshtml" />
+    <Content Include="Views\Vendedores\UltimaPosicionVendedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

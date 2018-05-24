@@ -1,9 +1,12 @@
 @model  WebVentas.ObjectModel.VendedorRequest
-
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places"></script>
 @{
     ViewData["Title"] = "Index";
-    List<WebVentas.ObjectModel.VisitaRecorrido> Visitas= new List<WebVentas.ObjectModel.VisitaRecorrido>();
+    List<WebVentas.ObjectModel.VisitaRecorrido> Visitas = new List<WebVentas.ObjectModel.VisitaRecorrido>();
 }
+
+
 
 
 <style>
@@ -98,18 +101,18 @@
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget  personalizado-table" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
-        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-        data-widget-colorbutton="false"
-        data-widget-editbutton="false"
-        data-widget-togglebutton="false"
-        data-widget-deletebutton="false"
-        data-widget-fullscreenbutton="false"
-        data-widget-custombutton="false"
-        data-widget-collapsed="true"
-        data-widget-sortable="false"
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
 
-        -->
+                    -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Rutas</h2>
@@ -137,24 +140,24 @@
                     <!-- end widget div -->
                 </div>
                 @*<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-close="false" data-widget-custombutton="false">
-            <header draggable="true">
-                <span class="widget-icon"> <i class="fa fa-road"></i> </span>
-                <h2>Detalle...</h2>
-            </header>
-            <div>
-                <div class="jarviswidget-editbox">
-                </div>
-                <div class="widget-body no-padding">
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="divFichas"></div>
+                        <header draggable="true">
+                            <span class="widget-icon"> <i class="fa fa-road"></i> </span>
+                            <h2>Detalle...</h2>
+                        </header>
+                        <div>
+                            <div class="jarviswidget-editbox">
+                            </div>
+                            <div class="widget-body no-padding">
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="divFichas"></div>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
-                    </fieldset>
-                </div>
-            </div>
-        </div>*@
+                    </div>*@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-close="false" data-widget-custombutton="false">
                     <header draggable="true">
                         <span class="widget-icon"> <i class="fa fa-road"></i> </span>
@@ -215,14 +218,20 @@
         }
     </style>
 
+
+
     <script>
+
 
         // Variables para ir creando las fichas
         var fichas = [];
 
 
-        function dibujarFichas() {
+        function dibujarFichas()
+        {
             var text = "";
+            document.getElementById("divFichas").innerHTML = text;
+
 
             var contadorFichas = fichas.length;
 
@@ -231,69 +240,71 @@
             var abrir = true;
             ////alert("Cargando datos: " + contadorFichas);
 
-            for (var i = 0; i < contadorFichas; i++){
+                for (var i = 0; i < contadorFichas; i++) {
 
-                if (abrir == true) {
-
-                    
-
-                    text = text +
-                        '<div class="tituloFicha">Visita ' + (i + 1) + '</div>' +
-                        '<div class="labelFicha">Fecha</div><div class="textoFicha">' + moment(fichas[i].fecha).format('DD-MM-YYYY hh:mm:ss A') + '</div>' +
-                        '<div class="labelFicha">Cliente</div><div class="textoFicha">' + fichas[i].cliente + '</div> <br><br>' ;
-
-                    cerrar = true;
-                    abrir = false;
+                    if (abrir == true) {
 
 
-                }
 
-                //var contadorCompromiso = fichas[i].compromisos.length;
-                //if (contadorCompromiso>0)
-                //{
+                        text = text +
+                            '<div class="tituloFicha">Visita ' + (i + 1) + '</div>' +
+                            '<div class="labelFicha">Fecha</div><div class="textoFicha">' + moment(fichas[i].fecha).format('DD-MM-YYYY hh:mm:ss A') + '</div>' +
+                            '<div class="labelFicha">Cliente</div><div class="textoFicha">' + fichas[i].cliente + '</div> <br><br>';
 
-                //    for (var z = 0; z < contadorCompromiso; z++)
-                //    {
-
-                //    text = text +
-                //    /*'<div class="labelFicha">Hora</div><div class="textoFicha">' + fichas[i].hora +"</div><br />"+*/
-                //            //TipoCompromiso: tipoCompromiso,
-                //            //    Detalle: detalle,
-                //            //        Solucion: solucion
-
-                //        '<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichas[i].compromisos[z].TipoCompromiso +'</div><br />'+
-                //        '<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichas[i].compromisos[z].Detalle +'</div><br />'+
-                //        '<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichas[i].compromisos[z].Solucion +'</div><br />';
-
-                //    }
-                //}
+                        cerrar = true;
+                        abrir = false;
 
 
-                //if (fichas[i].fecha != fechaAnterior) {
+                    }
+
+                    //var contadorCompromiso = fichas[i].compromisos.length;
+                    //if (contadorCompromiso>0)
+                    //{
+
+                    //    for (var z = 0; z < contadorCompromiso; z++)
+                    //    {
+
+                    //    text = text +
+                    //    /*'<div class="labelFicha">Hora</div><div class="textoFicha">' + fichas[i].hora +"</div><br />"+*/
+                    //            //TipoCompromiso: tipoCompromiso,
+                    //            //    Detalle: detalle,
+                    //            //        Solucion: solucion
+
+                    //        '<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichas[i].compromisos[z].TipoCompromiso +'</div><br />'+
+                    //        '<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichas[i].compromisos[z].Detalle +'</div><br />'+
+                    //        '<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichas[i].compromisos[z].Solucion +'</div><br />';
+
+                    //    }
+                    //}
 
 
-                //}
+                    //if (fichas[i].fecha != fechaAnterior) {
 
 
-                //text = text +
+                    //}
+
+
+                    //text = text +
                     /*'<div class="labelFicha">Hora</div><div class="textoFicha">' + fichas[i].hora +"</div><br />"+*/
                     //'<div class="labelFicha">Tipo de compromiso</div><div class="textoFicha">' + fichasCompromiso[i].tipoCompromiso +'</div><br />'+
                     //'<div class="labelFicha">Detalle</div><div class="textoFicha">' + fichasCompromiso[i].detalle +'</div><br />'+
                     //'<div class="labelFicha">Soluci&oacute;n</div><div class="textoFicha">' + fichasCompromiso[i].solucion +'</div><br />';
 
 
-                if (cerrar == true) {
-                    text = text + '</div ><br />';
-                    abrir = true;
-                }
+                    if (cerrar == true) {
+                        text = text + '</div ><br />';
+                        abrir = true;
+                    }
 
             }
+            fichas.pop();
 
             document.getElementById("divFichas").innerHTML = text;
 
         }
 
-        function initMap() {
+
+
 
 
 
@@ -301,9 +312,8 @@
             {
                 var fichaDatos = { fecha: fecha, hora: fecha, cliente: RazonSocial, compromisos: Compromisos };
 
-              //  Console.log(fichaDatos);
+                console.log(fichaDatos);
                 fichas.push(fichaDatos);
-                
             }
 
 
@@ -319,10 +329,11 @@
             // Crear ruta
             var ruta = new google.maps.Polyline({
                 path: polilinea,
+
                 geodesic: true,
                 strokeColor: '#FF0000',
                 strokeOpacity: 1.0,
-                strokeWeight: 2
+                strokeWeight: 4
             });
 
 
@@ -333,22 +344,17 @@
             var marcadoresCliente = [];
             var imagenIconoCliente = "../Imagenes/pushpin cliente-01.png";
 
+
             // Variables de datos
             var vendedoresLista = new Array();
             var clientesLista = new Array();
 
             var polilinea = [];
-
+            var polylines = [];
 
             posicionActual = { lat: -0.199273058641198, lng: -78.49731476024294 };
 
-
-
             // ****************************************************************************** Añadir un grupo - vendedores -
-
-            //AddToVendedorList("j", -0.16054644784609212, -78.21604034618044);
-            //AddToVendedorList("j2", -0.20054644784609212, -78.21604034618044);
-            //AddToVendedorList("j2", -0.30054644784609212, -78.21604034618044);
 
             function CargarVendedores() {
                 $.ajax({
@@ -377,6 +383,7 @@
 
 
                     }
+
                 },
 
                 error: function (ex) {
@@ -399,13 +406,10 @@
             var iconoPosicionVendedor =
                 {
                     url: imageniconoPosicion,
-
                     size: new google.maps.Size(48, 48),
                     scaledSize: new google.maps.Size(48, 48), // scaled size
                     origin: new google.maps.Point(0, 0), // origin
                     anchor: new google.maps.Point(24, 48) // anchor
-
-
                 };
 
 
@@ -448,17 +452,6 @@
                         animation: google.maps.Animation.DROP,
                         label: { text: texto, color: "#645F9F", fontSize: "20px" }
                     });
-
-                    /*
-                    newMarker.addListener('click', function () {
-                        if (idVendedor == 0) {
-                            location.reload(true);
-                        } else {
-                            DibujarRutas(idVendedor);
-                        }
-
-                    });
-                    */
                     marcadoresVendedor.push(newMarker);
 
                 }, timer);
@@ -470,11 +463,6 @@
 
 
             // ****************************************************************************** Añadir un grupo - Clientes -
-
-
-            //AddToClientList("j", -0.16054644784609212, -78.31604034618044);
-            //AddToClientList("j2", -0.20054644784609212, -78.31604034618044);
-            //AddToClientList("j2", -0.30054644784609212, -78.31604034618044);
 
             function cargarClientes() {
                 $.ajax({
@@ -491,8 +479,6 @@
 
                             if (arreglo[i].Latitud != null && arreglo[i].Longitud != null) {
                                 AddToClientList(arreglo[i].Nombre + " " + arreglo[i].Apellido, arreglo[i].Latitud, arreglo[i].Longitud);
-
-
                                 DibujarClientes(map);
                             }
 
@@ -511,7 +497,6 @@
             var iconoCliente =
                 {
                     url: imagenIconoCliente,
-
                     size: new google.maps.Size(48, 48),
                     scaledSize: new google.maps.Size(48, 48), // scaled size
                     origin: new google.maps.Point(0, 0), // origin
@@ -521,13 +506,13 @@
                 };
 
 
+
             function AddToClientList(nombre, latitud, longitud) {
 
                 var cliente = { nombre: nombre, latitud: latitud, longitud: longitud };
 
                 clientesLista.push(cliente);
             }
-
 
             function DibujarClientes(mapa) {
 
@@ -561,9 +546,6 @@
 
             /**************************************************************************/
 
-
-
-
             // Función para Crear rutas
             function DibujarRutas(idVendedor) {
 
@@ -574,6 +556,7 @@
 
                 //Borrar polilinea y ruta
                 polilinea = [];
+                polylines = [];
 
 
                 $.ajax({
@@ -600,6 +583,7 @@
                         //TestLista comprimiso
                         fichas.pop();
                         polilinea.pop();
+                        polylines.pop();
                         //For para las Rutas diarias
                         for (var i = 0; i < arreglo.ListaRutas.length; i++) {
 
@@ -621,6 +605,7 @@
                                     numeradorVisita++;
                                     visitaFechaAnterior = arreglo.ListaRutas[i].Fecha;
                                 }
+                                var auxCoord = [arreglo.ListaRutas[i].Latitud, arreglo.ListaRutas[i].Longitud];
 
                                 //if (arreglo.ListaVisitas.length>=0) {
 
@@ -633,7 +618,7 @@
 
 
                                 DibujarVendedores(map);
-
+                                polylines.push(auxCoord);
                                 polilinea.push(coordenada);
                             }
 
@@ -673,10 +658,35 @@
                                 AddFicha(arreglo.ListaVisitas[i].Fecha, RazonSocial,NewCompromiso);
 
                             }
+
+                        }
+                        dibujarFichas();
+
+
+                        var smoothedPath = smooth(polylines)
+                        console.log("smoothedPath");
+                        console.log(smoothedPath);
+                        //our input polyline
+                        var myroute = [];
+                        for (var i in smoothedPath) {
+                            var coordenada = { lat: smoothedPath[i][0], lng: smoothedPath[i][1] };
+                            myroute.push(coordenada);
                         }
 
 
-                        ruta.setPath(polilinea);
+
+                        ruta.setPath(myroute);
+
+                        var imagenIconoRuta = "../Imagenes/pushpin-ruta.png";
+                        var iconoRuta =
+                            {
+                                url: imagenIconoRuta,
+
+                                size: new google.maps.Size(48, 48),
+                                scaledSize: new google.maps.Size(24, 24), // scaled size
+                                origin: new google.maps.Point(0, 0), // origin
+                                anchor: new google.maps.Point(24, 48) // anchor
+                            };
 
 
                         if (arreglo.ListaRutas.length > 0) {
@@ -685,8 +695,24 @@
                             ruta.setMap(map);
 
 
+
                             map.panTo(polilinea[0]);
-                            dibujarFichas();
+
+                            //for (i = 0; i < polilinea.length; i++) {
+                            //    marker = new google.maps.Marker({
+                            //        position: new google.maps.LatLng(polilinea[i]),
+                            //        icon: iconoRuta,
+                            //        map: map
+                            //    });
+
+                            //    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                            //        return function () {
+                            //            infowindow.setContent(locations[i][0]);
+                            //            infowindow.open(map, marker);
+                            //        }
+                            //    })(marker, i));
+                           // }
+
                             //alert("Ruta creada exitosamente");
 
                         } else {
@@ -707,8 +733,6 @@
 
             }
 
-
-
             // Función para dibujar el mapa con todos los componentes
 
             function DibujarMapa(idMapa) {
@@ -727,11 +751,12 @@
                 // Elementos del mapa
                 AddBuscador("txtBuscador", map);
 
-
                 setFechaActual();
-                addFechaAlMapa();
-            }
 
+                addFechaAlMapa();
+
+
+            }
 
 
             function AddEventoClick(mapa) {
@@ -744,8 +769,6 @@
                 });
 
             }
-
-
 
             // Función para hacer funcionar el buscador
 
@@ -817,56 +840,43 @@
 
             DibujarMapa("map");
 
-
-            ////////*********************************
-
-
-            function addFechaAlMapa() {
+            //
+            function addFechaAlMapa()
+            {
 
                 var controlDiv = document.createElement('DIV');
                 controlDiv.id = "controls";
-
-                var onChange = function () {
-
+                var onChange = function ()
+                {
                     DibujarRutas(@Model.IdVendedor);
-
                 };
-
                 controlDiv.appendChild(document.getElementById("txtFecha"));
                 google.maps.event.addDomListener(controlDiv, 'change', onChange);
-
-
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
             }
 
 
+        function setFechaActual()
+        {
 
 
-
-
-        }
-
-        function setFechaActual() {
-
-            if (document.getElementById("txtFecha").valueAsDate == null) {
-
+            if (document.getElementById("txtFecha").valueAsDate == null)
+            {
                 document.getElementById("txtFecha").valueAsDate = new Date();
-
             }
+                            DibujarRutas(@Model.IdVendedor);
+
 
         }
 
-        setFechaActual();
-
-
     </script>
 
 
 
 
-   
 
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIBkXjci-D1Gog6Ez_BkpJcdtEnO1XsBA&libraries=places&callback=initMap">
-    </script>
+
+
+    <script src="https://unpkg.com/smooth-polyline@1.0.6/dist/smooth-polyline.min.js"></script>
+
 }

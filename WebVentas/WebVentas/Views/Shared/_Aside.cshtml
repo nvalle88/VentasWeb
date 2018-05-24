@@ -13,6 +13,12 @@
                         <li class="@Html.RouteIf("Supervisor", "active")">
                             <a href="@Url.Action("Index", "Supervisor")" title="Supervisores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Supervisores</span></a>
                         </li>
+                        <li class="@Html.RouteIf("Vendedores", "active")">
+                            <a href="@Url.Action("VendedorIndex", "Vendedores")" title="Vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
+                        </li>
+                        <li class="@Html.RouteIf("VerVendedores", "active")">
+                            <a href="@Url.Action("Index", "VerVendedores")" title="Vervendedores"><i class="fa fa-lg fa-fw fa-map-marker"></i> <span class="menu-item-parent">Ver Vendedores</span></a>
+                        </li>
                         <li class="@Html.RouteIf("Clientes", "active")">
                             <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
                         </li>
@@ -57,6 +63,9 @@
                         <ul>
                             <li class="@Html.RouteIf("Vendedores", "active")">
                                 <a href="@Url.Action("VendedorIndex", "Vendedores")" title="Vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
+                            </li>
+                            <li class="@Html.RouteIf("VerVendedores", "active")">
+                                <a href="@Url.Action("Index", "VerVendedores")" title="Vervendedores"><i class="fa fa-lg fa-fw fa-map-marker"></i> <span class="menu-item-parent">Ver Vendedores</span></a>
                             </li>
                             <li class="@Html.RouteIf("Clientes", "active")">
                                 <a href="@Url.Action("Index", "Clientes")" title="Clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>

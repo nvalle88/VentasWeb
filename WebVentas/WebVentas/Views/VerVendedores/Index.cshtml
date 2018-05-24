@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Index";
 }
+@using WebVentas.Utils;
+
 
 
 <script src="~/Scripts/jquery-1.9.1.min.js"></script>
@@ -16,9 +18,8 @@
 <script src="~/Scripts/jquery-2.1.1.js"></script>
 <script src="~/Scripts/jquery-2.1.1.min.js"></script>
 <link href="~/Content/css/Personalizado.css" rel="stylesheet" />
-<script src="~/Scripts/moment.js"></script>
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/Scripts/moment-with-locales.js"></script>
+<script src="~/Scripts/moment-with-locales.js"
+        ></script>
 <script src="~/Scripts/moment-with-locales.min.js"></script>
 
 
@@ -63,8 +64,8 @@
         }
 
     .gm-style-iw {
-        top: 15px !important;
-        left: 0px !important;
+        top: 7px !important;
+        left: 21px !important;
         background-color: #fff;
         box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
         border: 1px solid rgba(255, 87, 34, 0.6);
@@ -80,6 +81,7 @@
             font-size: 15px;
             font-weight: 400;
             background-color: #FF5722;
+            width: 100%;
             color: white;
             margin: 0;
             border-radius: 2px 2px 0 0;
@@ -89,7 +91,7 @@
             font-size: 13px;
             line-height: 18px;
             font-weight: 400;
-            padding: 15px 5px 20px 15px;
+            padding: 0px 0px 0px 0px;
             overflow-y: auto;
             overflow-x: hidden;
         }
@@ -131,7 +133,7 @@
                     </section>
                     <section class="col col-lg-5">
 
-                        <input type="button" id="refresh" onclick="verValores()" value="Actualizar"  class="btn btn-default butoon" />
+                        <input type="button" id="refresh" onclick="verValores()" value="Actualizar" class="btn btn-default butoon" />
 
                     </section>
                 </div>
@@ -171,7 +173,7 @@
 
 <script>
 
-   
+
 
     function verValores()
     {
@@ -221,7 +223,7 @@
                             map: map,
                             title: arreglo[i].Nombre,
                             position: myLatlng,
-                            
+
                         });
                         Vendedores.push(marker);
 
@@ -230,15 +232,20 @@
                                 + arreglo[i].VendedorId + '">'
                                 + arreglo[i].Nombre + '</option>');
                         //infowindow
+                        var fecha = new Date(parseInt(arreglo[i].Fecha.replace('/Date(', '')));
+                        var fm = moment(fecha).format('llll');
                         var content = '<div id="iw-container">' +
                             '<div class="iw-title">'+arreglo[i].Nombre+'</div>' +
                             '<div class="iw-content">' +
                             '<div class="iw-subTitle">Última ubicación</div>' +
-                            '<img src="' + arreglo[i].urlFoto.replace('~', 'http://52.224.8.198:51/')+'" alt="" height="80" width="63">' +
-                            '<p>'+ new Date(parseInt(arreglo[i].Fecha.replace('/Date(', '')))+'.</p>' +
+                            '<img src="' + arreglo[i].urlFoto + '" alt="" height="80" width="63">' +
+                            '<p>' + fm + '.</p>' +
                             '</div>' +
-                            '<div class="iw-bottom-gradient"></div>' +
                             '</div>';
+                      //  alert(fm);
+
+
+
                         var infowindow = new google.maps.InfoWindow({
                             content: content,
                             // Assign a maximum value for the width of the infowindow allows
@@ -272,7 +279,7 @@
 
                             // Removes white background DIV
                             iwBackground.children(':nth-child(4)').css({ 'display': 'none' });
-                          
+
                         });
 
                     }
@@ -330,10 +337,10 @@
         for (var i = 0; i < listVendedores.length; i++)
         {
             if (ids != null)
-            {                
+            {
                 $.each(ids, function (index, value) {
                     if (arreglo[i].VendedorId == value) {
-                    
+
 
                     var myLatlng = new google.maps.LatLng(arreglo[i].Lat, arreglo[i].Lon);
                     var marker = new google.maps.Marker({
@@ -381,7 +388,7 @@
                         iwBackground.children(':nth-child(4)').css({ 'display': 'none' });
                     });
                 }
-                }); 
+                });
 
             } else
             {
@@ -406,7 +413,7 @@
                     '<div class="iw-bottom-gradient"></div>' +
                     '</div>';
                 var infowindow = new google.maps.InfoWindow({
-                    content: content,                   
+                    content: content,
                 });
 
                 new google.maps.event.addListener(map, 'click', function () {
@@ -431,10 +438,10 @@
                     // Removes white background DIV
                     iwBackground.children(':nth-child(4)').css({ 'display': 'none' });
                 });
-                    
+
             }
 
-           
+
 
         }
 

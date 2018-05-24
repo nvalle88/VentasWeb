@@ -33,7 +33,6 @@ namespace WebVentas.Controllers
             {
                 var userWithClaims = (ClaimsPrincipal)User;
                 var idEmpresa = userWithClaims.Claims.First(c => c.Type == Constantes.Empresa).Value;
-
                 int idEmpresaInt = Convert.ToInt32(idEmpresa);
                 ApplicationDbContext db = new ApplicationDbContext();
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
@@ -53,11 +52,18 @@ namespace WebVentas.Controllers
                     lista = await ApiServicio.InsertarAsync(empresa, new Uri(WebApp.BaseAddress),
                                                                        "api/LogRutaVendedors/VendedoresPorEmpresa");
                 }
-
                 if (lista.IsSuccess)
                 {
                     var listaVendedor = JsonConvert.DeserializeObject<List<VendedorPositionRequest>>(lista.Resultado.ToString());
-                   // var f = (DateTime)(listaVendedor.FirstOrDefault().fecha.Date);
+                     List <VendedorPositionRequest> listaVendedores = new  List < VendedorPositionRequest >();
+
+                    foreach (var vendedor in listaVendedor)
+                    {
+                        vendedor.urlFoto = string.IsNullOrEmpty(vendedor.urlFoto) != true ? vendedor.urlFoto.Replace("~", WebApp.BaseAddress) : "";
+                        listaVendedores.Add(vendedor);
+                    }
+
+                    // var f = (DateTime)(listaVendedor.FirstOrDefault().fecha.Date);
                     return Json(listaVendedor);
                 }
                 else return Json(false);                               

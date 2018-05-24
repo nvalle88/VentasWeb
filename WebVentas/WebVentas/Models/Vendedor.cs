@@ -23,6 +23,9 @@ namespace  WebVentas.Models
 
         public int? TiempoSeguimiento { get; set; }
 
+        public Double? DistanciaSeguimiento { get; set; }
+
+
         public int? IdSupervisor { get; set; }
 
         [StringLength(128)]
